@@ -1,0 +1,38 @@
+.header-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: var(--header-padding);
+    background-color: var(--color-tertiary);
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--header-font);
+}
+
+.header-logo {
+    background-image: url('../../public/images/logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: var(--header-logo-dimensions);
+    height: var(--header-logo-dimensions);
+    transform: var(--header-logo-scaling);
+}
+
+.header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--header-element-gap);
+    margin: var(--header-div-margin);
+}
+
+.header-button {
+    text-decoration: none;
+    font-size: var(--header-font);
+    color: var(--color-primary);
+    transition: var(--transitions);
+}
+
+.header-button:hover {
+    color: var(--color-secondary);
+}

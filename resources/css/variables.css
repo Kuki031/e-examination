@@ -1,0 +1,20 @@
+:root {
+
+    /*Color palette*/
+    --color-primary: #1F2A44;
+    --color-secondary: #3E9BA8;
+    --color-tertiary: #faf7f7;
+    --transitions: all .2s;
+    /**/
+
+
+    /*Header*/
+    --header-font: 1.8rem;
+    --header-padding: 1.5rem;
+    --header-height: 15vh;
+    --header-logo-dimensions: 15rem;
+    --header-logo-scaling: 1.2;
+    --header-element-gap: 1.5rem;
+    --header-div-margin: 5rem;
+    /**/
+}
