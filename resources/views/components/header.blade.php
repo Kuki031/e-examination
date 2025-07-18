@@ -15,8 +15,8 @@
             <div class="header-logo"></div>
             <div class="header-actions">
                 {{-- <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a> --}}
-                <a class="header-button" href="{{ route('auth.student_login_form') }}">Prijavi se</a>
-                <a class="header-button" href="{{ route('auth.student_register_form') }}">Registriraj se</a>
+                <a class="header-button" href="{{ route('auth.login_selector') }}">Prijava</a>
+                <a class="header-button" href="{{ route('auth.register_selector') }}">Registracija</a>
             </div>
         </div>
     </nav>

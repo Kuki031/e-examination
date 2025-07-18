@@ -1,10 +1,18 @@
 :root {
 
-    /*Color palette*/
+    /*Color palette & defaults*/
     --color-primary: #1F2A44;
-    --color-secondary: #3E9BA8;
+    --color-secondary: #3ea87f;
     --color-tertiary: #faf7f7;
     --transitions: all .2s;
+    --default-element-gap: 1rem;
+    --default-image-radius: .3rem;
+    --default-radius: .3rem;
+    --default-font: 2rem;
+    --default-padding: 1rem;
+    --default-margin: 2rem;
+    --default-heading-font: 2.5rem;
+    --default-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     /*******************************/
 
 
@@ -29,5 +37,10 @@
     --user-auth-form-border-radius: 1rem;
     --user-auth-form-input-radius: .1rem;
     --user-auth-input-border-radius: .3rem;
+    /*******************************/
+
+    /*Auth selectors*/
+    --selector-div-width: 30rem;
+    --selector-div-height: 30rem;
     /*******************************/
 }

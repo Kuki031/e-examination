@@ -1,0 +1,99 @@
+.selector-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin) auto;
+}
+
+.selector-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--default-element-gap);
+}
+
+.selector-admin-teacher, .selector-student {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: var(--selector-div-width);
+    height: var(--selector-div-height);
+    border: none;
+    border-radius: var(--default-image-radius);
+    box-shadow: var(--default-box-shadow);
+}
+
+.selector-admin-teacher {
+    background-image: url('../../public/images/auth_module/administrators.jpg');
+}
+
+.selector-student {
+    background-image: url('../../public/images/auth_module/students.jpg');
+}
+
+.selector-admin-teacher::after, .selector-student::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    opacity: .3;
+    background-color: var(--color-secondary);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.selector-admin-teacher div, .selector-student div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.selector-admin-teacher div a,
+.selector-student div a {
+  text-decoration: none;
+  font-size: var(--default-font);
+  font-weight: bold;
+  padding: var(--default-padding);
+  border: none;
+  border-radius: var(--default-radius);
+  z-index: 99999;
+
+  background-color: var(--color-secondary);
+  color: var(--color-tertiary);
+
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.37),
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: -200% 0;
+  animation: glowFlash 2s linear infinite;
+}
+
+
+.selector-title-div {
+    margin: 1rem auto;
+    background-color: var(--color-secondary);
+    border: none;
+    border-radius: var(--default-radius);
+    box-shadow: var(--default-box-shadow);
+}
+
+.selector-title-heading {
+    padding: var(--default-padding);
+    color: var(--color-tertiary);
+    font-size: var(--default-heading-font);
+}

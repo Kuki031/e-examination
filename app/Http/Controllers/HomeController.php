@@ -13,11 +13,11 @@ class HomeController extends Controller
 
     public function getRegistrationSelector()
     {
-        //
+        return view('auth.register_selector');
     }
 
     public function getLoginSelector()
     {
-        //
+        return view('auth.login_selector');
     }
 }
