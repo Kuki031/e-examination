@@ -14,7 +14,7 @@
     background-size: cover;
     width: var(--header-logo-dimensions);
     height: var(--header-logo-dimensions);
-    transform: var(--header-logo-scaling);
+    transform: scale(var(--header-logo-scaling));
 }
 
 .header-actions {
@@ -30,8 +30,13 @@
     font-size: var(--header-font);
     color: var(--color-primary);
     transition: var(--transitions);
+    padding: var(--header-button-padding);
+    border: none;
+    border-radius: var(--header-button-radius);
+    font-weight: var(--header-button-weight);
 }
 
 .header-button:hover {
-    color: var(--color-secondary);
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
 }

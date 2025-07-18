@@ -11,12 +11,12 @@ class HomeController extends Controller
         return view('index');
     }
 
-    public function getRegistrationModule()
+    public function getRegistrationSelector()
     {
         //
     }
 
-    public function getLoginModule()
+    public function getLoginSelector()
     {
         //
     }
