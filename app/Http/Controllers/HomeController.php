@@ -10,4 +10,14 @@ class HomeController extends Controller
     {
         return view('index');
     }
+
+    public function getRegistrationModule()
+    {
+        //
+    }
+
+    public function getLoginModule()
+    {
+        //
+    }
 }

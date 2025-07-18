@@ -1,23 +1,23 @@
 <x-header />
 
-<div align="center">
-    <div>
+<div class="user-auth-main">
+    <div class="user-auth-wrap">
         <form action="#">
-            <div>
-            <div>
+            <div class="user-auth-form-div">
                 <h3>Prijava u aplikaciju</h3>
             </div>
             <div>
-                <label for="oib">Unesite OIB: </label>
-                <input type="text" name="oib" id="oib">
+            <div class="user-auth-form-div">
+                <label for="jmbag">Unesite JMBAG: </label>
+                <input type="text" name="jmbag" id="jmbag" autocomplete="off">
             </div>
 
-            <div>
+            <div class="user-auth-form-div">
                 <label for="password">Unesite lozinku: </label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" autocomplete="off">
             </div>
-            <div>
-                <button type="submit">Prijavi se</button>
+            <div class="user-auth-form-div">
+                <button class="user-auth-action" type="submit">Prijavi se</button>
             </div>
             </div>
         </form>

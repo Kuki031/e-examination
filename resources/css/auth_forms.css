@@ -1,0 +1,54 @@
+.user-auth-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    font-size: var(--user-auth-form-font);
+    animation: fadeIn ease-in-out .5s;
+}
+
+.user-auth-form-div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--user-auth-form-element-gap);
+    margin: 2rem auto;
+    color: var(--color-primary);
+}
+
+.user-auth-wrap {
+    background-color: var(--color-tertiary);
+    padding: var(--user-auth-form-padding);
+    border-radius: var(--user-auth-form-border-radius);
+}
+
+.user-auth-form-div input {
+    padding: var(--user-auth-input-padding);
+    border: var(--user-auth-form-input-radius) solid var(--color-secondary);
+    border-radius: var(--user-auth-input-border-radius);
+}
+
+.user-auth-action {
+    background-color: var(--color-secondary);
+    border: none;
+    padding: var(--user-auth-input-padding);
+    cursor: pointer;
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+    border-radius: var(--user-auth-input-border-radius);
+    font-size: var(--user-auth-cta-font);
+}
+
+.user-auth-action:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary);
+}
+
+.user-auth-radio-selection {
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--user-auth-form-element-gap);
+}

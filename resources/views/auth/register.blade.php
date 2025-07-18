@@ -1,39 +1,62 @@
 <x-header />
 
-<div align="center">
-    <div>
+<div class="user-auth-main">
+    <div class="user-auth-wrap">
         <form action="#">
-            <div>
-            <div>
+            <div class="user-auth-form-div">
                 <h3>Registracija u aplikaciju</h3>
             </div>
             <div>
-                <label for="oib">Unesite OIB: </label>
-                <input type="text" name="oib" id="oib">
+            <div class="user-auth-form-div">
+                <label for="jmbag">Unesite JMBAG: </label>
+                <input type="text" name="jmbag" id="jmbag" autocomplete="off">
             </div>
 
-            <div>
-                <label for="name">Prezime i ime: </label>
-                <input type="text" name="name" id="name">
+            <div class="user-auth-form-div">
+                <label for="name">Unesite prezime i ime: </label>
+                <input type="text" name="name" id="name" autocomplete="off">
             </div>
 
-            <div>
-                <label for="gender">Spol: </label>
-                <input type="radio" name="gender"> Muški
-                <input type="radio" name="gender"> Ženski
+            <div class="user-auth-form-div">
+                <div class="user-auth-radio-selection">
+                    <label for="gender">Spol (označiti jedno): </label>
+                    <div>
+                        <div>
+                            <input type="radio" name="gender" value="m"> Muški
+                        </div>
+                        <div>
+                            <input type="radio" name="gender" value="f"> Ženski
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div>
+            <div class="user-auth-form-div">
+                <div class="user-auth-radio-selection">
+                    <label for="status">Status studiranja (označiti jedno): </label>
+                    <div>
+                        <div>
+                            <input type="radio" name="status" value="r"> Redoviti
+                        </div>
+                        <div>
+                            <input type="radio" name="status" value="i"> Izvanredni
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-auth-form-div">
                 <label for="password">Unesite lozinku: </label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" autocomplete="off">
             </div>
 
-            <div>
+            <div class="user-auth-form-div">
                 <label for="password_confirm">Ponovite lozinku: </label>
-                <input type="password" name="password_confirm" id="password_confirm">
+                <input type="password" name="password_confirm" id="password_confirm" autocomplete="off">
             </div>
-            <div>
-                <button type="submit">Registriraj se</button>
+
+            <div class="user-auth-form-div">
+                <button class="user-auth-action" type="submit">Registriraj se</button>
             </div>
             </div>
         </form>

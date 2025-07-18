@@ -5,16 +5,26 @@
     --color-secondary: #3E9BA8;
     --color-tertiary: #faf7f7;
     --transitions: all .2s;
-    /**/
+    /*******************************/
 
 
     /*Header*/
     --header-font: 1.8rem;
-    --header-padding: 1.5rem;
-    --header-height: 15vh;
     --header-logo-dimensions: 15rem;
-    --header-logo-scaling: 1.2;
+    --header-logo-scaling: 1.8;
     --header-element-gap: 1.5rem;
     --header-div-margin: 5rem;
-    /**/
+    /*******************************/
+
+
+    /*User auth forms*/
+    --user-auth-form-font: 1.8rem;
+    --user-auth-cta-font: 1.5rem;
+    --user-auth-input-padding: .8rem;
+    --user-auth-form-padding: 2rem;
+    --user-auth-form-element-gap: .5rem;
+    --user-auth-form-border-radius: 1rem;
+    --user-auth-form-input-radius: .1rem;
+    --user-auth-input-border-radius: .3rem;
+    /*******************************/
 }
