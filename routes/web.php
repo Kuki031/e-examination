@@ -17,6 +17,8 @@ Route::name("auth.")->prefix("autentifikacija")->group(function() {
 
     Route::get("/prijava/nastavnik", [AuthController::class, "getTeacherLoginForm"])->name("teacher_login_form");
     Route::get("/registracija/nastavnik", [AuthController::class, "getTeacherRegisterForm"])->name("teacher_register_form");
+
+    Route::post("/prijava", [AuthController::class, 'authenticate'])->name("login");
 });
 
 Route::name('users.')->prefix("korisnici")->group(function() {

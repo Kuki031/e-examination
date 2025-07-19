@@ -21,3 +21,17 @@ body {
 html {
     font-size: 62.5%;
 }
+
+.error-div {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.error-div span {
+    color: rgb(180, 8, 8);
+}
+
+.fl-wrapper {
+    font-size: var(--flasher-font);
+}
