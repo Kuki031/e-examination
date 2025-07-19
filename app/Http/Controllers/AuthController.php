@@ -52,4 +52,17 @@ class AuthController extends Controller
         ->error(message: "Netočni pristupni podaci!", title: "Prijava neuspješna");
         return back();
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $this->flasherInterface
+        ->option('position', 'top-center')
+        ->option('timeout', 2500)
+        ->success(message: "Uspješno ste se odjavili iz aplikacije!", title: "Odjava uspješna");
+        return to_route("index");
+    }
 }

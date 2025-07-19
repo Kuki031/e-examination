@@ -14,9 +14,17 @@
         <div class="header-main">
             <div class="header-logo"></div>
             <div class="header-actions">
-                {{-- <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a> --}}
-                <a class="header-button" href="{{ route('auth.login_selector') }}">Prijava</a>
-                <a class="header-button" href="{{ route('auth.register_selector') }}">Registracija</a>
+
+                @auth
+                    <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a>
+                    <a id="log-out" class="header-button" href="#">Odjavi se</a>
+
+                @endauth
+
+                @if (!auth()->check())
+                    <a class="header-button" href="{{ route('auth.login_selector') }}">Prijava</a>
+                    <a class="header-button" href="{{ route('auth.register_selector') }}">Registracija</a>
+                @endif
             </div>
         </div>
     </nav>

@@ -34,9 +34,15 @@
     border: none;
     border-radius: var(--header-button-radius);
     font-weight: var(--header-button-weight);
+    cursor: pointer;
+    background-color: inherit;
 }
 
 .header-button:hover {
     background-color: var(--color-secondary);
     color: var(--color-tertiary);
+}
+
+.header-button-form {
+    font-weight: var(--header-button-weight);
 }
