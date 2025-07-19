@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     margin: var(--default-margin) auto;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .selector-wrap {
@@ -71,15 +72,10 @@
   background-color: var(--color-secondary);
   color: var(--color-tertiary);
 
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.37),
-    transparent
-  );
+  background-image: var(--image-gradient);
   background-repeat: no-repeat;
-  background-size: 200% 100%;
-  background-position: -200% 0;
+  background-size: var(--image-gradient-size);
+  background-position: var(--image-gradient-position);
   animation: glowFlash 2s linear infinite;
 }
 

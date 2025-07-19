@@ -15,4 +15,14 @@ class AuthController extends Controller
     {
         return view("auth.student_register");
     }
+
+    public function getTeacherLoginForm()
+    {
+        return view("auth.teacher_login");
+    }
+
+    public function getTeacherRegisterForm()
+    {
+        return view("auth.teacher_register");
+    }
 }

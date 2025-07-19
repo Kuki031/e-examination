@@ -20,3 +20,13 @@
     background-position: 200% 0;
   }
 }
+
+
+@keyframes appearFromBelow {
+    0% {
+
+    }
+    100% {
+
+    }
+}

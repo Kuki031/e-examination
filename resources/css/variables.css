@@ -13,6 +13,14 @@
     --default-margin: 2rem;
     --default-heading-font: 2.5rem;
     --default-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --image-gradient: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.37),
+        transparent
+    );
+    --image-gradient-size: 200% 100%;
+    --image-gradient-position: -200% 0;
     /*******************************/
 
 

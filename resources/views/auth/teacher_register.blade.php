@@ -4,7 +4,7 @@
     <div class="user-auth-wrap">
         <form action="#">
             <div class="user-auth-form-div">
-                <h3>Registracija u aplikaciju - student</h3>
+                <h3>Registracija u aplikaciju - nastavnik</h3>
             </div>
             <div>
 
@@ -13,8 +13,8 @@
                 <input type="text" name="email" id="email" autocomplete="off">
             </div>
             <div class="user-auth-form-div">
-                <label for="jmbag">Unesite JMBAG: </label>
-                <input type="text" name="jmbag" id="jmbag" autocomplete="off">
+                <label for="oib">Unesite OIB: </label>
+                <input type="text" name="oib" id="oib" autocomplete="off">
             </div>
 
             <div class="user-auth-form-div">
@@ -36,19 +36,6 @@
                 </div>
             </div>
 
-            <div class="user-auth-form-div">
-                <div class="user-auth-radio-selection">
-                    <label for="status">Status studiranja (označiti jedno): </label>
-                    <div>
-                        <div>
-                            <input type="radio" name="status" value="r"> Redoviti
-                        </div>
-                        <div>
-                            <input type="radio" name="status" value="i"> Izvanredni
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="user-auth-form-div">
                 <label for="password">Unesite lozinku: </label>
