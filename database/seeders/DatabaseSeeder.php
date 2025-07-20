@@ -15,26 +15,44 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Pero Perić',
-            'email' => 'test@example.com',
+            'full_name' => 'Pero Perić',
+            'email' => 'student@example.com',
             'pin' => "jmbag",
             'pin_value' => "1234567891",
             'gender' => "m",
             'status' => "r",
             "registration_type" => "student",
-            'role' => "student"
+            'role' => "student",
+            'is_allowed' => true,
+            'is_in_pending_status' => false
         ]);
 
         User::factory()->create([
-            'name' => 'Ana Anić',
-            'email' => 'test1@example.com',
+            'full_name' => 'Ana Anić',
+            'email' => 'nastavnik@example.com',
             'pin' => "oib",
             'pin_value' => "00000000000",
             'gender' => "f",
             'status' => "n",
             "registration_type" => "teacher",
             'role' => "teacher",
-            "password" => Hash::make("password")
+            "password" => Hash::make("password"),
+            'is_allowed' => true,
+            'is_in_pending_status' => false
+        ]);
+
+        User::factory()->create([
+            'full_name' => 'Luka Lukić',
+            'email' => 'admin@example.com',
+            'pin' => "oib",
+            'pin_value' => "00000000001",
+            'gender' => "m",
+            'status' => "n",
+            "registration_type" => "teacher",
+            'role' => "admin",
+            "password" => Hash::make("password"),
+            'is_allowed' => true,
+            'is_in_pending_status' => false
         ]);
     }
 }

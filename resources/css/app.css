@@ -30,6 +30,7 @@ html {
 
 .error-div span {
     color: rgb(180, 8, 8);
+    font-size: var(--default-error-font);
 }
 
 .fl-wrapper {

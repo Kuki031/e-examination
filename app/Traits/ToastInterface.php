@@ -8,11 +8,11 @@ trait ToastInterface
 {
     public function __construct(private FlasherInterface $flasherInterface) {}
 
-    public function constructToastMessage(string $message, string $title, $model)
+    public function constructToastMessage(string $message, string $title, $model, int $timeout = 2500)
     {
             $this->flasherInterface
             ->option('position', 'top-center')
-            ->option('timeout', 2500)
+            ->option('timeout', $timeout)
             ->$model(message: $message, title: $title);
 
             return $this->flasherInterface;

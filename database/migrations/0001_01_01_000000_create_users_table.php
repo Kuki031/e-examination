@@ -18,15 +18,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->index();
             $table->enum("pin", array_column(Pin::cases(), 'value'));
-            $table->string("pin_value")->unique();
-            $table->string("name");
+            $table->string("pin_value")->unique()->index();
+            $table->string("full_name")->index();
             $table->enum("gender", array_column(Gender::cases(), 'value'));
             $table->enum("status", array_column(Status::cases(), 'value'));
             $table->enum("registration_type", array_column(RegistrationType::cases(), 'value'));
             $table->enum("role", array_column(Role::cases(), 'value'));
             $table->string('password');
+            $table->boolean("is_allowed")->default(false);
+            $table->boolean('is_in_pending_status')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

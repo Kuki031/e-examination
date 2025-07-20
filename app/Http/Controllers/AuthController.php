@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticateRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use App\Traits\ToastInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function Symfony\Component\String\b;
 
 class AuthController extends Controller
 {
@@ -37,12 +41,38 @@ class AuthController extends Controller
 
         if (Auth::attempt($authenticateRequest->validated())) {
             $authenticateRequest->session()->regenerate();
-            $this->constructToastMessage("Uspješno ste se prijavili u aplikaciju!", "Prijava uspješna", "success");
+            $this->constructToastMessage(message: "Uspješno ste se prijavili u aplikaciju!", title: "Prijava uspješna", model: "success");
 
             return to_route("index");
         }
 
-        $this->constructToastMessage("Netočni pristupni podaci!", "Prijava neuspješna", "error");
+        $this->constructToastMessage(message: "Netočni pristupni podaci!", title: "Prijava neuspješna", model: "error");
+        return back();
+    }
+
+    public function register(RegisterRequest $registerRequest)
+    {
+        $data = NULL;
+
+        if ($registerRequest['pin'] === 'JMBAG')
+        {
+            $data = $registerRequest->validated();
+            $data['registration_type'] = 'student';
+            $data['role'] = 'student';
+
+        } else if ($registerRequest['pin'] === 'OIB') {
+
+            $data = $registerRequest->validated();
+            $data['registration_type'] = 'teacher';
+            $data['role'] = 'student';
+        }
+
+        $user = User::create($data);
+
+        if ($user) {
+            $this->constructToastMessage(message: "Uspješno ste se registrirali u aplikaciju! Kako bi ste mogli koristiti sve značajke aplikacije, administrator mora odobriti vašu prijavu.", title: "Registracija uspješna", model: "success", timeout: 5000);
+            return to_route("index");
+        }
         return back();
     }
 
@@ -52,7 +82,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $this->constructToastMessage("Uspješno ste se odjavili iz aplikacije!", "Odjava uspješna", "success");
+        $this->constructToastMessage(message: "Uspješno ste se odjavili iz aplikacije!", title: "Odjava uspješna", model: "success");
         return to_route("index");
     }
 }
