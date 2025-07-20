@@ -12,9 +12,13 @@
 <header>
     <nav>
         <div class="header-main">
-            <div class="header-logo"></div>
             <div class="header-actions">
-
+                <div class="header-logo"></div>
+                <div class="header-index">
+                    <a class="header-button" href="{{ route('index') }}">Naslovnica</a>
+                </div>
+            </div>
+            <div class="header-actions">
                 @auth
                     <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a>
                     <a id="log-out" class="header-button" href="#">Odjavi se</a>

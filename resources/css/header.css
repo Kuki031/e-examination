@@ -22,7 +22,6 @@
     flex-wrap: wrap;
     flex-direction: row;
     gap: var(--header-element-gap);
-    margin: var(--header-div-margin);
 }
 
 .header-button {
@@ -45,4 +44,19 @@
 
 .header-button-form {
     font-weight: var(--header-button-weight);
+}
+
+.header-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-actions:first-child {
+    gap: var(--header-element-bigger-gap);
+}
+
+.header-index a {
+    background-color:var(--color-secondary-alter);
+    color: var(--color-tertiary);
 }

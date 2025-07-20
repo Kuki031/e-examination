@@ -4,6 +4,7 @@
 @import url('./auth_forms.css');
 @import url('./keyframes.css');
 @import url('./auth_selectors.css');
+@import url('./index.css');
 
 
 *, *::after, *::before {
