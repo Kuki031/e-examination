@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticateRequest;
-use Flasher\Prime\FlasherInterface;
+use App\Traits\ToastInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
 
-    public function __construct(private FlasherInterface $flasherInterface) {
+    use ToastInterface;
 
-    }
     public function getStudentLoginForm()
     {
         return view("auth.student_login");
@@ -38,18 +37,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($authenticateRequest->validated())) {
             $authenticateRequest->session()->regenerate();
+            $this->constructToastMessage("Uspješno ste se prijavili u aplikaciju!", "Prijava uspješna", "success");
 
-            $this->flasherInterface
-            ->option('position', 'top-center')
-            ->option('timeout', 2500)
-            ->success(message: "Uspješno ste se prijavili u aplikaciju!", title: "Prijava uspješna");
-            return to_route('index');
+            return to_route("index");
         }
 
-        $this->flasherInterface
-        ->option('position', 'top-center')
-        ->option('timeout', 2500)
-        ->error(message: "Netočni pristupni podaci!", title: "Prijava neuspješna");
+        $this->constructToastMessage("Netočni pristupni podaci!", "Prijava neuspješna", "error");
         return back();
     }
 
@@ -59,10 +52,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $this->flasherInterface
-        ->option('position', 'top-center')
-        ->option('timeout', 2500)
-        ->success(message: "Uspješno ste se odjavili iz aplikacije!", title: "Odjava uspješna");
+        $this->constructToastMessage("Uspješno ste se odjavili iz aplikacije!", "Odjava uspješna", "success");
         return to_route("index");
     }
 }
