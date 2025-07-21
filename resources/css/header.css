@@ -60,3 +60,28 @@
     background-color:var(--color-secondary-alter);
     color: var(--color-tertiary);
 }
+
+.header-requests {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+.header-requests-notification {
+    position: absolute;
+    top: 0;
+    left: 92%;
+    width: var(--default-notification-size);
+    height: var(--default-notification-size);
+    background-color: var(--color-danger);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: var(--default-padding);
+    border: none;
+    border-radius: 50%;
+    color: var(--color-tertiary);
+    font-size: var(--default-font-mobile);
+}

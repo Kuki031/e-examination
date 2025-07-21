@@ -20,6 +20,7 @@
 .table-main {
     overflow-x: auto;
     border-collapse: collapse;
+    margin: var(--default-margin) auto;
 }
 
 .table-main tr td {
@@ -52,6 +53,22 @@
     cursor: pointer;
     transition: var(--transitions);
     color: var(--color-tertiary);
+}
+
+.table-title {
+    font-size: var(--font-size-headers);
+    color: var(--color-primary);
+    align-self: start;
+}
+
+.table-title-fallback {
+    display: flex;
+    margin-top: var(--default-margin);
+    font-size: var(--font-size-headers);
+    color: var(--color-primary);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .positive {

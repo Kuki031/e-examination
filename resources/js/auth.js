@@ -7,11 +7,12 @@ document.querySelector("#log-out")?.addEventListener("click", (e) => {
 const logOut = async function()
 {
     await axios.get('/');
-    const request = await axios({
-        method: "POST",
-        url: "http://127.0.0.1:8000/autentifikacija/odjavi-se"
+    const request = await axios.post("/autentifikacija/odjavi-se", {
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        withCredentials: true,
     })
-
     if(request.status === 200)
     {
         window.location.assign("/");
