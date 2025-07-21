@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
             "registration_type" => "teacher",
             'role' => "teacher",
             "password" => Hash::make("password"),
-            'is_allowed' => true,
-            'is_in_pending_status' => false
+            'is_allowed' => false,
+            'is_in_pending_status' => true
         ]);
 
         User::factory()->create([
@@ -51,8 +51,8 @@ class DatabaseSeeder extends Seeder
             "registration_type" => "teacher",
             'role' => "admin",
             "password" => Hash::make("password"),
-            'is_allowed' => true,
-            'is_in_pending_status' => false
+            'is_allowed' => false,
+            'is_in_pending_status' => true
         ]);
     }
 }

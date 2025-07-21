@@ -5,11 +5,13 @@
     --color-secondary: #3ea87f;
     --color-tertiary: #faf7f7;
     --color-secondary-alter: #3E9BA8;
+    --color-danger: rgb(180, 8, 8);
     --transitions: all .2s;
     --default-element-gap: 1rem;
     --default-image-radius: .3rem;
     --default-radius: .3rem;
     --default-font: 2rem;
+    --default-font-mobile: 1rem;
     --default-error-font: 1.5rem;
     --flasher-font: 1.5rem;
     --default-padding: 1rem;
@@ -54,5 +56,11 @@
     /*Auth selectors*/
     --selector-div-width: 30rem;
     --selector-div-height: 30rem;
+    /*******************************/
+
+    /*Tables*/
+    --font-size-headers: 1.7rem;
+    --font-size-cells: 1.5rem;
+    --options-gap: 0.7rem;
     /*******************************/
 }

@@ -20,10 +20,13 @@
             </div>
             <div class="header-actions">
                 @auth
+                    @if (auth()->user()['role'] === 'admin')
+                        <a class="header-button" href="{{ route('admin.new_users_list') }}">Zahtjevi</a>
+                    @endif
                     <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a>
                     <a id="log-out" class="header-button" href="#">Odjavi se</a>
-
                 @endauth
+
 
                 @if (!auth()->check())
                     <a class="header-button" href="{{ route('auth.login_selector') }}">Prijava</a>

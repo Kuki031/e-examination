@@ -2,7 +2,7 @@
 
 <div class="selector-main">
     <div class="selector-title-div">
-        <h1 class="selector-title-heading">Odaberite vrstu prijave: </h1>
+        <h2 class="selector-title-heading">Odaberite vrstu prijave: </h2>
     </div>
         <div class="selector-wrap">
             <div class="selector-admin-teacher">

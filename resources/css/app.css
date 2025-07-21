@@ -5,6 +5,8 @@
 @import url('./keyframes.css');
 @import url('./auth_selectors.css');
 @import url('./index.css');
+@import url('./tables.css');
+@import url('./pagination.css');
 
 
 *, *::after, *::before {
@@ -30,7 +32,7 @@ html {
 }
 
 .error-div span {
-    color: rgb(180, 8, 8);
+    color: var(--color-danger);
     font-size: var(--default-error-font);
 }
 
