@@ -7,6 +7,7 @@
 @import url('./index.css');
 @import url('./tables.css');
 @import url('./pagination.css');
+@import url('./profile.css');
 
 
 *, *::after, *::before {
@@ -39,3 +40,21 @@ html {
 .fl-wrapper {
     font-size: var(--flasher-font);
 }
+
+.custom-file-button {
+    display: inline-block;
+    margin-top: .2rem;
+    color: var(--color-tertiary);
+    cursor: pointer;
+    border-radius: var(--default-image-radius);
+    font-size: var(--default-error-font);
+    text-align: center;
+    transition: var(--transitions);
+}
+
+
+.custom-file-button:hover {
+    background-color: var(--color-secondary-alter);
+    color: var(--color-primary);
+}
+

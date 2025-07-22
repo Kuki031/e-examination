@@ -30,11 +30,12 @@ class User extends Authenticatable
         'role',
         'password',
         'is_allowed',
-        'is_in_pending_status'
+        'is_in_pending_status',
+        "profile_picture"
     ];
 
     protected $appends = [
-        "registration_type_formatted", "is_allowed_formatted", "full_name_formatted"
+        "registration_type_formatted", "is_allowed_formatted", "full_name_formatted", "status_formatted", "role_formatted"
     ];
 
     /**

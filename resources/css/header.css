@@ -59,6 +59,7 @@
 .header-index a {
     background-color:var(--color-secondary-alter);
     color: var(--color-tertiary);
+    box-shadow: var(--default-box-shadow);
 }
 
 .header-requests {

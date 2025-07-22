@@ -51,8 +51,8 @@ class DatabaseSeeder extends Seeder
             "registration_type" => "teacher",
             'role' => "admin",
             "password" => Hash::make("password"),
-            'is_allowed' => false,
-            'is_in_pending_status' => true
+            'is_allowed' => true,
+            'is_in_pending_status' => false
         ]);
     }
 }

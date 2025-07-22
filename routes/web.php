@@ -40,6 +40,7 @@ Route::middleware(['auth'])
     ->name('users.')->prefix("korisnici")
     ->group(function() {
         Route::get("/moj-profil", [UserController::class, 'getMyProfile'])->name('profile');
+        Route::patch("/moj-profil/azuriraj", [UserController::class, 'editProfile'])->name("edit_profile");
 });
 
 

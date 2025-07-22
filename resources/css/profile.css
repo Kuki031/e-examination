@@ -1,0 +1,99 @@
+.profile-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin);
+}
+
+.profile-wrap {
+    animation: fadeIn ease-in-out 1s;
+}
+
+.profile-title {
+    align-self: start;
+    font-size: var(--default-font);
+    color: var(--color-primary);
+}
+
+.profile-section-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    font-size: var(--default-font);
+    margin: var(--default-margin) auto;
+    box-shadow: var(--default-box-shadow);
+}
+
+.profile-section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: var(--color-bg-profile);
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.profile-section-input {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: var(--default-margin) auto;
+}
+
+.profile-section-input input {
+    border: none;
+    border-radius: var(--default-image-radius);
+    padding: var(--default-padding);
+}
+
+.profile-section-input label {
+    color: var(--color-primary);
+    font-size: var(--default-error-font);
+}
+
+
+.gender-span, .status-span {
+    font-size: var(--default-error-font);
+}
+
+.profile-action {
+    margin: var(--default-margin) auto;
+}
+
+.profile-action button {
+    padding: var(--header-button-padding);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--default-image-radius);
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+}
+
+.profile-picture {
+    width: var(--profile-picture-width);
+    height: var(--profile-picture-height);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border: .2rem solid white
+}
+
+.profile-action button:hover {
+    background-color: inherit;
+    color: var(--color-primary);
+}
+
+.profile-subsection {
+    border-radius: var(--default-image-radius);
+    border: none;
+    padding: var(--default-padding);
+}
+
+.status {
+    color: var(--color-primary);
+    font-size: var(--default-error-font);
+}

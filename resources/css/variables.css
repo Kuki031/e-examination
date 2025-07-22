@@ -5,6 +5,7 @@
     --color-secondary: #3ea87f;
     --color-tertiary: #faf7f7;
     --color-secondary-alter: #3E9BA8;
+    --color-bg-profile: #aff3ce;
     --color-danger: rgb(180, 8, 8);
     --transitions: all .2s;
     --default-element-gap: 1rem;
@@ -64,4 +65,10 @@
     --font-size-cells: 1.5rem;
     --options-gap: 0.7rem;
     /*******************************/
+
+    /**/
+    --profile-picture-width: 20rem;
+    --profile-picture-height: 20rem;
+    /*******************************/
+
 }
