@@ -27,7 +27,6 @@ return new class extends Migration
             $table->enum("registration_type", array_column(RegistrationType::cases(), 'value'));
             $table->enum("role", array_column(Role::cases(), 'value'));
             $table->string("profile_picture")->nullable();
-            $table->boolean("has_profile_picture")->default(false);
             $table->string('password');
             $table->boolean("is_allowed")->default(false);
             $table->boolean('is_in_pending_status')->default(true);

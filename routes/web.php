@@ -47,10 +47,14 @@ Route::middleware(['auth'])
 
 // Admin rute
 Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->name("admin.")->group(function() {
-    Route::get("/zahtjevi", [AdminController::class, 'getNewlyRegisteredUsers'])->name("new_users_list");
+    Route::get("/korisnici", [AdminController::class, 'getAllUsers'])->name("new_users_list");
+    Route::get("/korisnici/{user}", [AdminController::class, 'getUserProfile'])->name("user_profile");
     Route::get("/zahtjevi/brojka", [AdminController::class, 'countRequests'])->name("request_count");
     Route::post("/zahtjevi/{user}/odbij", [AdminController::class, 'rejectRegistration'])->name("reject_registration");
     Route::post("/zahtjevi/{user}/odobri", [AdminController::class, 'approveRegistration'])->name("approve_registration");
+    Route::patch("/korisnici/{user}/dodjeli-ulogu", [AdminController::class, 'assignRole'])->name("assign_role");
+    Route::delete("/korisnici/{user}/obrisi", [AdminController::class, "deleteUser"])->name("delete_user");
+
 });
 
 

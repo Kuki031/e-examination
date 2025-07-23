@@ -97,3 +97,48 @@
     color: var(--color-primary);
     font-size: var(--default-error-font);
 }
+
+
+/*************************************Admin actions*************************************/
+
+.admin-profile-action {
+    background-color: inherit;
+    border:none;
+    border-radius: var(--default-image-radius);
+    color: var(--color-primary);
+    cursor: pointer;
+    background-color: var(--color-primary);
+    color: var(--color-tertiary);
+    padding: .2rem;
+    transition: var(--transitions);
+}
+
+.admin-profile-action:hover {
+    color: var(--color-primary);
+    background-color: inherit;
+}
+
+.profile-label {
+    font-weight: bold;
+}
+
+.admin-select-role {
+    border: none;
+    padding: .2rem;
+    border-radius: var(--default-image-radius);
+}
+
+.admin-btn-delete-user {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+    cursor: pointer;
+    transition: var(--transitions);
+    background-color: var(--color-danger);
+    color: var(--color-tertiary);
+}
+
+.admin-btn-delete-user:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-danger);
+}

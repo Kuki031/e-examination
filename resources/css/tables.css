@@ -81,6 +81,7 @@
 
 .details {
     background-color: var(--color-secondary-alter);
+    text-decoration: none;
 }
 
 @media (max-width: 768px) {

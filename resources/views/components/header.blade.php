@@ -22,7 +22,7 @@
                 @auth
                     @if (auth()->user()['role'] === 'admin')
                         <div class="header-requests">
-                            <a class="header-button" href="{{ route('admin.new_users_list') }}">Zahtjevi</a>
+                            <a class="header-button" href="{{ route('admin.new_users_list') }}">Korisnici</a>
                             <div class="header-requests-notification">
                                 <span id="request-number"></span>
                             </div>

@@ -13,8 +13,20 @@
                     @method("PATCH")
                 <input type="hidden" name="pin" value="{{ auth()->user()->pin }}">
                 <div class="profile-subsection">
+
+
                     <div class="profile-section-input">
-                        <label for="full_name">Prezime i ime: </label>
+                        <label class="profile-label" for="email">E-mail adresa: </label>
+                        <input type="text" name="email" id="email" value="{{ $user->email }}">
+                    </div>
+                    @error('email')
+                        <div class="error-div">
+                            <span>{{ $message }}</span>
+                        </div>
+                    @enderror
+
+                    <div class="profile-section-input">
+                        <label class="profile-label" for="full_name">Prezime i ime: </label>
                         <input type="text" name="full_name" id="full_name" value="{{ $user->full_name_formatted }}">
                     </div>
                     @error('full_name')
@@ -24,7 +36,7 @@
                     @enderror
 
                     <div class="profile-section-input">
-                        <label for="pin_value">{{ auth()->user()->pin }}: </label>
+                        <label class="profile-label" for="pin_value">{{ auth()->user()->pin }}: </label>
                         <input type="text" name="pin_value" id="pin_value" value="{{ $user->pin_value }}">
                     </div>
 
@@ -35,7 +47,7 @@
                     @enderror
 
                     <div class="profile-section-input">
-                        <label for="profile_picture">Slika profila:</label>
+                        <label class="profile-label" for="profile_picture">Slika profila:</label>
 
                         <div
                             class="profile-picture"
@@ -50,7 +62,7 @@
                             style="display: none;"
                         >
 
-                        <label for="profile_picture" class="custom-file-button auth-picture">Odaberi sliku</label>
+                        <label for="profile_picture" class="custom-file-button auth-picture profile-label">Odaberi sliku</label>
                     </div>
 
                     @error('profile_picture')
@@ -62,12 +74,12 @@
 
                 <div class="profile-subsection">
                     <div class="profile-section-input">
-                    <label for="role">Uloga: </label>
+                    <label class="profile-label" for="role">Uloga: </label>
                     <span class="status">{{ $user->role_formatted }}</span>
                 </div>
 
                 <div class="profile-section-input">
-                    <label for="gender">Spol: </label>
+                    <label class="profile-label" for="gender">Spol: </label>
                     <div>
                         <input type="radio" name="gender" value="m" {{ $user->gender === 'm' ? 'checked' : '' }}> <span class="gender-span">Muški</span>
                         <input type="radio" name="gender" value="f" {{ $user->gender === 'f' ? 'checked' : '' }}> <span class="gender-span">Ženski</span>
@@ -76,7 +88,7 @@
 
                 @if (auth()->user()->role === 'student')
                     <div class="profile-section-input">
-                    <label for="status">Status: </label>
+                    <label class="profile-label" for="status">Status: </label>
                     <div>
                         <input type="radio" name="status" value="i" {{ $user->status === 'i' ? 'checked' : '' }}> <span class="status-span">Izvanredan</span>
                         <input type="radio" name="status" value="r" {{ $user->status === 'r' ? 'checked' : '' }}> <span class="status-span">Redovan</span>
@@ -84,7 +96,7 @@
                 </div>
                 @elseif (auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
                     <div class="profile-section-input">
-                        <label for="status">Status: </label>
+                        <label class="profile-label" for="status">Status: </label>
                         <span class="status">{{ $user->status_formatted }}</span>
                     </div>
                 @endif
@@ -100,7 +112,7 @@
                         @csrf
                         @method("PATCH")
                         <div class="profile-section-input">
-                            <label for="password">Stara lozinka: </label>
+                            <label class="profile-label" for="password">Stara lozinka: </label>
                             <input type="password" name="password" id="password">
                         </div>
                         @error("password")
@@ -110,7 +122,7 @@
                         @enderror
 
                         <div class="profile-section-input">
-                            <label for="new_password">Nova lozinka: </label>
+                            <label class="profile-label" for="new_password">Nova lozinka: </label>
                             <input type="password" name="new_password" id="new_password">
                         </div>
 
@@ -121,7 +133,7 @@
                         @enderror
 
                         <div class="profile-section-input">
-                            <label for="new_password_repeat">Ponovi novu lozinku: </label>
+                            <label class="profile-label" for="new_password_repeat">Ponovi novu lozinku: </label>
                             <input type="password" name="new_password_repeat" id="new_password_repeat">
                         </div>
 

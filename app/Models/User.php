@@ -35,7 +35,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        "registration_type_formatted", "is_allowed_formatted", "full_name_formatted", "status_formatted", "role_formatted"
+        "registration_type_formatted", "is_allowed_formatted", "full_name_formatted", "status_formatted", "role_formatted", "is_in_pending_status_formatted"
     ];
 
     /**
@@ -57,6 +57,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -81,6 +83,11 @@ class User extends Authenticatable
         return $convert;
     }
 
+    public function getIsInPendingStatusFormattedAttribute()
+    {
+        return $this->is_in_pending_status === 0 ? "Ne" : "Da";
+    }
+
     public function getGenderFormattedAttribute()
     {
         return $this->gender === "m" ? "Muški" : "Ženski";
@@ -102,5 +109,15 @@ class User extends Authenticatable
             'teacher' => 'Nastavnik',
             default => 'Student',
         };
+    }
+
+    public function getCreatedAtFormattedAttribute()
+    {
+        return $this->created_at->format("d.m.y H:i:s");
+    }
+
+    public function getUpdatedAtFormattedAttribute()
+    {
+        return $this->updated_at->format("d.m.y H:i:s");
     }
 }
