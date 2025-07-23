@@ -40,6 +40,7 @@ class updateUserProfileRequest extends FormRequest
     {
         return [
             "profile_picture.mimes" => "Slika profila mora biti formata .jpg ili .png",
+            "profile_picture.max" => "Slika profila može biti maksimalno veličine 2MB.",
             "full_name.regex" => "Prezime i ime mora sadržavati najmanje dvije riječi."
         ];
     }

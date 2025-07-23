@@ -96,23 +96,40 @@
                 </div>
 
                 <div class="profile-subsection">
-                    <form action="#" method="POST">
+                    <form action="{{ route('users.update_password') }}" method="POST">
                         @csrf
                         @method("PATCH")
                         <div class="profile-section-input">
                             <label for="password">Stara lozinka: </label>
                             <input type="password" name="password" id="password">
                         </div>
+                        @error("password")
+                            <div class="error-div">
+                                <span>{{ $message }}</span>
+                            </div>
+                        @enderror
 
                         <div class="profile-section-input">
                             <label for="new_password">Nova lozinka: </label>
                             <input type="password" name="new_password" id="new_password">
                         </div>
 
+                        @error("new_password")
+                            <div class="error-div">
+                                <span>{{ $message }}</span>
+                            </div>
+                        @enderror
+
                         <div class="profile-section-input">
                             <label for="new_password_repeat">Ponovi novu lozinku: </label>
                             <input type="password" name="new_password_repeat" id="new_password_repeat">
                         </div>
+
+                        @error("new_password_repeat")
+                            <div class="error-div">
+                                <span>{{ $message }}</span>
+                            </div>
+                        @enderror
 
                         <div class="profile-action">
                             <button type="submit">Ažuriraj lozinku</button>

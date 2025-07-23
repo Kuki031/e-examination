@@ -41,6 +41,7 @@ Route::middleware(['auth'])
     ->group(function() {
         Route::get("/moj-profil", [UserController::class, 'getMyProfile'])->name('profile');
         Route::patch("/moj-profil/azuriraj", [UserController::class, 'editProfile'])->name("edit_profile");
+        Route::patch("/moj-profil/azuriraj-lozinku", [UserController::class, 'updatePassword'])->name("update_password");
 });
 
 

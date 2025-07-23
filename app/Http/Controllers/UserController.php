@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\updateUserPasswordRequest;
 use App\Http\Requests\updateUserProfileRequest;
 use App\Models\User;
 use App\Traits\ToastInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -41,8 +43,19 @@ class UserController extends Controller
         return back();
     }
 
-    public function updatePassword()
+    public function updatePassword(updateUserPasswordRequest $request)
     {
-        //
+        $user = Auth::user();
+
+        if (!Hash::check($request->input("password"), $user->password)) {
+            $this->constructToastMessage("Neispravna stara lozinka.", "Neuspjela promjena lozinke.", "error");
+            return back();
+        }
+
+        $user->password = Hash::make(value: $request->input(key: "new_password"));
+        $user->save();
+
+        $this->constructToastMessage("Lozinka je uspješno promijenjena.", "Promjena lozinke", "success");
+        return back();
     }
 }
