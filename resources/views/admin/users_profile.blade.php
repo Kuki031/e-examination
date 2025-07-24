@@ -89,7 +89,7 @@
                         <x-modal-action :text="'Obriši korisnika'" class="strict-confirmation-btn-admin" />
                         <x-generic-modal
                             :confirmAction="route('admin.delete_user', $user)"
-                            subtitle="Ova radnja će trajno obrisati korisnika {{ $user->full_name }}."
+                            subtitle="Ova radnja će trajno obrisati korisnika {{ $user->full_name_formatted }}."
                             :method="'DELETE'"
                         />
                     </div>

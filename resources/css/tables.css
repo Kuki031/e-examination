@@ -21,19 +21,24 @@
     overflow-x: auto;
     border-collapse: collapse;
     margin: var(--default-margin) auto;
+    box-shadow: var(--default-box-shadow);
 }
 
 .table-main tr td {
-    border-bottom: .1rem solid var(--color-primary);
     border-collapse: collapse;
     padding: var(--default-padding);
     font-size: var(--font-size-cells);
+    background-color: var(--color-secondary-diff);
+}
+
+.table-main tr:last-child td {
+    border-bottom: none;
 }
 
 .table-main tr th {
     padding: var(--default-padding);
     text-align: left;
-    border-bottom: .1rem solid inherit;
+    border-bottom: var(--border-thickness) solid inherit;
     background-color: var(--color-secondary);
     color: var(--color-tertiary);
     font-size: var(--font-size-headers);
@@ -102,8 +107,8 @@
         flex-wrap: wrap;
         flex-direction: column;
         margin-bottom: 1.5rem;
-        background-color: var(--color-tertiary);
-        border: .1rem solid var(--color-primary);
+        background-color: var(--color-secondary-diff);
+        border: var(--border-thickness) solid var(--color-primary);
         border-radius: var(--default-image-radius);
         padding: var(--default-padding);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);

@@ -5,6 +5,7 @@
     --color-secondary: #3ea87f;
     --color-tertiary: #faf7f7;
     --color-secondary-alter: #3E9BA8;
+    --color-secondary-diff: #a4f8ce4d;
     --color-bg-profile: #aff3ce;
     --color-danger: rgb(180, 8, 8);
     --transitions: all .2s;
@@ -18,6 +19,7 @@
     --default-padding: 1rem;
     --default-margin: 2rem;
     --default-notification-size: 2rem;
+    --border-thickness: .1rem;
     --smaller-padding: .5rem;
     --default-heading-font: 2.5rem;
     --default-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
