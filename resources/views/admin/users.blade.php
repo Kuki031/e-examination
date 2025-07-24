@@ -6,6 +6,16 @@
         <div class="table-title">
             <h2>Korisnici</h2>
         </div>
+
+        <div class="table-title">
+            <x-search-bar :search="'korisnike'" />
+            @if(request('search'))
+                <a href="{{ route('admin.new_users_list') }}" class="reset-filter-link">
+                    Poništi pretragu
+                </a>
+            @endif
+        </div>
+
         <table class="table-main">
             <thead>
                 <tr>
@@ -60,8 +70,9 @@
                                         <button type="submit" class="table-options-btn negative" style="background-color:inherit" disabled>❌</button>
                                     </form>
                                 @endif
-
-                                <a href="{{ route('admin.user_profile', $user) }}" class="table-options-btn details">Profil</a>
+                                <form action="{{ route('admin.user_profile', $user) }}">
+                                    <button class="table-options-btn details" type="submit">Profil</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

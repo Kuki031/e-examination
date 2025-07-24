@@ -9,6 +9,7 @@
 @import url('./pagination.css');
 @import url('./profile.css');
 @import url('./generic_modal.css');
+@import url('./search_bar.css');
 
 *, *::after, *::before {
     margin: 0;

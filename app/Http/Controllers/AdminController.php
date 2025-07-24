@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    use ToastInterface;
+    use ToastInterface, Search;
     public function getAllUsers()
     {
-        $users =
-        User::orderByDesc("created_at")
-        ->paginate(5);
+        $users = $this->searchAny(User::class, ['pin_value', 'full_name', 'email'])
+            ->orderByDesc('created_at')
+            ->paginate(5);
 
-        return view("admin.users", compact("users"));
+        return view('admin.users', compact('users'));
     }
 
     public function getUserProfile(User $user)
