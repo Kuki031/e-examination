@@ -2,6 +2,11 @@
 
 <div class="index-main">
     <div class="index-wrap">
+        @if (auth()->user())
+        <div class="index-text-user">
+            <h2>Dobrodošao/la {{ auth()->user()?->full_name }}</h2>
+        </div>
+        @endif
         <div class="index-text">
                 <div>
                     <h2>Dobrodošli u Examino!</h2>
