@@ -24,6 +24,7 @@
                     <th>Vrijednost ID-a</th>
                     <th>Prezime i ime</th>
                     <th>Vrsta registracije</th>
+                    <th>Odobren?</th>
                     <th>Akcije</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@
                         <td data-label="Vrijednost ID-a">{{ $user->pin_value }}</td>
                         <td data-label="Prezime i ime">{{ $user->full_name_formatted }}</td>
                         <td data-label="Vrsta registracije">{{ $user->registration_type_formatted }}</td>
+                        <td data-label="Odobren?">{{ $user->is_allowed ? "✔️" : "❌" }}</td>
                         <td data-label="Akcije">
                             <div class="table-options">
                                 @if ($user->is_in_pending_status)
@@ -52,10 +54,6 @@
                                     </form>
 
                                 @elseif (!$user->is_in_pending_status && $user->is_allowed)
-                                    <form action="{{ route('admin.approve_registration', $user) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="table-options-btn positive" style="background-color:inherit;" disabled>✔️</button>
-                                    </form>
                                     <form action="{{ route('admin.reject_registration', $user) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="table-options-btn negative">Odbij</button>
@@ -64,10 +62,6 @@
                                     <form action="{{ route('admin.approve_registration', $user) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="table-options-btn positive">Odobri</button>
-                                    </form>
-                                    <form action="{{ route('admin.reject_registration', $user) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="table-options-btn negative" style="background-color:inherit" disabled>❌</button>
                                     </form>
                                 @endif
                                 <form action="{{ route('admin.user_profile', $user) }}">

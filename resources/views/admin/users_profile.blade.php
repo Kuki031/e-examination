@@ -46,7 +46,6 @@
                             <select class="admin-select-role" name="role" id="role">
                                 <option value="">Odaberite ulogu</option>
                                 <option value="teacher">Nastavnik</option>
-                                <option value="student">Student</option>
                             </select>
                                 <button class="admin-profile-action" type="submit">Dodjeli ulogu</button>
                         </form>
@@ -68,8 +67,8 @@
                     </div>
 
                     <div class="profile-section-input">
-                        <label class="profile-label" for="status">Dozvoljen: </label>
-                        <span class="status">{{ $user->is_allowed_formatted }}</span>
+                        <label class="profile-label" for="status">Odobren: </label>
+                        <span class="status">{{ $user->is_allowed ? "✔️" : "❌" }}</span>
                     </div>
 
                     <div class="profile-section-input">

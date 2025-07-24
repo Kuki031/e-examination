@@ -32,7 +32,7 @@
     border: none;
     border-radius: var(--default-image-radius);
     background-color: var(--color-secondary-alter);
-    padding: .5rem;
+    padding: var(--smaller-padding);
     font-size: var(--default-font);
     color: var(--color-tertiary);
     text-decoration: none;

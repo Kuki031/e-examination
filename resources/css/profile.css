@@ -109,7 +109,7 @@
     cursor: pointer;
     background-color: var(--color-primary);
     color: var(--color-tertiary);
-    padding: .2rem;
+    padding: var(--smaller-padding);
     transition: var(--transitions);
 }
 
@@ -124,6 +124,6 @@
 
 .admin-select-role {
     border: none;
-    padding: .2rem;
+    padding: var(--smaller-padding);
     border-radius: var(--default-image-radius);
 }

@@ -4,7 +4,7 @@
     <div class="index-wrap">
         @if (auth()->user())
         <div class="index-text-user">
-            <h2>Dobrodošao/la {{ auth()->user()?->full_name }}</h2>
+            <h2>Dobrodošao/la {{ auth()->user()?->full_name_formatted }}</h2>
         </div>
         @endif
         <div class="index-text">

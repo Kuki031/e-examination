@@ -18,6 +18,7 @@
     --default-padding: 1rem;
     --default-margin: 2rem;
     --default-notification-size: 2rem;
+    --smaller-padding: .5rem;
     --default-heading-font: 2.5rem;
     --default-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     --image-gradient: linear-gradient(
