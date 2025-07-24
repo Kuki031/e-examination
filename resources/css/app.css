@@ -8,7 +8,7 @@
 @import url('./tables.css');
 @import url('./pagination.css');
 @import url('./profile.css');
-
+@import url('./generic_modal.css');
 
 *, *::after, *::before {
     margin: 0;

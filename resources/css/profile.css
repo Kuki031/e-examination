@@ -127,18 +127,3 @@
     padding: .2rem;
     border-radius: var(--default-image-radius);
 }
-
-.admin-btn-delete-user {
-    padding: var(--default-padding);
-    border: none;
-    border-radius: var(--default-image-radius);
-    cursor: pointer;
-    transition: var(--transitions);
-    background-color: var(--color-danger);
-    color: var(--color-tertiary);
-}
-
-.admin-btn-delete-user:hover {
-    background-color: var(--color-tertiary);
-    color: var(--color-danger);
-}
