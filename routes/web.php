@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAllowed;
+use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
 use Illuminate\Support\Facades\Route;
 
 // Redirect sa root-a
@@ -56,6 +58,16 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->
     Route::delete("/korisnici/{user}/obrisi", [AdminController::class, "deleteUser"])->name("delete_user");
 
 });
+
+// Provedba ispita, rute za nastavnika ili admina (jer admin može biti i nastavnik)
+Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
+    Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
+    Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");
+    Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");
+    Route::get("/provjera-znanja/{exam}/kreiraj-pitanja", [ExamController::class, 'getQuestionMakerForExam'])->name("create_questions");
+    Route::get("/provjera-znanja/{exam}", [ExamController::class, 'getExamDetails'])->name("exam_details");
+});
+
 
 
 Route::fallback([HomeController::class, 'fallbackRoute']);

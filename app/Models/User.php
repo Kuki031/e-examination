@@ -63,6 +63,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
     public function getIsAllowedFormattedAttribute()
     {
         return $this->is_allowed === 0 ? "Ne" : "Da";

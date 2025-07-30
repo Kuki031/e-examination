@@ -10,6 +10,7 @@
     --color-danger: rgb(180, 8, 8);
     --transitions: all .2s;
     --default-element-gap: 1rem;
+    --gap-bigger: 10rem;
     --default-image-radius: .3rem;
     --default-radius: .3rem;
     --default-font: 2rem;

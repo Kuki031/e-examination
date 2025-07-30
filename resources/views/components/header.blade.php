@@ -18,6 +18,17 @@
                     <a class="header-button" href="{{ route('index') }}">Naslovnica</a>
                 </div>
             </div>
+
+            @auth
+                @if (auth()->user()->role === 'admin' || auth()->user()->role === 'teacher')
+                    <div>
+                        <a class="header-button" href="{{ route('teacher.teacher_exams') }}">Moje provjere znanja</a>
+                        <a class="header-button" href="{{ route('teacher.new_exam') }}">Nova provjera znanja</a>
+                        <a class="header-button" href="#">Provedene provjere znanja</a>
+                    </div>
+                @endif
+            @endauth
+
             <div class="header-actions">
                 @auth
                     @if (auth()->user()['role'] === 'admin')

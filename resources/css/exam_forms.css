@@ -1,0 +1,79 @@
+.exam-form-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin) auto;
+}
+
+.exam-form-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: var(--default-margin) auto;
+    font-size: var(--default-font);
+    background-color: var(--color-tertiary);
+    color: var(--color-primary);
+    padding: var(--default-padding);
+    border-radius: var(--default-image-radius);
+    box-shadow: var(--default-box-shadow);
+    animation: fadeIn ease-in-out 1s;
+    gap: var(--gap-bigger);
+    margin: var(--default-margin);
+}
+
+.exam-form-content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: auto;
+    gap: var(--default-element-gap);
+}
+
+
+.exam-form-form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+.exam-form-form-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+.exam-form-form-wrap div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.exam-form-form-wrap input, button, textarea {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.exam-form-form-wrap button {
+    cursor: pointer;
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+}
+
+.exam-form-form-wrap button:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary);
+}
+
+.danger {
+    background-color: var(--color-danger) !important;
+    color: var(--color-tertiary);
+}
+.danger:hover {
+    background-color: var(--color-tertiary) !important;
+    color: var(--color-danger) !important;
+}
