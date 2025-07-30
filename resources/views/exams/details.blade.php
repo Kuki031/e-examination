@@ -5,7 +5,7 @@
         <div>
             <div class="exam-form-content">
                 <h4>Opće informacije</h4>
-                <form action="#" method="POST">
+                <form action="{{ route('teacher.update_exam', $exam) }}" method="POST">
                 @csrf
                 @method("PATCH")
                 @include('exams._form')
@@ -111,7 +111,7 @@
 
             <div class="exam-form-form-wrap">
                 <button class="{{ !$exam?->num_of_questions ? 'danger' : '' }}" {{ !$exam?->num_of_questions ? 'disabled' : '' }}>Pokreni provjeru znanja</button>
-                <button>Spremi promjene</button>
+                <button type="submit">Spremi promjene</button>
                 <button>Obriši provjeru znanja</button>
             </div>
         </div>

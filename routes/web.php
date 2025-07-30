@@ -66,6 +66,7 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");
     Route::get("/provjera-znanja/{exam}/kreiraj-pitanja", [ExamController::class, 'getQuestionMakerForExam'])->name("create_questions");
     Route::get("/provjera-znanja/{exam}", [ExamController::class, 'getExamDetails'])->name("exam_details");
+    Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
 });
 
 

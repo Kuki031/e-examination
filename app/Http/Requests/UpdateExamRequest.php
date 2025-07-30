@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateExamRequest extends FormRequest
 {
@@ -22,7 +23,20 @@ class UpdateExamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => ["sometimes", Rule::unique('exams', 'name')->ignore($this->exam)],
+            "description" => "nullable",
+            "time_to_solve" => "sometimes|integer|min:10",
+            "required_for_pass" => "sometimes",
+            "user_id" => "required"
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "name.unique" => "Provjera znanja sa ovim imenom već postoji.",
+            "time_to_solve.min" => "Vrijeme potrebno za rješavanje mora biti minimalno 10 minuta.",
+            "user_id.required" => "ID korisnika je obavezan."
         ];
     }
 }
