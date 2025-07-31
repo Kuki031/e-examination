@@ -77,3 +77,16 @@
     background-color: var(--color-tertiary) !important;
     color: var(--color-danger) !important;
 }
+
+.exam-details-btn {
+    text-decoration: none;
+    color: var(--color-tertiary);
+    background-color: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+    box-shadow: var(--default-box-shadow);
+}

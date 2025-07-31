@@ -4,8 +4,9 @@
 const addQuestionBtn = document.querySelector(".add_question");
 const questionsDiv = document.querySelector("#questions");
 const examOptions = document.querySelector('.save_exam');
+const examId = parseInt(document.querySelector('#exam-id')?.textContent);
 let numOfQuestions = 0;
-let inMemoryQuestionValidators = [];
+
 
 addQuestionBtn?.addEventListener("click", () => {
     addQuestionFunc(questionsDiv);
@@ -15,27 +16,25 @@ addQuestionBtn?.addEventListener("click", () => {
     if (numOfQuestions >= 2) {
         examOptions.style = "display:block;";
     }
-
 });
 
 
 const addQuestionFunc = function(appendEl) {
 
     const questionDivHolder = document.createElement("div");
-    questionDivHolder.classList.add(`question_div`);
-    questionDivHolder.style = "display:flex;flex-wrap:wrap;flex-direction:column;gap:5px;margin:auto 20px;background-color:lightgray;padding:10px;"
+    questionDivHolder.classList.add(`question-div`);
 
     const questionNumber = document.createElement('a');
-    questionNumber.textContent = `Pitanje #${Date.now()}`;
-    questionNumber.id = Date.now();
-    questionNumber.style = "text-decoration:none;"
+    questionNumber.classList.add('question_title')
+    questionNumber.id = `id-${Date.now()}`;
     questionDivHolder.appendChild(questionNumber);
 
     const questionInput = document.createElement("textarea");
-    questionInput.cols = 60;
+    questionInput.cols = 100;
     questionInput.rows = 5;
     questionInput.name = "question";
     questionInput.classList.add("question");
+    questionInput.setAttribute("spellcheck", "false");
     questionInput.placeholder = "Unesite pitanje";
 
     const delQuestionBtn = document.createElement("button");
@@ -47,8 +46,8 @@ const addQuestionFunc = function(appendEl) {
     addAnswerBtn.classList.add("add_answer");
 
     questionDivHolder.appendChild(questionInput);
-    questionDivHolder.appendChild(delQuestionBtn);
     questionDivHolder.appendChild(addAnswerBtn);
+    questionDivHolder.appendChild(delQuestionBtn);
     appendEl.appendChild(questionDivHolder);
 
     questionDivHolder.addEventListener("click", (e) => {
@@ -57,15 +56,15 @@ const addQuestionFunc = function(appendEl) {
 
         const answerDiv = document.createElement("div");
         answerDiv.classList.add("answer_div");
-        answerDiv.style = "display:flex;flex-wrap:wrap;flex-direction:row;align-items:center;justify-content:center;margin:auto;padding:10px;"
         mainEl.parentElement.appendChild(answerDiv);
 
         const answerInput = document.createElement("input");
         answerInput.name = "answer";
+        answerInput.autocomplete = "off";
         answerInput.classList.add(`answer`);
 
         const isCorrectDiv = document.createElement("div");
-        isCorrectDiv.style = "display:flex;flex-wrap:wrap;flex-direction:row;gap:5px;"
+        isCorrectDiv.classList.add("is_correct_div");
 
         const isCorrectLabel = document.createElement("label");
         isCorrectLabel.textContent = "Točan?";
@@ -135,103 +134,132 @@ const addQuestionFunc = function(appendEl) {
         {
             if (answerInputs[i] === correctAnswer) continue;
             answerInputs[i].classList.remove('correct');
-            answerInputs[i].style.backgroundColor = 'white';
+            answerInputs[i].style.backgroundColor = '#fff';
         }
     }
     });
 }
 
+let questions = [];
 examOptions?.addEventListener("click", () => {
-    const questionDivs = Array.from(document.querySelectorAll('.question_div'));
+
+    let hasError = false;
+    const questionDivs = Array.from(document.querySelectorAll(".question-div"));
     questionDivs.forEach((div, _index) => {
 
         const question = div.querySelector('.question');
-        const questionNumber = div.querySelector('a');
+        const questionTitle = div.querySelector(".question_title").id;
+        const answersDivs = Array.from(div.querySelectorAll(".answer_div .answer"));
+        const answers = {};
 
-        if (!question.value) {
-            return;
-        }
-
-
-
-        const answers = Array.from(div.querySelectorAll('.answer_div .answer'));
-
-        if (!answers.length) {
-            return;
-        }
-
-        if (answers.length < 2) {
-            return;
-        }
-
-        let isEmptyAnswer = false;
-        for(let i = 0 ; i < answers.length ; i++)
+        for(let i = 0 ; i < answersDivs.length ; i++)
         {
-            if (!answers[i].value) {
-                isEmptyAnswer = true;
+            answers[i + 1] = answersDivs[i].value;
+            if (answersDivs[i].classList.contains('correct'))
+            {
+                answers.is_correct = answersDivs[i].value;
+            } else continue;
+
+        }
+
+        const questionObject = {
+            examId: examId,
+            questionId: questionTitle,
+            questionValue: question.value,
+            answers: answers
+        };
+
+        questions.push(questionObject);
+    });
+
+//////////////////////////////////////////VALIDACIJA/////////////////////////////////////////////////////
+
+    for (const question of questions)
+    {
+        const el = document.querySelector(`#${question.questionId}`).parentElement;
+
+        // Pitanje je prazno
+        if (!question.questionValue)
+        {
+            hasError = true;
+            signalError(el);
+            handleScrollBehavior(el);
+            questions = [];
+            break;
+        }
+        const answers = Array.from(el.querySelectorAll(".answer_div .answer"));
+
+        // Nema odgovora ili je broj odgovora manji od 2
+        if (!answers.length || answers.length < 2)
+        {
+            hasError = true;
+            signalError(el);
+            handleScrollBehavior(el);
+            questions = [];
+            break;
+        }
+
+        // Ima praznih odgovora
+        for (const answer of answers)
+        {
+            if (!answer.value) {
+                hasError = true;
+                signalEmptyAnswers(el);
+                handleScrollBehavior(el);
+                questions = [];
                 break;
             }
         }
-        if (isEmptyAnswer) {
-            return;
-        };
 
-        const answerObj = {};
-        answers.forEach((a, i) => {
-            answerObj[i + 1] = a.value;
-            if (a.classList.contains('correct')) {
-                answerObj['correct_answer'] = a.value;
-            }
+        const correctAnswer = el.querySelector(".answer_div .correct");
+        const correctAnswerObj = question.answers.is_correct;
 
-        })
+        // Nije označen točan odgovor
+        if (!correctAnswer && !correctAnswerObj)
+        {
+            hasError = true;
+            signalError(el);
+            handleScrollBehavior(el);
+            questions = [];
+            break;
+        }
+    }
 
-        const matchKey = Object.keys(answerObj).includes("correct_answer", 0);
-        if (!matchKey) {
-            return;
+    if (hasError)
+    {
+        return;
+    }
+
+    saveQuestions({questions});
+
+
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Slanje AJAX requesta
+const saveQuestions = async function (data) {
+    try {
+        const request = await axios.post(`/nastavnik/provjera-znanja/${examId}/spremi-pitanja`,
+        data,
+        {
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        withCredentials: true,
+        });
+        if (request.status === 200) {
+            console.log(request.data);
         }
 
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+};
 
-        const answersJSON = JSON.stringify(answerObj);
-        const totalNumberOfQuestions = questionDivs.length;
-
-        //Testni exam id
-        const examId = 1;
-        console.log(`question = ${question.value}\nanswers = ${answersJSON}\ntotal num of questions: ${totalNumberOfQuestions}`);
-
-        /*
-        Features:
-        - Dodat mogucnost stavljanja slike u pitanje (i u backendu)
-        - Local storage kao draft
-        - Control flow (ako ima neki error, ne slati ajax request)
-        */
-
-        /*
-        Improvements:
-        - Ljepše boje
-        - Tranzicija kod promjene boje errora
-         */
-
-        // Slanje AJAX requesta
-        /*const request = async function () {
-            try {
-                const sendAxiosData = await axios({
-                    method: "POST",
-                    url: "http://localhost:8000/create-questions",
-                    data: {
-                        question: question.value,
-                        answers: answersJSON,
-                        exam_id: examId
-                    }
-                });
-                console.log(sendAxiosData.data);
-            } catch (error) {
-                console.error("Request failed:", error.response?.data || error.message);
-            }
-            };
-        request();*/
-
-    });
-});
 
 
 const handleScrollBehavior = function(el) {
@@ -241,9 +269,9 @@ const handleScrollBehavior = function(el) {
 }
 
 const signalError = function(el) {
-    el.style.backgroundColor = 'red';
+    el.style.backgroundColor = 'rgb(255, 86, 86)';
     setTimeout(() => {
-        el.style.backgroundColor = 'lightgray';
+        el.style.backgroundColor = '#a4f8ce4d';
     }, 1000);
 }
 
@@ -253,7 +281,7 @@ const signalEmptyAnswers = function(questionDiv) {
     {
         const answerInput = answerDivs[i].querySelector('.answer');
         if (!answerInput.value) {
-            answerInput.style.backgroundColor = 'red';
+            answerInput.style.backgroundColor = 'rgb(255, 86, 86)';
         }
     }
 
@@ -261,8 +289,8 @@ const signalEmptyAnswers = function(questionDiv) {
         for(let i = 0 ; i < answerDivs.length ; i++)
         {
             const answerInput = answerDivs[i].querySelector('.answer');
-            if (answerInput.style.backgroundColor === 'red') {
-                answerInput.style.backgroundColor = 'white';
+            if (answerInput.style.backgroundColor === 'rgb(255, 86, 86)') {
+                answerInput.style.backgroundColor = '#fff';
             }
         }
     }, 1000);

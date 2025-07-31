@@ -120,8 +120,8 @@
             <div class="exam-form-content">
                 <h4>Pitanja</h4>
                 <div class="exam-form-form-wrap">
-                    <a href="#">Pregled pitanja</a>
-                    <a href="{{ route('teacher.create_questions', $exam) }}">Kreiranje pitanja</a>
+                    <a class="exam-details-btn" href="#">Pregled pitanja</a>
+                    <a class="exam-details-btn" href="{{ route('teacher.create_questions', $exam) }}">Kreiranje pitanja</a>
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@
             <div class="exam-form-content">
                 <h4>Gamifikacija (kviz)</h4>
                 <div class="exam-form-form-wrap">
-                    <a href="#">Podijeli</a>
+                    <a class="exam-details-btn" href="#">Podijeli</a>
                 </div>
             </div>
         </div>

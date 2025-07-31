@@ -11,6 +11,7 @@
 @import url('./generic_modal.css');
 @import url('./search_bar.css');
 @import url('./exam_forms.css');
+@import url('./questions.css');
 
 
 *, *::after, *::before {
