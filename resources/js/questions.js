@@ -1,5 +1,8 @@
-"use strict"
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
+import {DANGER_COLOR, SUCCESS_COLOR} from './constants';
 
+"use strict"
 
 const addQuestionBtn = document.querySelector(".add_question");
 const questionsDiv = document.querySelector("#questions");
@@ -178,48 +181,61 @@ examOptions?.addEventListener("click", () => {
     {
         const el = document.querySelector(`#${question.questionId}`).parentElement;
 
-        // Pitanje je prazno
         if (!question.questionValue)
         {
             hasError = true;
             signalError(el);
             handleScrollBehavior(el);
+            setFlashMessage("Pitanje je prazno!", DANGER_COLOR);
             questions = [];
             break;
         }
         const answers = Array.from(el.querySelectorAll(".answer_div .answer"));
 
-        // Nema odgovora ili je broj odgovora manji od 2
         if (!answers.length || answers.length < 2)
         {
             hasError = true;
             signalError(el);
             handleScrollBehavior(el);
+            setFlashMessage("Za ovo pitanje nema odgovora ili je broj odgovora manji od 2!", DANGER_COLOR);
             questions = [];
             break;
         }
 
-        // Ima praznih odgovora
         for (const answer of answers)
         {
             if (!answer.value) {
                 hasError = true;
                 signalEmptyAnswers(el);
                 handleScrollBehavior(el);
+                setFlashMessage("Ovo pitanje ima praznih odgovora!", DANGER_COLOR);
                 questions = [];
                 break;
             }
         }
 
+
+
+        const isAnswerArrayUnique = areAnswersUnique(answers);
+        if (!isAnswerArrayUnique)
+        {
+            hasError = true;
+            signalError(el);
+            handleScrollBehavior(el);
+            setFlashMessage("Za ovo pitanje postoje isti odgovori!", DANGER_COLOR);
+            questions = [];
+            break;
+        }
+
         const correctAnswer = el.querySelector(".answer_div .correct");
         const correctAnswerObj = question.answers.is_correct;
 
-        // Nije označen točan odgovor
         if (!correctAnswer && !correctAnswerObj)
         {
             hasError = true;
             signalError(el);
             handleScrollBehavior(el);
+            setFlashMessage("U ovom pitanju nije označen koji je točan odgovor!", DANGER_COLOR);
             questions = [];
             break;
         }
@@ -252,11 +268,14 @@ const saveQuestions = async function (data) {
         withCredentials: true,
         });
         if (request.status === 200) {
-            console.log(request.data);
+            setFlashMessage(request.data.message, SUCCESS_COLOR);
+            setTimeout(() => {
+                window.location.assign(`/nastavnik/provjera-znanja/${examId}`);
+            }, 1500);
         }
 
     } catch (error) {
-        console.error("Error: ", error);
+        setFlashMessage(error, DANGER_COLOR);
     }
 };
 
@@ -294,4 +313,35 @@ const signalEmptyAnswers = function(questionDiv) {
             }
         }
     }, 1000);
+}
+
+
+const setFlashMessage = function(text, background)
+{
+    Toastify({
+    text: text,
+    duration: 5000,
+    newWindow: true,
+    close: true,
+    gravity: "top",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+        background: background,
+        color: "#faf7f7",
+        fontSize: "2rem"
+    },
+    onClick: function(){}
+    }).showToast();
+}
+
+const areAnswersUnique = function(answers) {
+    const values = Object.entries(answers)
+        .filter(([key]) => key !== 'is_correct')
+        .map(([, inputEl]) => String(inputEl.value).trim());
+
+    console.log('Checking answers:', answers);
+    console.log('Filtered values:', values);
+
+    return new Set(values).size === values.length;
 }

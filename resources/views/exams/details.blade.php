@@ -40,7 +40,7 @@
             <div class="exam-form-form-wrap">
                 <div>
                     <label for="required_for_pass">Potrebno za prolaz: </label>
-                    <input type="number" name="required_for_pass" id="required_for_pass" value="{{ $exam?->required_for_pass ?? 'Nedefinirano' }}" {{ !$exam?->num_of_questions ? 'disabled' : '' }}>
+                    <input type="number" name="required_for_pass" id="required_for_pass" value="{{ $exam?->required_for_pass ?? 0 }}" {{ !$exam?->num_of_questions ? 'disabled' : '' }}>
                 </div>
             </div>
                 @error('required_for_pass')
