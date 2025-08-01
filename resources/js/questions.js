@@ -14,9 +14,8 @@ let numOfQuestions = 0;
 addQuestionBtn?.addEventListener("click", () => {
     addQuestionFunc(questionsDiv);
     numOfQuestions++;
-
-
-    if (numOfQuestions >= 2) {
+    if (numOfQuestions >= 1)
+    {
         examOptions.style = "display:block;";
     }
 });
@@ -102,7 +101,7 @@ const addQuestionFunc = function(appendEl) {
             numOfQuestions--;
             parentDiv.remove();
         }
-        if (numOfQuestions < 2) {
+        if (numOfQuestions < 1) {
             examOptions.style = "display:none;";
         }
     }
@@ -246,6 +245,9 @@ examOptions?.addEventListener("click", () => {
         return;
     }
 
+
+    console.log(questions);
+
     saveQuestions({questions});
 
 
@@ -258,26 +260,42 @@ examOptions?.addEventListener("click", () => {
 // Slanje AJAX requesta
 const saveQuestions = async function (data) {
     try {
-        const request = await axios.post(`/nastavnik/provjera-znanja/${examId}/spremi-pitanja`,
-        data,
-        {
-        headers: {
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        withCredentials: true,
-        });
-        if (request.status === 200) {
-            setFlashMessage(request.data.message, SUCCESS_COLOR);
+        const response = await axios.post(`/nastavnik/provjera-znanja/${examId}/spremi-pitanja`,
+            data,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                withCredentials: true,
+            }
+        );
+
+        if (response.status === 200) {
+            setFlashMessage(response.data.message, SUCCESS_COLOR);
             setTimeout(() => {
                 window.location.assign(`/nastavnik/provjera-znanja/${examId}`);
             }, 1500);
         }
 
     } catch (error) {
-        setFlashMessage(error, DANGER_COLOR);
+        if (error.response) {
+            if (error.response.status === 422) {
+                const errors = error.response.data.errors;
+                const messages = Object.values(errors)
+                    .flat()
+                    .join('<br>');
+
+                setFlashMessage(messages, DANGER_COLOR);
+            } else {
+                setFlashMessage(`Error: ${error.response.statusText}`, DANGER_COLOR);
+            }
+        } else {
+            setFlashMessage(error.message, DANGER_COLOR);
+        }
     }
 };
+
 
 
 
@@ -339,9 +357,5 @@ const areAnswersUnique = function(answers) {
     const values = Object.entries(answers)
         .filter(([key]) => key !== 'is_correct')
         .map(([, inputEl]) => String(inputEl.value).trim());
-
-    console.log('Checking answers:', answers);
-    console.log('Filtered values:', values);
-
     return new Set(values).size === values.length;
 }

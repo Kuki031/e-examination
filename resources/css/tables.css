@@ -66,6 +66,10 @@
     align-self: start;
 }
 
+.table-title div {
+    margin: var(--default-margin) auto;
+}
+
 .table-title-fallback {
     display: flex;
     margin-top: var(--default-margin);

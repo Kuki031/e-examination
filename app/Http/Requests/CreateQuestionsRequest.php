@@ -22,7 +22,7 @@ class CreateQuestionsRequest extends FormRequest
     public function rules()
     {
         return [
-            'questions' => 'required|array|min:2',
+            'questions' => 'required|array|min:1',
             'questions.*.questionValue' => 'required|string',
             'questions.*.answers' => 'required|array|min:2',
             'questions.*.examId' => 'required|integer|exists:exams,id',

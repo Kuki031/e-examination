@@ -3,12 +3,16 @@
 <div class="question-main">
     <div class="question-wrap">
     <div class="question-title">
-        <h1>{{ $exam->name }} (min. 5 pitanja)</h1>
+        @if (!$exam->num_of_questions)
+            <h1>{{ $exam->name }} (min. 1 pitanje)</h1>
+            @else
+            <h1>{{ $exam->name }} | Broj pitanja: {{ $exam->num_of_questions }}</h1>
+        @endif
         <span id="exam-id" hidden>{{ $exam->id }}</span>
     </div>
         <div>
         <div id="exam_options" class="question-options">
-            <button class="add_question">Dodaj pitanje +</button>
+            <button class="add_question">Dodaj pitanje</button>
             <button style="display: none" class="save_exam">Spremi ispit</button>
         </div>
         </div>

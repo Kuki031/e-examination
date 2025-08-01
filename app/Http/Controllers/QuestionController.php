@@ -45,6 +45,17 @@ class QuestionController extends Controller
             return response()->json(["message" => "Nešto nije u redu."]);
         }
 
-        return response()->json(["message" => "Pitanja uspješno kreirana!"]);
+        return response()->json(["message" => "Pitanja/e uspješno kreirana/o!"]);
+    }
+
+
+    public function getQuestionsForExam(Exam $exam)
+    {
+        $questions = $this->searchAny(Question::class, ['question'])
+            ->where("exam_id", "=", $exam->id)
+            ->orderByDesc('created_at')
+            ->paginate(5);
+
+        return view('exams.questionList', compact('questions', 'exam'));
     }
 }
