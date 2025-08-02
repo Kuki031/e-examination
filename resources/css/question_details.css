@@ -1,0 +1,94 @@
+.question-details-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin) auto;
+}
+
+.question-details-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--gap-bigger);
+    font-size: var(--default-font);
+    padding: var(--default-padding);
+    background-color: var(--color-secondary-diff);
+    color: var(--color-primary);
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out 1s;
+    box-shadow: var(--default-box-shadow);
+    margin: var(--default-margin);
+}
+
+
+.question-details-content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    margin: var(--default-margin) auto;
+    align-self: flex-start;
+}
+
+.question-details-content-form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+.question-details-content-form div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.question-details-input {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.answer-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+.form-action-update-question {
+    cursor: pointer;
+    transition: var(--transitions);
+    border: none;
+    border-radius: var(--default-image-radius);
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+}
+
+.form-action-update-question:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary-alter);
+}
+
+.answer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    padding: var(--default-padding);
+    background-color: var(--color-tertiary);
+    box-shadow: var(--default-box-shadow);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.answer-action-delete {
+    cursor: pointer;
+    transition: var(--transitions);
+    border: none;
+    border-radius: var(--default-image-radius);
+    background-color: var(--color-danger);
+    color: var(--color-tertiary);
+}

@@ -13,7 +13,7 @@
 @import url('./exam_forms.css');
 @import url('./questions.css');
 @import url('./question_list.css');
-
+@import url('./question_details.css');
 
 *, *::after, *::before {
     margin: 0;

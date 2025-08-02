@@ -5,3 +5,4 @@ import './profile';
 import './modal';
 import './questions';
 import './constants';
+import './question_details';

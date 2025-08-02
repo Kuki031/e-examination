@@ -130,7 +130,7 @@
             <div class="exam-form-content">
                 <h4>Gamifikacija (kviz)</h4>
                 <div class="exam-form-form-wrap">
-                    <a class="exam-details-btn" href="#">Podijeli</a>
+                    <a class="exam-details-btn" href="#">Podijeli 🎮</a>
                 </div>
             </div>
         </div>

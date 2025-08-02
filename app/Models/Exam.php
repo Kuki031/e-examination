@@ -32,11 +32,11 @@ class Exam extends Model
 
     public function getCreatedAtFormattedAttribute()
     {
-        return $this->created_at->format("d.m.Y h:m:s");
+        return $this->created_at->format("d.m.Y H:m:s");
     }
 
     public function getUpdatedAtFormattedAttribute()
     {
-        return $this->updated_at->format("d.m.Y h:m:s");
+        return $this->updated_at->format("d.m.Y H:m:s");
     }
 }

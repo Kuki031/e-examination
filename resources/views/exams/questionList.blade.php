@@ -48,6 +48,9 @@
                         <td data-label="Ažurirano">{{ $question->updated_at_formatted }}</td>
                         <td data-label="Akcije">
                             <div class="table-options">
+                                <form action="{{ route('teacher.exam_question_details', [$exam, $question]) }}" method="GET">
+                                    <button class="table-options-btn details" type="submit">Detalji</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -70,6 +70,10 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
     Route::post("/provjera-znanja/{exam}/spremi-pitanja", [QuestionController::class, 'saveQuestions'])->name("save_questions");
     Route::get("/provjera-znanja/{exam}/pitanja", [QuestionController::class, 'getQuestionsForExam'])->name("exam_question_list");
+    Route::get("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'getQuestionDetails'])->name("exam_question_details");
+    Route::patch("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'updateQuestion'])->name("exam_question_update");
+    Route::delete("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'deleteQuestion'])->name("exam_question_delete");
+
 });
 
 
