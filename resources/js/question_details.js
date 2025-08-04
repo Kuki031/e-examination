@@ -2,12 +2,15 @@ import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import {DANGER_COLOR, SUCCESS_COLOR} from './constants';
 import { signalEmptyAnswersInputs, setFlashMessage, areAnswersUnique, signalError, handleScrollBehavior } from './questions';
+import axios from 'axios';
 
 "use strict"
 
 const mainAnswerDivWrap = document.querySelector(".answers-holder");
-const answersLength = parseInt(document.querySelector('.answers-length').value);
-let numberOfAnswers = parseInt(document.querySelector('.number-of-answers').textContent);
+const answersLength = parseInt(document.querySelector('.answers-length')?.value);
+const questionId = parseInt(document.querySelector('.question-id')?.textContent);
+const examId = parseInt(document.querySelector('.exam-id')?.value);
+let numberOfAnswers = parseInt(document.querySelector('.number-of-answers')?.textContent);
 
 document.querySelector(".new-answer")?.addEventListener("click", () => {
     addAnswer(mainAnswerDivWrap);
@@ -84,12 +87,26 @@ document.querySelector('.update-answers')?.addEventListener("click", (e) => {
         return;
     }
 
+    const answersObj = {};
+    const questions = {
+        examId: examId,
+        questionId: questionId
+    };
+
+    const answerInputs = Array.from(document.querySelectorAll('.answer-actions .answer'));
+    for(let i = 0 ; i < answerInputs.length ; i++)
+    {
+        answersObj[i + 1] = answerInputs[i].value;
+    }
+    const correctAnswerInput = document.querySelector(".correct");
+    answersObj.is_correct = correctAnswerInput.value;
+    questions.answers = answersObj;
+
+
+    saveAnswers({questions});
+
 });
 
-
-// Ako su samo dva odgovora, zabrani brisanje ++++
-// Provjera je li označen točan odgovor (korisnik može obrisati točan odgovor pa kliknut update) ++++
-// Priprema za ajax => redni broj odgovora mora biti prisutan
 
 
 
@@ -121,3 +138,42 @@ const addAnswer = function(mainEl) {
     spanCorrect.textContent = "Točan";
     isCorrectDiv.appendChild(spanCorrect);
 }
+
+
+const saveAnswers = async function (data) {
+    try {
+        const response = await axios.patch(`/nastavnik/provjera-znanja/${examId}/pitanja/${questionId}/azuriraj-odgovore`,
+            data,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                withCredentials: true,
+            }
+        );
+
+        if (response.status === 200) {
+            setFlashMessage(response.data.message, SUCCESS_COLOR);
+            setTimeout(() => {
+                window.location.assign(`/nastavnik/provjera-znanja/${examId}/pitanja/${questionId}`);
+            }, 1500);
+        }
+
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 422) {
+                const errors = error.response.data.errors;
+                const messages = Object.values(errors)
+                    .flat()
+                    .join('<br>');
+
+                setFlashMessage(messages, DANGER_COLOR);
+            } else {
+                setFlashMessage(`Error: ${error.response.statusText}`, DANGER_COLOR);
+            }
+        } else {
+            setFlashMessage(error.message, DANGER_COLOR);
+        }
+    }
+};

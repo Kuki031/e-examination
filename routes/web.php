@@ -73,7 +73,7 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::get("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'getQuestionDetails'])->name("exam_question_details");
     Route::patch("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'updateQuestion'])->name("exam_question_update");
     Route::delete("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'deleteQuestion'])->name("exam_question_delete");
-
+    Route::patch("/provjera-znanja/{exam}/pitanja/{question}/azuriraj-odgovore", [QuestionController::class, 'saveAnswers'])->name("exam_save_answers");
 });
 
 

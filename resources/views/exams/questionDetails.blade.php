@@ -3,12 +3,13 @@
 <div class="question-details-main">
     <div class="question-details-wrap">
         <div class="question-details-content">
+            <input class="exam-id" type="hidden" readonly disabled value="{{ $exam->id }}">
             <form class="question-details-content-form" action="{{ route('teacher.exam_question_update', [$exam, $question]) }}" method="POST">
                 @csrf
                 @method("PATCH")
                 <div>
                     <p><b>Provjera znanja: {{ $exam->name }}</b></p>
-                    <p><b>ID pitanja: {{ $question->id }}</b></p>
+                    <p><b>ID pitanja: <span class="question-id">{{ $question->id }}</span></b></p>
                 </div>
 
                 <div>

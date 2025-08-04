@@ -94,4 +94,20 @@ class QuestionController extends Controller
         $this->constructToastMessage("Pitanje uspješno izbrisano!", "Uspješno izbrisano", "success");
         return to_route("teacher.exam_question_list", compact("exam"));
     }
+
+    public function saveAnswers(Exam $exam, Question $question, UpdateQuestionRequest $updateQuestionRequest)
+    {
+
+        try {
+
+            $question->update([
+                "answers" => $updateQuestionRequest->questions['answers']
+            ]);
+
+            return response()->json(["message" => "Odgovori uspješno ažurirani!"]);
+
+        } catch (Exception $e) {
+            return response()->json(["message" => "Nešto nije u redu."], 500);
+        }
+    }
 }
