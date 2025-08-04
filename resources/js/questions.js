@@ -183,7 +183,7 @@ examOptions?.addEventListener("click", () => {
         if (!question.questionValue)
         {
             hasError = true;
-            signalError(el);
+            signalError(el, '#a4f8ce4d');
             handleScrollBehavior(el);
             setFlashMessage("Pitanje je prazno!", DANGER_COLOR);
             questions = [];
@@ -194,7 +194,7 @@ examOptions?.addEventListener("click", () => {
         if (!answers.length || answers.length < 2)
         {
             hasError = true;
-            signalError(el);
+            signalError(el, '#a4f8ce4d');
             handleScrollBehavior(el);
             setFlashMessage("Za ovo pitanje nema odgovora ili je broj odgovora manji od 2!", DANGER_COLOR);
             questions = [];
@@ -219,7 +219,7 @@ examOptions?.addEventListener("click", () => {
         if (!isAnswerArrayUnique)
         {
             hasError = true;
-            signalError(el);
+            signalError(el, '#a4f8ce4d');
             handleScrollBehavior(el);
             setFlashMessage("Za ovo pitanje postoje isti odgovori!", DANGER_COLOR);
             questions = [];
@@ -232,7 +232,7 @@ examOptions?.addEventListener("click", () => {
         if (!correctAnswer && !correctAnswerObj)
         {
             hasError = true;
-            signalError(el);
+            signalError(el, '#a4f8ce4d');
             handleScrollBehavior(el);
             setFlashMessage("U ovom pitanju nije označen koji je točan odgovor!", DANGER_COLOR);
             questions = [];
@@ -244,13 +244,7 @@ examOptions?.addEventListener("click", () => {
     {
         return;
     }
-
-
-    console.log(questions);
-
     saveQuestions({questions});
-
-
 });
 
 
@@ -299,20 +293,20 @@ const saveQuestions = async function (data) {
 
 
 
-const handleScrollBehavior = function(el) {
+export const handleScrollBehavior = function(el) {
     window.scrollTo(el.getBoundingClientRect().x, el.getBoundingClientRect().y,{
     behavior: 'smooth',
     });
 }
 
-const signalError = function(el) {
+export const signalError = function(el, color) {
     el.style.backgroundColor = 'rgb(255, 86, 86)';
     setTimeout(() => {
-        el.style.backgroundColor = '#a4f8ce4d';
+        el.style.backgroundColor = color;
     }, 1000);
 }
 
-const signalEmptyAnswers = function(questionDiv) {
+export const signalEmptyAnswers = function(questionDiv) {
     const answerDivs = Array.from(questionDiv.querySelectorAll('.answer_div'));
     for(let i = 0 ; i < answerDivs.length ; i++)
     {
@@ -334,7 +328,36 @@ const signalEmptyAnswers = function(questionDiv) {
 }
 
 
-const setFlashMessage = function(text, background)
+export const signalEmptyAnswersInputs = function(answersAreas)
+{
+    let isEmpty;
+    for(let i = 0 ; i < answersAreas.length ; i++)
+    {
+        if (!answersAreas[i].value) {
+            isEmpty = true;
+            answersAreas[i].style.backgroundColor = 'rgb(255, 86, 86)';
+        }
+    }
+    setTimeout(() => {
+        for(let i = 0 ; i < answersAreas.length ; i++)
+        {
+            if (answersAreas[i].style.backgroundColor = 'rgb(255, 86, 86)'){
+
+                if (answersAreas[i].classList.contains('correct'))
+                {
+                    answersAreas[i].style.backgroundColor = '#aff3ce';
+                } else {
+                    answersAreas[i].style.backgroundColor = '#fff';
+                }
+            }
+        }
+    }, 1000);
+
+    return isEmpty;
+}
+
+
+export const setFlashMessage = function(text, background)
 {
     Toastify({
     text: text,
@@ -353,7 +376,7 @@ const setFlashMessage = function(text, background)
     }).showToast();
 }
 
-const areAnswersUnique = function(answers) {
+export const areAnswersUnique = function(answers) {
     const values = Object.entries(answers)
         .filter(([key]) => key !== 'is_correct')
         .map(([, inputEl]) => String(inputEl.value).trim());

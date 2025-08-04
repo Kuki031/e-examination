@@ -84,6 +84,13 @@
     border-radius: var(--default-image-radius);
 }
 
+.answer-actions div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--default-element-gap);
+}
+
 .answer-action-delete {
     cursor: pointer;
     transition: var(--transitions);
@@ -91,4 +98,36 @@
     border-radius: var(--default-image-radius);
     background-color: var(--color-danger);
     color: var(--color-tertiary);
+}
+
+.is-correct-div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: auto;
+    margin: auto;
+}
+
+.update-answers {
+    cursor: pointer;
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+}
+
+.update-answers:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary-alter);
+}
+
+.new-answer {
+    cursor: pointer;
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+}
+
+.new-answer:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary-alter);
 }

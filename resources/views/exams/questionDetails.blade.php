@@ -35,32 +35,46 @@
 
         <div class="question-details-content">
             <div class="answer-wrap">
-                <p><b>Broj odgovora: {{ sizeof($question->answers) - 1 }}</b></p>
+                <p><b>Broj odgovora: <span class="number-of-answers">{{ sizeof($question->answers) - 1 }}</span></b></p>
                 <p><b>Odgovori: </b></p>
-
+                <div>
+                    <button class="new-answer">Novi odgovor</button>
+                </div>
                 @php
                     $correctAnswer = $question->answers['is_correct'];
                 @endphp
 
-                @foreach ($question->answers as $key => $answer)
-
-                    @if ($key === 'is_correct')
-                        @continue
-                    @endif
-
+                <div class="answers-holder">
                     @php
-                        $answersLength = str_split($answer);
-                        $isCorrect = $answer === $correctAnswer;
+                        $answersLength = str_split($question->answers[1]);
                     @endphp
-                    <div class="answer-actions">
-                        <textarea @if ($isCorrect)
-                            style="background: #aff3ce;"
-                        @endif class="question-details-input answer" cols="{{ sizeof($answersLength) }}" spellcheck="false">{{ $answer }}</textarea>
-                        <div>
-                            <button class="answer-action-delete">Obriši</button>
+                    <input class="answers-length" type="hidden" disabled readonly value="{{ sizeof($answersLength) }}">
+                    @foreach ($question->answers as $key => $answer)
+
+                        @if ($key === 'is_correct')
+                            @continue
+                        @endif
+
+                        @php
+                            $isCorrect = $answer === $correctAnswer;
+                        @endphp
+                        <div class="answer-actions">
+                            <textarea @if ($isCorrect)
+                                style="background: #aff3ce;"
+                            @endif class="question-details-input answer {{ $isCorrect ? 'correct' : '' }}" cols="{{ sizeof($answersLength) }}" spellcheck="false">{{ $answer }}</textarea>
+                            <div>
+                                <button class="answer-action-delete">Obriši</button>
+                                <div class="is-correct-div">
+                                    <input type="radio" name="is_correct" {{ $isCorrect ? 'checked' : '' }}>
+                                    <span>Točan</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                <div>
+                    <button class="update-answers">Ažuriraj odgovore</button>
+                </div>
             </div>
         </div>
     </div>
