@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer("required_for_pass")->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean("in_process")->default(false);
+            $table->string("access_code")->default(fake()->colorName());
+            $table->text('access_code_encrypted')->nullable();
             $table->timestamp("start_time")->nullable();
             $table->timestamp("end_time")->nullable();
             $table->integer("time_to_solve")->nullable();

@@ -90,3 +90,33 @@
     border-radius: var(--default-image-radius);
     box-shadow: var(--default-box-shadow);
 }
+
+.exam-code {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--default-element-gap);
+    margin: var(--default-margin) auto;
+}
+
+.exam-code-input {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.exam-code-input-button {
+    cursor: pointer;
+    transition: var(--transitions);
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+}
+
+.exam-code-input-button:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary-alter);
+}
+
+.exam-code-input-input {
+    color: var(--color-danger);
+}

@@ -70,4 +70,17 @@ class ExamController extends Controller
 
         return view('exams.list', compact('exams'));
     }
+
+    public function saveGeneratedAccessCode(Exam $exam, Request $request)
+    {
+        try {
+            $exam->update([
+            "access_code" => $request->access_code
+
+        ]);
+        return response()->json(["message" => "Uspješno generiran pristupni kod."], 200);
+        } catch (\Throwable $th) {
+            return response()->json(["message" => $th->getMessage()]);
+        }
+    }
 }

@@ -4,11 +4,16 @@
     <div class="exam-form-wrap">
         <div>
             <div class="exam-form-content">
+                <span class="exam_id" hidden>{{ $exam->id }}</span>
                 <h4>Opće informacije</h4>
                 <form action="{{ route('teacher.update_exam', $exam) }}" method="POST">
                 @csrf
                 @method("PATCH")
                 @include('exams._form')
+                <div class="exam-code">
+                    <input class="exam-code-input exam-code-input-input" type="text" name="security_code" autocomplete="off" value="{{ $exam->access_code_formatted }}" disabled>
+                    <button class="exam-code-input exam-code-input-button">Generiraj pristupni kod</button>
+                </div>
             </div>
         </div>
         <div class="exam-form-content">
