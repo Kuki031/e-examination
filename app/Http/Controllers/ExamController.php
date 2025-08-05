@@ -83,4 +83,11 @@ class ExamController extends Controller
             return response()->json(["message" => $th->getMessage()]);
         }
     }
+
+    public function deleteExam(Exam $exam)
+    {
+        $exam->delete();
+        $this->constructToastMessage("Provjera znanja uspješno izbrisana!", "Uspjeh", "success");
+        return to_route("teacher.teacher_exams");
+    }
 }

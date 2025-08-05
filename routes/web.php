@@ -67,6 +67,7 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");
     Route::get("/provjera-znanja/{exam}/kreiraj-pitanja", [ExamController::class, 'getQuestionMakerForExam'])->name("create_questions");
     Route::get("/provjera-znanja/{exam}", [ExamController::class, 'getExamDetails'])->name("exam_details");
+    Route::delete("/provjera-znanja/{exam}", [ExamController::class, 'deleteExam'])->name("delete_exam");
     Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
     Route::patch("/provjera-znanja/{exam}/spremi-kod", [ExamController::class, 'saveGeneratedAccessCode'])->name("save_generated_access_code");
     Route::post("/provjera-znanja/{exam}/spremi-pitanja", [QuestionController::class, 'saveQuestions'])->name("save_questions");

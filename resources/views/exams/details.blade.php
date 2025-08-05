@@ -2,126 +2,94 @@
 
 <div class="exam-form-main">
     <div class="exam-form-wrap">
-        <div>
+
+        <div class="exam-form-section">
             <div class="exam-form-content">
                 <span class="exam_id" hidden>{{ $exam->id }}</span>
                 <h4>Opće informacije</h4>
+
                 <form action="{{ route('teacher.update_exam', $exam) }}" method="POST">
-                @csrf
-                @method("PATCH")
-                @include('exams._form')
+                    @csrf
+                    @method("PATCH")
+
+                    <div class="exam-form-form-wrap">
+                        <div>
+                            <label for="required_for_pass">Potrebno za prolaz: </label>
+                            <input type="text" name="required_for_pass" id="required_for_pass" value="{{ $exam?->required_for_pass ? $exam->required_for_pass : 0 }}" autocomplete="off">
+                        </div>
+                    </div>
+                    @include('exams._form')
+
+                    <div class="exam-form-form-wrap">
+                        <button type="submit">Spremi promjene</button>
+                    </div>
+                </form>
+
+                <x-modal-action :text="'Obriši provjeru znanja'" class="strict-confirmation-btn-admin" />
+                <x-generic-modal
+                    :confirmAction="route('teacher.delete_exam', $exam)"
+                    subtitle="Ova radnja će trajno obrisati provjeru znanja {{ $exam->id }}."
+                    :method="'DELETE'"
+                />
+            </div>
+        </div>
+
+        <div class="exam-form-section">
+            <div class="exam-form-content">
+                <h4>Detalji provjere znanja: {{ $exam?->name }}</h4>
+
+                @foreach ([
+                    ['num_of_questions', 'Broj pitanja', $exam?->num_of_questions ?? 'Nema pitanja'],
+                    ['num_of_points', 'Ukupan broj bodova', $exam?->num_of_points ?? 'Nedefinirano'],
+                    ['in_process', 'U procesu', $exam?->in_process ? 'Da' : 'Ne'],
+                    ['start_time', 'Početak', $exam?->start_time ?? 'Nedefinirano'],
+                    ['end_time', 'Kraj', $exam?->end_time ?? 'Nedefinirano'],
+                    ['created_at', 'Kreirano', $exam?->created_at_formatted],
+                    ['updated_at', 'Ažurirano', $exam?->updated_at_formatted],
+                ] as [$field, $label, $value])
+                    <div class="exam-form-form-wrap">
+                        <div>
+                            <label for="{{ $field }}">{{ $label }}:</label>
+                            <input
+                                type="text"
+                                name="{{ $field }}"
+                                id="{{ $field }}"
+                                value="{{ $value }}"
+                                disabled
+                            >
+                        </div>
+                    </div>
+                    @error($field)
+                        <div class="error-div"><span>{{ $message }}</span></div>
+                    @enderror
+                @endforeach
+            </div>
+
+            <div class="exam-form-content">
+                <h4>Pristupni kod</h4>
                 <div class="exam-code">
-                    <input class="exam-code-input exam-code-input-input" type="text" name="security_code" autocomplete="off" value="{{ $exam->access_code_formatted }}" disabled>
-                    <button class="exam-code-input exam-code-input-button">Generiraj pristupni kod</button>
+                    <input
+                        class="exam-code-input exam-code-input-input"
+                        type="text"
+                        name="security_code"
+                        autocomplete="off"
+                        value="{{ $exam->access_code_formatted }}"
+                        disabled
+                    >
+                    <button class="exam-code-input exam-code-input-button">
+                        Generiraj pristupni kod
+                    </button>
+                    <button
+                        class="action-button {{ !$exam?->num_of_questions ? 'danger' : 'success' }}"
+                        {{ !$exam?->num_of_questions ? 'disabled' : '' }}
+                    >
+                        Pokreni provjeru znanja
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="exam-form-content">
-            <h4>Detalji provjere znanja: {{ $exam?->name }}</h4>
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="num_of_questions">Broj pitanja: </label>
-                    <input type="text" name="num_of_questions" id="num_of_questions" autocomplete="off" value="{{ $exam?->num_of_questions ?? 'Nema pitanja' }}" disabled>
-                </div>
-            </div>
-                @error('num_of_questions')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
 
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="num_of_points">Ukupan broj bodova: </label>
-                    <input type="text" name="num_of_points" id="num_of_points" value="{{ $exam?->num_of_points ?? 'Nedefinirano' }}" disabled>
-                </div>
-            </div>
-                @error('num_of_points')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="required_for_pass">Potrebno za prolaz: </label>
-                    <input type="number" name="required_for_pass" id="required_for_pass" value="{{ $exam?->required_for_pass ?? 0 }}" {{ !$exam?->num_of_questions ? 'disabled' : '' }}>
-                </div>
-            </div>
-                @error('required_for_pass')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="in_process">U procesu: </label>
-                    <input type="text" name="in_process" id="in_process" value="{{ $exam?->in_process ? 'Da' : 'Ne' }}" disabled>
-                </div>
-            </div>
-                @error('in_process')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="start_time">Početak: </label>
-                    <input type="text" name="start_time" id="start_time" value="{{ $exam?->start_time ?? 'Nedefinirano' }}" disabled>
-                </div>
-            </div>
-                @error('start_time')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="end_time">Kraj: </label>
-                    <input type="text" name="end_time" id="end_time" value="{{ $exam?->end_time ?? 'Nedefinirano' }}" disabled>
-                </div>
-            </div>
-                @error('end_time')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="created_at">Kreirano: </label>
-                    <input type="text" name="created_at" id="created_at" value="{{ $exam?->created_at_formatted }}" disabled>
-                </div>
-            </div>
-                @error('created_at')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <div>
-                    <label for="updated_at">Ažurirano: </label>
-                    <input type="text" name="updated_at" id="updated_at" value="{{ $exam?->updated_at_formatted }}" disabled>
-                </div>
-            </div>
-                @error('updated_at')
-                    <div class="error-div">
-                        <span>{{ $message }}</span>
-                    </div>
-                @enderror
-
-            <div class="exam-form-form-wrap">
-                <button class="{{ !$exam?->num_of_questions ? 'danger' : '' }}" {{ !$exam?->num_of_questions ? 'disabled' : '' }}>Pokreni provjeru znanja</button>
-                <button type="submit">Spremi promjene</button>
-                <button>Obriši provjeru znanja</button>
-            </div>
-        </div>
-        </form>
-        <div>
+        <div class="exam-form-section">
             <div class="exam-form-content">
                 <h4>Pitanja</h4>
                 <div class="exam-form-form-wrap">
@@ -129,9 +97,7 @@
                     <a class="exam-details-btn" href="{{ route('teacher.create_questions', $exam) }}">Kreator pitanja ✨</a>
                 </div>
             </div>
-        </div>
 
-        <div>
             <div class="exam-form-content">
                 <h4>Gamifikacija (kviz)</h4>
                 <div class="exam-form-form-wrap">
@@ -139,5 +105,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

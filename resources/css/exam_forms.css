@@ -26,7 +26,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    margin: auto;
+    margin: var(--default-margin) auto;
     gap: var(--default-element-gap);
 }
 
@@ -49,6 +49,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    justify-content: center;
+    margin-top: .5rem;
 }
 
 .exam-form-form-wrap input, button, textarea {
@@ -69,10 +71,28 @@
     color: var(--color-secondary);
 }
 
+
+.action-button {
+    cursor: pointer;
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+}
+
+.action-button:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary);
+}
+
 .danger {
     background-color: var(--color-danger) !important;
     color: var(--color-tertiary);
 }
+
+.success {
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+}
+
 .danger:hover {
     background-color: var(--color-tertiary) !important;
     color: var(--color-danger) !important;
@@ -119,4 +139,5 @@
 
 .exam-code-input-input {
     color: var(--color-danger);
+    font-weight: bold;
 }

@@ -38,6 +38,6 @@
     <div class="exam-form-form-wrap">
         <div>
             <label for="description">Ostale informacije: </label>
-            <textarea cols="50" rows="20" name="description" id="description">{{ $exam?->description ?? old('description') }}</textarea>
+            <textarea cols="50" rows="20" name="description" id="description" spellcheck="false">{{ $exam?->description ?? old('description') }}</textarea>
         </div>
     </div>
