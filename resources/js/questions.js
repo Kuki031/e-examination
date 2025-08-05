@@ -39,6 +39,25 @@ const addQuestionFunc = function(appendEl) {
     questionInput.setAttribute("spellcheck", "false");
     questionInput.placeholder = "Unesite pitanje";
 
+
+    const hasPictureMain = document.createElement("div");
+    hasPictureMain.classList.add("has-picture-main");
+
+    const hasPictureDiv = document.createElement("div");
+    hasPictureDiv.classList.add("has-picture-holder");
+
+    const hasPictureLabel = document.createElement("label");
+    hasPictureLabel.textContent = "Slika?";
+
+    const hasPictureCheckBox = document.createElement("input");
+    hasPictureCheckBox.type = "checkbox";
+    hasPictureCheckBox.classList.add("checkbox-input");
+
+    hasPictureDiv.appendChild(hasPictureLabel);
+    hasPictureDiv.appendChild(hasPictureCheckBox);
+
+    hasPictureMain.appendChild(hasPictureDiv);
+
     const delQuestionBtn = document.createElement("button");
     delQuestionBtn.textContent = "Obriši pitanje";
     delQuestionBtn.classList.add("del_question");
@@ -48,12 +67,14 @@ const addQuestionFunc = function(appendEl) {
     addAnswerBtn.classList.add("add_answer");
 
     questionDivHolder.appendChild(questionInput);
+    questionDivHolder.appendChild(hasPictureMain);
     questionDivHolder.appendChild(addAnswerBtn);
     questionDivHolder.appendChild(delQuestionBtn);
     appendEl.appendChild(questionDivHolder);
 
     questionDivHolder.addEventListener("click", (e) => {
         let mainEl = e.target;
+
         if (mainEl.classList.contains('add_answer')) {
 
         const answerDiv = document.createElement("div");
@@ -117,6 +138,21 @@ const addQuestionFunc = function(appendEl) {
         if (transformToLower === 'da') {
             parentDiv.remove();
         }
+    }
+
+    if (mainEl.classList.contains('checkbox-input')) {
+
+        let isChecked = mainEl.checked;
+        if (isChecked)
+        {
+            createPictureSection(questionNumber.id, hasPictureMain);
+        } else {
+            const mainDiv = mainEl.parentElement.parentElement;
+            const divToRemove = mainEl.parentElement.nextElementSibling.parentElement.parentElement.querySelector('.picture-div-holder');
+            mainDiv.removeChild(divToRemove);
+            return;
+        }
+
     }
 
     let correctAnswer;
@@ -381,4 +417,24 @@ export const areAnswersUnique = function(answers) {
         .filter(([key]) => key !== 'is_correct')
         .map(([, inputEl]) => String(inputEl.value).trim());
     return new Set(values).size === values.length;
+}
+
+
+const createPictureSection = function(questionNumberId, appendEl) {
+
+    const pictureDivHolder = document.createElement("div");
+    pictureDivHolder.classList.add("picture-div-holder");
+
+    const pictureDiv = document.createElement("div");
+    pictureDiv.classList.add("question-picture");
+    pictureDiv.id = questionNumberId;
+
+    pictureDivHolder.appendChild(pictureDiv);
+
+    const pictureInput = document.createElement("input");
+    pictureInput.type = "file";
+
+    pictureDivHolder.appendChild(pictureInput);
+
+    appendEl.appendChild(pictureDivHolder);
 }

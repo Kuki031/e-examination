@@ -15,9 +15,14 @@
                     <div class="exam-form-form-wrap">
                         <div>
                             <label for="required_for_pass">Potrebno za prolaz: </label>
-                            <input type="text" name="required_for_pass" id="required_for_pass" value="{{ $exam?->required_for_pass ? $exam->required_for_pass : 0 }}" autocomplete="off">
+                            <input type="text" name="required_for_pass" id="required_for_pass" value="{{ $exam->required_for_pass ? $exam->required_for_pass : 0 }}" {{ !$exam->num_of_questions ? 'disabled' : '' }} autocomplete="off">
                         </div>
                     </div>
+                    @error("required_for_pass")
+                        <div class="error-div">
+                            <span>{{ $message }}</span>
+                        </div>
+                    @enderror
                     @include('exams._form')
 
                     <div class="exam-form-form-wrap">
