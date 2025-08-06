@@ -19,14 +19,24 @@ class QuestionController extends Controller
 
     public function saveQuestions(CreateQuestionsRequest $request)
     {
+        $validated = $request->validated();
+
         try {
 
             DB::beginTransaction();
-            foreach ($request->validated()['questions'] as $question) {
+            foreach ($validated['questions'] as $index => $question) {
+                $imagePath = null;
+
+                if ($request->hasFile("questions.$index.image")) {
+                    $file = $request->file("questions.$index.image");
+                    $imagePath = $file->store('question_images', 'public');
+                }
+
                 Question::create([
                     'question' => $question['questionValue'],
                     'answers' => $question['answers'],
                     'exam_id' => $question['examId'],
+                    'image' => $imagePath,
                 ]);
             }
 

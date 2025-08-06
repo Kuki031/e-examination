@@ -26,6 +26,7 @@ class CreateQuestionsRequest extends FormRequest
             'questions.*.questionValue' => 'required|string',
             'questions.*.answers' => 'required|array|min:2',
             'questions.*.examId' => 'required|integer|exists:exams,id',
+            'questions.*.image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ];
     }
 
@@ -34,7 +35,7 @@ class CreateQuestionsRequest extends FormRequest
         return [
             "questions.required" => "Pitanja su obavezna.",
             "questions.array" => "Pitanja moraju biti poslana u obliku niza.",
-            "questions.min" => "Broj pitanja je minimalno 2.",
+            "questions.min" => "Broj pitanja je minimalno 2."
         ];
     }
 }

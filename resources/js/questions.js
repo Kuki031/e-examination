@@ -296,7 +296,7 @@ examOptions?.addEventListener("click", () => {
     {
         return;
     }
-    saveQuestions({questions});
+    saveQuestions();
 });
 
 
@@ -304,16 +304,45 @@ examOptions?.addEventListener("click", () => {
 
 
 // Slanje AJAX requesta
-const saveQuestions = async function (data) {
+const saveQuestions = async function () {
+    const formData = new FormData();
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+
+    const questionDivs = Array.from(document.querySelectorAll(".question-div"));
+
+    questionDivs.forEach((div, index) => {
+        const questionInput = div.querySelector(".question");
+        const answersDivs = Array.from(div.querySelectorAll(".answer_div .answer"));
+        const imageInput = div.querySelector(".has-picture-main .picture-div-holder .file-input");
+
+        formData.append(`questions[${index}][examId]`, examId);
+        formData.append(`questions[${index}][questionValue]`, questionInput.value);
+
+        let correctAnswerValue = null;
+        answersDivs.forEach((ansDiv, i) => {
+            formData.append(`questions[${index}][answers][${i+1}]`, ansDiv.value);
+            if (ansDiv.classList.contains("correct")) {
+                correctAnswerValue = ansDiv.value;
+            }
+        });
+
+        if (correctAnswerValue) {
+            formData.append(`questions[${index}][answers][is_correct]`, correctAnswerValue);
+        }
+
+        if (imageInput?.files?.length > 0) {
+            formData.append(`questions[${index}][image]`, imageInput.files[0]);
+        }
+    });
+
+
     try {
-        const response = await axios.post(`/nastavnik/provjera-znanja/${examId}/spremi-pitanja`,
-            data,
+        const response = await axios.post(
+            `/nastavnik/provjera-znanja/${examId}/spremi-pitanja`,
+            formData,
             {
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Requested-With": "XMLHttpRequest",
-                },
-                withCredentials: true,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                withCredentials: true
             }
         );
 
@@ -323,24 +352,18 @@ const saveQuestions = async function (data) {
                 window.location.assign(`/nastavnik/provjera-znanja/${examId}`);
             }, 1500);
         }
-
     } catch (error) {
-        if (error.response) {
-            if (error.response.status === 422) {
-                const errors = error.response.data.errors;
-                const messages = Object.values(errors)
-                    .flat()
-                    .join('<br>');
-
-                setFlashMessage(messages, DANGER_COLOR);
-            } else {
-                setFlashMessage(`Error: ${error.response.statusText}`, DANGER_COLOR);
-            }
+        console.error('Upload error:', error.response ?? error);
+        if (error.response?.status === 422) {
+            const errors = error.response.data.errors;
+            const messages = Object.values(errors).flat().join("<br>");
+            setFlashMessage(messages, DANGER_COLOR);
         } else {
             setFlashMessage(error.message, DANGER_COLOR);
         }
     }
 };
+
 
 
 
@@ -449,6 +472,7 @@ const createPictureSection = function(questionNumberId, appendEl) {
 
     const pictureInput = document.createElement("input");
     pictureInput.type = "file";
+    pictureInput.name = "image";
     pictureInput.classList.add("file-input");
 
     pictureDivHolder.appendChild(pictureInput);

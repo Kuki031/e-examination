@@ -19,6 +19,7 @@ return new class extends Migration
             $table->json("answers");
             $table->foreignIdFor(Exam::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('question_hash', 64);
+            $table->string("image")->nullable();
             $table->unique(['question_hash', 'exam_id']);
             $table->timestamps();
         });

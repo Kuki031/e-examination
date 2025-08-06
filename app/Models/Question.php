@@ -22,7 +22,7 @@ class Question extends Model
 
     protected $appends = ["created_at_formatted", "updated_at_formatted"];
 
-    protected $fillable = ["question", "answers", "exam_id"];
+    protected $fillable = ["question", "answers", "exam_id", "image"];
 
     public function exam()
     {
