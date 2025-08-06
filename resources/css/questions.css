@@ -135,7 +135,7 @@
 .question-picture {
     width: var(--question-picture-w);
     height: var(--question-picture-h);
-    background-color: var(--color-secondary-alter);
+    background-color: var(--color-tertiary);
     background-size: contain;
     background-repeat: no-repeat;
 }

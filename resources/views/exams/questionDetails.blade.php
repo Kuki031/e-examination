@@ -8,14 +8,26 @@
                 @csrf
                 @method("PATCH")
                 <div>
+
+                    @php
+                        $questionLength = str_split($question->name);
+                    @endphp
                     <p><b>Provjera znanja: {{ $exam->name }}</b></p>
                     <p><b>ID pitanja: <span class="question-id">{{ $question->id }}</span></b></p>
                 </div>
 
                 <div>
                     <label for="question">Pitanje: </label>
-                    <textarea cols="50" rows="20" name="question" id="question" spellcheck="false">{{ $question->question }}</textarea>
+                    <textarea cols="{{ sizeof($questionLength) }}" name="question" id="question" spellcheck="false">{{ $question->question }}</textarea>
                 </div>
+
+                @if ($question->image)
+                    <div>
+                        <label for="image">Slika: </label>
+                        <div style="background-image: url('{{ asset('storage/' . $question->image) }}'); background-size:contain; background-repeat: no-repeat; width: 40rem; height: 40rem;"></div>
+                    </div>
+                @endif
+
                 <div>
                     <label for="created_at_formatted">Kreirano: </label>
                     <input class="question-details-input" type="text" name="created_at" value="{{ $question->created_at_formatted }}" disabled>
