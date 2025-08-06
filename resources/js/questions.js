@@ -152,6 +152,22 @@ const addQuestionFunc = function(appendEl) {
             mainDiv.removeChild(divToRemove);
             return;
         }
+    }
+
+    if (mainEl.classList.contains("file-input"))
+    {
+        mainEl.addEventListener("change", (ev) => {
+            const file = ev.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                mainEl.previousElementSibling.style.backgroundColor = 'inherit';
+                mainEl.previousElementSibling.style.backgroundImage = `url('${event.target.result}')`;
+            }
+
+            reader.readAsDataURL(file);
+        })
 
     }
 
@@ -433,6 +449,7 @@ const createPictureSection = function(questionNumberId, appendEl) {
 
     const pictureInput = document.createElement("input");
     pictureInput.type = "file";
+    pictureInput.classList.add("file-input");
 
     pictureDivHolder.appendChild(pictureInput);
 

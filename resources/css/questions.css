@@ -133,11 +133,11 @@
 }
 
 .question-picture {
-    border: none;
-    border-radius: var(--default-image-radius);
-    width: var(--profile-picture-width);
-    height: var(--profile-picture-height);
+    width: var(--question-picture-w);
+    height: var(--question-picture-h);
     background-color: var(--color-secondary-alter);
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .has-picture-main {

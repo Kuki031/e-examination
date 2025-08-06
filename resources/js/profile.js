@@ -1,6 +1,4 @@
 const profilePictureDiv = document.querySelector(".profile-picture");
-const profilePictureInput = document.querySelector("#profile-picture");
-
 document.querySelector('#profile_picture')?.addEventListener('change', function (e) {
     const file = e.target.files[0];
     if (!file) return;
