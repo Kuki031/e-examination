@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAllowed;
@@ -60,7 +61,7 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->
 
 });
 
-// Provedba ispita, rute za nastavnika ili admina (jer admin može biti i nastavnik)
+// Upravljanje ispitima, rute za nastavnika ili admina (jer admin može biti i nastavnik)
 Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
     Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
     Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");
@@ -79,6 +80,11 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
 
 });
 
+// Provedba ispita
+Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() {
+    Route::get("/dostupni-ispiti", [StudentController::class, 'getAvailableExamList'])->name("list");
+    Route::get("/pristup/{exam}", [StudentController::class, 'getExamConfirmationView'])->name("confirmation");
+});
 
 
 Route::fallback([HomeController::class, 'fallbackRoute']);

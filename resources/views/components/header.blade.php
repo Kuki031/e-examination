@@ -30,6 +30,15 @@
                 @endif
             @endauth
 
+            @auth
+                @if (auth()->user()->role === 'student')
+                    <div>
+                        <a class="header-button" href="{{ route('exams.list') }}">Dostupne provjere znanja</a>
+                        <a class="header-button" href="#">Rezultati</a>
+                    </div>
+                @endif
+            @endauth
+
             <div class="header-actions">
                 @auth
                     @if (auth()->user()['role'] === 'admin')

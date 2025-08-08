@@ -12,7 +12,7 @@ class Exam extends Model
         "name", "description", "num_of_questions", "num_of_points", "required_for_pass", "user_id", "in_process", "start_time", "end_time", "time_to_solve", "access_code", "access_code_encrypted"
     ];
 
-    protected $appends = ["created_at_formatted", "updated_at_formatted", "access_code_formatted"];
+    protected $appends = ["created_at_formatted", "updated_at_formatted", "access_code_formatted", "in_process_formatted"];
 
     protected static function booted()
     {
@@ -66,5 +66,10 @@ class Exam extends Model
     public function verifyAccessCode(string $input): bool
     {
         return hash('sha256', $input) === $this->access_code;
+    }
+
+    public function getInProcessFormattedAttribute()
+    {
+        return $this->in_process ? "Da" : "Ne";
     }
 }

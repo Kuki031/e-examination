@@ -1,0 +1,93 @@
+.exam-welcome-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin);
+}
+
+.exam-welcome-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin) auto;
+    background-color: var(--color-tertiary);
+    padding: var(--default-padding);
+    box-shadow: var(--default-box-shadow);
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out 1s;
+}
+
+.exam-welcome-header {
+    margin-top: var(--default-margin);
+    padding: var(--default-padding);
+    color: var(--color-primary);
+    border: none;
+    border-radius: var(--default-image-radius);
+    align-self: start;
+    font-size: var(--font-size-cells);
+    box-shadow: var(--default-box-shadow);
+}
+
+.exam-welcome-header h2 {
+    align-self: flex-start;
+}
+
+.exam-information-main {
+    align-self: flex-start;
+    margin: var(--default-margin) 0;
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+    box-shadow: var(--default-box-shadow);
+    color: var(--color-primary);
+}
+
+
+.exam-information-main div {
+    font-size: var(--default-font);
+}
+
+.exam-p {
+    margin-top: var(--default-margin);
+}
+
+.exam-options {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-self: start;
+    font-size: var(--default-font);
+}
+
+.exam-options div:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    color: var(--color-primary);
+}
+
+.exam-options input {
+    padding: var(--default-padding);
+    border: none;
+    background-color: var(--color-secondary-diff);
+    border-radius: var(--default-image-radius);
+}
+
+.access-btn {
+    cursor: pointer;
+    color: var(--color-tertiary);
+    background-color: var(--color-secondary);
+    border: none;
+    border-radius: var(--default-image-radius);
+    transition: var(--transitions);
+}
+
+.access-btn:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-secondary);
+}
