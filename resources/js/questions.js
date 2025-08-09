@@ -353,11 +353,14 @@ const saveQuestions = async function () {
             }, 1500);
         }
     } catch (error) {
-        console.error('Upload error:', error.response ?? error);
+        console.log(error);
+
         if (error.response?.status === 422) {
             const errors = error.response.data.errors;
             const messages = Object.values(errors).flat().join("<br>");
             setFlashMessage(messages, DANGER_COLOR);
+        } else if (error.response?.status === 403) {
+            setFlashMessage(error.response.data.message, DANGER_COLOR);
         } else {
             setFlashMessage(error.message, DANGER_COLOR);
         }

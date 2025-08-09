@@ -84,12 +84,26 @@
                     <button class="exam-code-input exam-code-input-button">
                         Generiraj pristupni kod
                     </button>
-                    <button
-                        class="action-button {{ !$exam?->num_of_questions ? 'danger' : 'success' }}"
-                        {{ !$exam?->num_of_questions ? 'disabled' : '' }}
-                    >
-                        Pokreni provjeru znanja
-                    </button>
+                    @if (!$exam->in_process)
+                        <form action="{{ route('teacher.start_exam', $exam) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit"
+                            class="action-button {{ !$exam?->num_of_questions ? 'danger' : 'success' }}"
+                            {{ !$exam?->num_of_questions ? 'disabled' : '' }}>
+                            Pokreni provjeru znanja
+                        </button>
+                    </form>
+                    @else
+                    <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit"
+                            class="action-button danger">
+                            Zaustavi provjeru znanja
+                        </button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>

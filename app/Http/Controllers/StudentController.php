@@ -26,6 +26,4 @@ class StudentController extends Controller
     {
         return view("exams.process.welcome", compact("exam"));
     }
-
-
 }

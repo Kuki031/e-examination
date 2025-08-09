@@ -161,19 +161,18 @@ const saveAnswers = async function (data) {
         }
 
     } catch (error) {
-        if (error.response) {
-            if (error.response.status === 422) {
-                const errors = error.response.data.errors;
-                const messages = Object.values(errors)
-                    .flat()
-                    .join('<br>');
-
-                setFlashMessage(messages, DANGER_COLOR);
-            } else {
-                setFlashMessage(`Error: ${error.response.statusText}`, DANGER_COLOR);
-            }
+    if (error.response) {
+        if (error.response.status === 422) {
+            const errors = error.response.data.errors || {};
+            const messages = Object.values(errors).flat().join('<br>');
+            setFlashMessage(messages, DANGER_COLOR);
+        } else if (error.response.status === 403) {
+            setFlashMessage(error.response.data.message, DANGER_COLOR);
         } else {
-            setFlashMessage(error.message, DANGER_COLOR);
+            setFlashMessage(`Error: ${error.response.statusText}`, DANGER_COLOR);
         }
+    } else {
+        setFlashMessage(error.message, DANGER_COLOR);
     }
+}
 };

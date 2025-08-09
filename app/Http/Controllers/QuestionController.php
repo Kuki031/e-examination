@@ -54,7 +54,7 @@ class QuestionController extends Controller
         } catch (QueryException $e) {
             DB::rollBack();
 
-            return response()->json(["message" => "Nešto nije u redu."]);
+            return response()->json(["message" => "Nešto nije u redu."], 403);
         }
 
         return response()->json(["message" => "Pohrana pitanja uspješno izvršena!"]);

@@ -6,10 +6,13 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\EnsureExamIsInProcess;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAllowed;
 use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
+use App\Http\Middleware\StopIfExamInProcess;
 use Illuminate\Support\Facades\Route;
 
 // Redirect sa root-a
@@ -68,22 +71,28 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");
     Route::get("/provjera-znanja/{exam}/kreiraj-pitanja", [ExamController::class, 'getQuestionMakerForExam'])->name("create_questions");
     Route::get("/provjera-znanja/{exam}", [ExamController::class, 'getExamDetails'])->name("exam_details");
-    Route::delete("/provjera-znanja/{exam}", [ExamController::class, 'deleteExam'])->name("delete_exam");
-    Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
     Route::patch("/provjera-znanja/{exam}/spremi-kod", [ExamController::class, 'saveGeneratedAccessCode'])->name("save_generated_access_code");
-    Route::post("/provjera-znanja/{exam}/spremi-pitanja", [QuestionController::class, 'saveQuestions'])->name("save_questions");
     Route::get("/provjera-znanja/{exam}/pitanja", [QuestionController::class, 'getQuestionsForExam'])->name("exam_question_list");
     Route::get("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'getQuestionDetails'])->name("exam_question_details");
-    Route::patch("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'updateQuestion'])->name("exam_question_update");
-    Route::delete("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'deleteQuestion'])->name("exam_question_delete");
-    Route::patch("/provjera-znanja/{exam}/pitanja/{question}/azuriraj-odgovore", [QuestionController::class, 'saveAnswers'])->name("exam_save_answers");
+    Route::patch("/provjera-znanja/{exam}/zaustavi", [TeacherController::class, 'stopExam'])->name("stop_exam");
 
+    Route::middleware([StopIfExamInProcess::class])->group(function() {
+        Route::delete("/provjera-znanja/{exam}", [ExamController::class, 'deleteExam'])->name("delete_exam");
+        Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
+        Route::post("/provjera-znanja/{exam}/spremi-pitanja", [QuestionController::class, 'saveQuestions'])->name("save_questions");
+        Route::patch("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'updateQuestion'])->name("exam_question_update");
+        Route::delete("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'deleteQuestion'])->name("exam_question_delete");
+        Route::patch("/provjera-znanja/{exam}/pitanja/{question}/azuriraj-odgovore", [QuestionController::class, 'saveAnswers'])->name("exam_save_answers");
+        Route::patch("/provjera-znanja/{exam}/pokreni", [TeacherController::class, 'startExam'])->name("start_exam");
+    });
 });
 
 // Provedba ispita
 Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() {
     Route::get("/dostupni-ispiti", [StudentController::class, 'getAvailableExamList'])->name("list");
-    Route::get("/pristup/{exam}", [StudentController::class, 'getExamConfirmationView'])->name("confirmation");
+    Route::middleware([EnsureExamIsInProcess::class])->group(function() {
+        Route::get("/pristup/{exam}", [StudentController::class, 'getExamConfirmationView'])->name("confirmation");
+    });
 });
 
 
