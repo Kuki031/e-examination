@@ -81,6 +81,24 @@ class StudentController extends Controller
         return view("exams.process.spa", compact("examAttempt"));
     }
 
+    public function updateState(ExamAttempt $examAttempt, Request $request) {
+
+        $requestParse = json_encode([
+            "current_question" => $request->input("current_question"),
+            "checked_answers" => $request->input("checked_answers")
+        ]);
+
+        $examAttempt->where("user_id", "=", Auth::id())
+                    ->latest()
+                    ->first();
+
+        $examAttempt->update([
+            "state" => $requestParse
+        ]);
+
+        return response()->json(["message" => "state updated"]);
+    }
+
     private function isCodeCorrect(string $accessCode, Exam $exam) {
         return hash('sha256', $accessCode) === $exam->access_code;
     }

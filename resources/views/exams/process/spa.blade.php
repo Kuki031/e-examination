@@ -2,7 +2,14 @@
 
 @php
     $questions = $examAttempt->questions;
+    $state = json_decode($examAttempt->state);
+    $checkedAnswers = $state?->checked_answers;
+    $currentQuestion = $state?->current_question;
+
 @endphp
+<span id="attempt_id" hidden>{{ $examAttempt->id }}</span>
+<span id="current_question" hidden>{{ $currentQuestion }}</span>
+<span id="load_script" hidden>1</span>
 
 <div class="exam-process-main">
   <div class="exam-process-wrap">
@@ -36,7 +43,9 @@
                         @endif
                         @php $j++; $inputId = "q{$index}_a{$j}"; @endphp
                         <label for="{{ $inputId }}">
-                            <input id="{{ $inputId }}" class="q{{ $index + 1 }}a{{ $j }}" type="radio" name="answer{{ $index + 1 }}" />
+                            <input id="{{ $inputId }}" class="q{{ $index + 1 }}a{{ $j }}" type="radio" name="answer{{ $index + 1 }}" @if ($checkedAnswers)
+                                {{ in_array($inputId, $checkedAnswers) ? 'checked' : '' }}
+                            @endif />
                             {{ $answer }}
                         </label>
                     @endforeach
@@ -50,8 +59,8 @@
       </div>
 
       <div class="navigation-buttons">
-        <button>Prethodno pitanje</button>
-        <button>Sljedeće pitanje</button>
+        <button class="nav-btn">Prethodno pitanje</button>
+        <button class="nav-btn">Sljedeće pitanje</button>
       </div>
     </div>
   </div>

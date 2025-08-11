@@ -22,6 +22,7 @@ return new class extends Migration
             $table->json('questions');
             $table->integer('score')->nullable();
             $table->enum('status', ['in_process', 'finished'])->default('in_process');
+            $table->json("state")->nullable();
             $table->timestamps();
         });
     }

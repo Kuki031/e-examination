@@ -58,12 +58,12 @@ class Exam extends Model
 
     public function getStartTimeFormattedAttribute()
     {
-        return $this->start_time->format("d.m.Y H:i:s");
+        return $this->start_time?->format("d.m.Y H:i:s") ?? 0;
     }
 
     public function getEndTimeFormattedAttribute()
     {
-        return $this->end_time->format("d.m.Y H:i:s");
+        return $this->end_time?->format("d.m.Y H:i:s") ?? 0;
     }
 
 
