@@ -7,3 +7,4 @@ import './questions';
 import './constants';
 import './question_details';
 import './code_generator';
+import './exam_nav';

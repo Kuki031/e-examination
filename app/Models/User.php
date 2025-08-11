@@ -68,6 +68,10 @@ class User extends Authenticatable
         return $this->hasMany(Exam::class);
     }
 
+    public function examAttempts() {
+        return $this->hasMany(ExamAttempt::class);
+    }
+
     public function getIsAllowedFormattedAttribute()
     {
         return $this->is_allowed === 0 ? "Ne" : "Da";
@@ -118,11 +122,11 @@ class User extends Authenticatable
 
     public function getCreatedAtFormattedAttribute()
     {
-        return $this->created_at->format("d.m.y H:i:s");
+        return $this->created_at->format("d.m.Y H:i:s");
     }
 
     public function getUpdatedAtFormattedAttribute()
     {
-        return $this->updated_at->format("d.m.y H:i:s");
+        return $this->updated_at->format("d.m.Y H:i:s");
     }
 }

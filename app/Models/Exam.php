@@ -12,7 +12,7 @@ class Exam extends Model
         "name", "description", "num_of_questions", "num_of_points", "required_for_pass", "user_id", "in_process", "start_time", "end_time", "time_to_solve", "access_code", "access_code_encrypted"
     ];
 
-    protected $appends = ["created_at_formatted", "updated_at_formatted", "access_code_formatted", "in_process_formatted"];
+    protected $appends = ["created_at_formatted", "updated_at_formatted", "access_code_formatted", "in_process_formatted", "start_time_formatted", "end_time_formatted"];
 
     protected static function booted()
     {
@@ -35,20 +35,37 @@ class Exam extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function examAttempts() {
+        return $this->hasMany(ExamAttempt::class);
+    }
+
     protected $casts = [
         "created_at" => "datetime",
-        "updated_at" => "datetime"
+        "updated_at" => "datetime",
+        "start_time" => "datetime",
+        "end_time" => "datetime"
     ];
 
     public function getCreatedAtFormattedAttribute()
     {
-        return $this->created_at->format("d.m.Y H:m:s");
+        return $this->created_at->format("d.m.Y H:i:s");
     }
 
     public function getUpdatedAtFormattedAttribute()
     {
-        return $this->updated_at->format("d.m.Y H:m:s");
+        return $this->updated_at->format("d.m.Y H:i:s");
     }
+
+    public function getStartTimeFormattedAttribute()
+    {
+        return $this->start_time->format("d.m.Y H:i:s");
+    }
+
+    public function getEndTimeFormattedAttribute()
+    {
+        return $this->end_time->format("d.m.Y H:i:s");
+    }
+
 
     public function getAccessCodeFormattedAttribute(): ?string
     {

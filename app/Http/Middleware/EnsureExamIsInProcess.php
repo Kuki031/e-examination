@@ -21,7 +21,7 @@ class EnsureExamIsInProcess
         $exam = $request->route("exam");
         if (!$exam->in_process) {
             $this->constructToastMessage("Tražena provjera znanja nije u tijeku!", "Neuspjeh", "error");
-            return back();
+            return to_route("exams.list");
         }
 
         return $next($request);

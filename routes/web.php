@@ -12,6 +12,7 @@ use App\Http\Middleware\EnsureExamIsInProcess;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAllowed;
 use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
+use App\Http\Middleware\RejectIfInExam;
 use App\Http\Middleware\StopIfExamInProcess;
 use Illuminate\Support\Facades\Route;
 
@@ -92,6 +93,10 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
     Route::get("/dostupni-ispiti", [StudentController::class, 'getAvailableExamList'])->name("list");
     Route::middleware([EnsureExamIsInProcess::class])->group(function() {
         Route::get("/pristup/{exam}", [StudentController::class, 'getExamConfirmationView'])->name("confirmation");
+        Route::middleware([RejectIfInExam::class])->group(function() {
+            Route::post("/pristup/{exam}/provjera-koda", [StudentController::class, 'joinExam'])->name("join_exam");
+        });
+        Route::get("/pokusaj/{examAttempt}/ispit/{exam}", [StudentController::class, 'loadExam'])->name("load_exam");
     });
 });
 

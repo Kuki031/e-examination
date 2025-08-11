@@ -15,6 +15,7 @@
 @import url('./question_list.css');
 @import url('./question_details.css');
 @import url('./exam_welcome.css');
+@import url('./exam_spa.css');
 
 *, *::after, *::before {
     margin: 0;

@@ -31,11 +31,11 @@ class Question extends Model
 
     public function getCreatedAtFormattedAttribute()
     {
-        return $this->created_at->format("d.m.y H:i:s");
+        return $this?->created_at?->format("d.m.y H:i:s");
     }
 
     public function getUpdatedAtFormattedAttribute()
     {
-        return $this->updated_at->format("d.m.y H:i:s");
+        return $this?->updated_at?->format("d.m.y H:i:s");
     }
 }

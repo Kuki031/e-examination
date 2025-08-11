@@ -47,8 +47,8 @@
                     ['num_of_questions', 'Broj pitanja', $exam?->num_of_questions ?? 'Nema pitanja'],
                     ['num_of_points', 'Ukupan broj bodova', $exam?->num_of_points ?? 'Nedefinirano'],
                     ['in_process', 'U procesu', $exam?->in_process ? 'Da' : 'Ne'],
-                    ['start_time', 'Početak', $exam?->start_time ?? 'Nedefinirano'],
-                    ['end_time', 'Kraj', $exam?->end_time ?? 'Nedefinirano'],
+                    ['start_time', 'Početak', $exam?->start_time_formatted ?? 'Nedefinirano'],
+                    ['end_time', 'Kraj', $exam?->end_time_formatted ?? 'Nedefinirano'],
                     ['created_at', 'Kreirano', $exam?->created_at_formatted],
                     ['updated_at', 'Ažurirano', $exam?->updated_at_formatted],
                 ] as [$field, $label, $value])

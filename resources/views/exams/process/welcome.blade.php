@@ -26,8 +26,11 @@
         <div class="exam-options">
             <div>
                 <label for="access_code"><b>Pristupni kod: </b></label>
-                <input class="access_code_student" type="text" name="access_code" id="access_code" autocomplete="off" autocapitalize="off" required>
-                <button class="access-btn">Pristupi</button>
+                <form action="{{ route('exams.join_exam', $exam) }}" method="POST">
+                    @csrf
+                    <input class="access_code_student" type="text" name="access_code" id="access_code" autocomplete="off" autocapitalize="off" required>
+                    <button class="access-btn">Pristupi</button>
+                </form>
             </div>
         </div>
 </div>

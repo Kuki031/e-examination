@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\ExamAttempt;
+use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
@@ -33,15 +36,39 @@ class TeacherController extends Controller
     }
 
     public function stopExam(Exam $exam) {
+
         if (!$exam->in_process) {
-            $this->constructToastMessage("Prijava znanja nije pokrenuta.", "Neuspjeh", "error");
+            $this->constructToastMessage("Provjera znanja nije pokrenuta.", "Neuspjeh", "error");
             return back();
         }
 
-        $exam->update([
-            "in_process" => false,
-            "end_time" => Carbon::now()
-        ]);
+        try {
+
+            DB::beginTransaction();
+
+            $exam->update([
+                "in_process" => false,
+                "end_time" => Carbon::now()
+            ]);
+
+            $usersToStop = ExamAttempt::where("exam_id", "=", $exam->id)
+                ->get(["user_id"])
+                ->pluck("user_id");
+
+            foreach($usersToStop as $user) {
+                User::where("id", "=", $user)
+                    ->update([
+                        "is_in_exam" => false
+                    ]);
+            }
+            DB::commit();
+        }
+
+        catch (\Throwable $th) {
+            DB::rollBack();
+            $this->constructToastMessage("Nešto nije u redu.", "Neuspjeh", "error");
+            return back();
+        }
 
         $this->constructToastMessage("Provjera znanja uspješno zaustavljena.", "Uspjeh", "success");
         return back();
