@@ -31,6 +31,7 @@ return new class extends Migration
             $table->boolean("is_allowed")->default(false);
             $table->boolean('is_in_pending_status')->default(true);
             $table->boolean("is_in_exam")->default(false);
+            $table->integer("last_accessed_exam")->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -97,8 +97,8 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
             Route::post("/pristup/{exam}/provjera-koda", [StudentController::class, 'joinExam'])->name("join_exam");
         });
         Route::get("/pokusaj/{examAttempt}/ispit/{exam}", [StudentController::class, 'loadExam'])->name("load_exam");
+        Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
     });
-    Route::patch("/pokusaj/{examAttempt}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
 });
 
 

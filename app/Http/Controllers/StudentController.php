@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -54,7 +53,8 @@ class StudentController extends Controller
             ]);
 
             User::where("id", "=", Auth::id())->update([
-                "is_in_exam" => true
+                "is_in_exam" => true,
+                "last_accessed_exam" => $exam->id
             ]);
 
             DB::commit();
@@ -81,11 +81,13 @@ class StudentController extends Controller
         return view("exams.process.spa", compact("examAttempt"));
     }
 
-    public function updateState(ExamAttempt $examAttempt, Request $request) {
+    public function updateState(ExamAttempt $examAttempt, Exam $exam, Request $request) {
+
 
         $requestParse = json_encode([
             "current_question" => $request->input("current_question"),
-            "checked_answers" => $request->input("checked_answers")
+            "checked_answers" => $request->input("checked_answers"),
+            "nav_btns" => $request->input("nav_btns")
         ]);
 
         $examAttempt->where("user_id", "=", Auth::id())

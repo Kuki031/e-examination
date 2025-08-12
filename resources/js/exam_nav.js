@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentQuestion = parseInt(document.getElementById("current_question")?.textContent) || 1;
   const totalQuestions = questions.length;
 
-  const showQuestion = function(n) {
+const showQuestion = function(n) {
     if (n < 1) n = totalQuestions;
     if (n > totalQuestions) n = 1;
 
@@ -67,8 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     navButtons.forEach(btn => btn.classList.remove('active'));
     const activeBtn = Array.from(navButtons).find(btn => btn.textContent == n);
     if (activeBtn) activeBtn.classList.add('active');
-  }
 
+    if (currentQuestion === totalQuestions) {
+        nextBtn.textContent = "Završi ispit";
+    } else {
+        nextBtn.textContent = "Sljedeće pitanje";
+    }
+}
   navButtons.forEach(btn => {
     btn?.addEventListener('click', () => {
       const qNum = parseInt(btn.textContent);
@@ -80,9 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     showQuestion(currentQuestion - 1);
   });
 
-  nextBtn?.addEventListener('click', () => {
-    showQuestion(currentQuestion + 1);
-  });
+nextBtn?.addEventListener('click', () => {
+    if (currentQuestion === totalQuestions) {
+        // TODO: Submit the exam
+        alert("Predaja ispita");
+    } else {
+        showQuestion(currentQuestion + 1);
+    }
+});
 
   showQuestion(currentQuestion);
 });

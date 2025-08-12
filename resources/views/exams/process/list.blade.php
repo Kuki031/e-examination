@@ -32,9 +32,19 @@
                         <td data-label="Otvoreno?">{{ $exam->in_process_formatted }}</td>
                         <td data-label="Akcije">
                             <div class="table-options">
-                                <form action="{{ route('exams.confirmation', $exam) }}">
-                                    <button class="table-options-btn details" type="submit">Pristupi</button>
-                                </form>
+                                @if (!auth()->user()->is_in_exam)
+                                        <form action="{{ route('exams.confirmation', $exam) }}">
+                                            <button class="table-options-btn details" type="submit">Pristupi</button>
+                                        </form>
+                                    @elseif (auth()->user()->is_in_exam && auth()->user()->last_accessed_exam === $exam->id)
+
+                                    @php
+                                        $examAttempt = \App\Models\ExamAttempt::where("user_id", "=", auth()->user()->id)->where("exam_id", "=", $exam->id)->first();
+                                    @endphp
+                                    <form action="{{ route('exams.load_exam', [$examAttempt, $exam]) }}">
+                                        <button class="table-options-btn details" type="submit">Pristupi</button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

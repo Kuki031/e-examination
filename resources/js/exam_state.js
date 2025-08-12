@@ -3,8 +3,11 @@ const navigationButtons = document.querySelector(".navigation-buttons");
 const examProcessSectionNav = document.querySelector(".exam-process-section-nav");
 const attemptId = document.getElementById("attempt_id")?.textContent;
 const shouldRunScript = document.getElementById("load_script");
+const examId = parseInt(document.getElementById("exam_id")?.textContent);
+const currentQuestionId = parseInt(document.getElementById("current_question")?.textContent);
 
-let currentQuestion = 1;
+
+let currentQuestion = currentQuestionId || 1;
 let checked_answers = [];
 
 navigationButtons?.addEventListener("click", function(e) {
@@ -12,16 +15,7 @@ navigationButtons?.addEventListener("click", function(e) {
 
     if (!mainEl.classList.contains('nav-btn')) return;
 
-    switch (mainEl.textContent) {
-        case "Sljedeće pitanje":
-            currentQuestion = loadQuestionDivs().getAttribute("data-question");
-            break;
-        case "Prethodno pitanje":
-            currentQuestion = loadQuestionDivs().getAttribute("data-question");
-            break;
-        default: 0
-            break;
-    }
+    currentQuestion = loadQuestionDivs();
 });
 
 examProcessSectionNav?.addEventListener("click", function(e) {
@@ -34,7 +28,8 @@ examProcessSectionNav?.addEventListener("click", function(e) {
 const loadQuestionDivs = function() {
     const questions = Array.from(document.querySelectorAll(".question-wrap"));
     const currentQuestion = questions.filter(q => q.style.display !== 'none');
-    return currentQuestion[0];
+
+    return currentQuestion[0].getAttribute("data-question");
 }
 
 const loadCheckedAnswer = function() {
@@ -42,15 +37,28 @@ const loadCheckedAnswer = function() {
     return answers.filter(a => a.checked);
 }
 
+const loadCheckedNavButtons = function() {
+    const navBtns = Array.from(document.querySelectorAll(".exam-process-nav-btn"));
+    return navBtns.map((b) => {
+        if (b.classList.contains("checked")) {
+            return b.textContent;
+        }
+    });
+}
+
+// Slanje AJAX requesta za state
 const updateState = async function() {
     try {
 
         const answers = loadCheckedAnswer();
+        const navBtns = loadCheckedNavButtons();
+
         const freshCheckedAnswers = answers.map(el => el.id);
 
-        const request = await axios.patch(`/ispiti/pokusaj/${attemptId}/spremi-stanje`, {
+        const request = await axios.patch(`/ispiti/pokusaj/${attemptId}/ispit/${examId}/spremi-stanje`, {
             current_question: currentQuestion,
-            checked_answers: freshCheckedAnswers
+            checked_answers: freshCheckedAnswers,
+            nav_btns: navBtns
         }, {
             withCredentials: true
         });
@@ -69,3 +77,18 @@ if (shouldRunScript) {
         updateState();
     }, 10000);
 }
+
+questions.forEach(q => {
+    q.addEventListener("click", function(e) {
+        let mainEl = e.target;
+        if (!mainEl.classList.contains('answer')) return;
+
+        const questionParentEl = mainEl.parentElement.parentElement.parentElement.getAttribute("data-question");
+        const navBtns = Array.from(document.querySelectorAll(".exam-process-nav-btn"));
+
+        const btnToChange = navBtns.filter(btn => parseInt(btn.textContent) === parseInt(questionParentEl))[0];
+        btnToChange.classList.add("checked");
+        btnToChange.style.backgroundColor = '#3ea87f';
+
+    })
+})
