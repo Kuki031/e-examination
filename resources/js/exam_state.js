@@ -46,7 +46,6 @@ const loadCheckedNavButtons = function() {
     });
 }
 
-// Slanje AJAX requesta za state
 const updateState = async function() {
     try {
 

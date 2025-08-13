@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureExamIsInProcess;
+use App\Http\Middleware\EnsureStudentIsInExam;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAllowed;
 use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
@@ -97,7 +98,11 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
             Route::post("/pristup/{exam}/provjera-koda", [StudentController::class, 'joinExam'])->name("join_exam");
         });
         Route::get("/pokusaj/{examAttempt}/ispit/{exam}", [StudentController::class, 'loadExam'])->name("load_exam");
-        Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
+
+        Route::middleware([EnsureStudentIsInExam::class])->group(function() {
+            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
+            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
+        });
     });
 });
 

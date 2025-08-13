@@ -14,7 +14,7 @@
     <div class="exam-form-form-wrap">
         <div>
             <label for="time_to_solve">Vrijeme trajanja (u min): </label>
-            <input type="number" name="time_to_solve" id="time_to_solve" min="10" autocomplete="off" value="{{ $exam?->time_to_solve ?? old('time_to_solve') }}">
+            <input type="number" name="time_to_solve" id="time_to_solve" autocomplete="off" value="{{ $exam?->time_to_solve ?? old('time_to_solve') }}">
         </div>
     </div>
     @error('time_to_solve')

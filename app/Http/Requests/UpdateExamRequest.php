@@ -26,7 +26,7 @@ class UpdateExamRequest extends FormRequest
             "name" => ["sometimes", Rule::unique('exams', 'name')->ignore($this->exam)],
             "description" => "nullable",
             "num_of_points" => ["sometimes"],
-            "time_to_solve" => "sometimes|integer|min:10",
+            "time_to_solve" => "sometimes|integer|min:3",
             "required_for_pass" => "sometimes|lte:num_of_points",
             "user_id" => "required"
         ];
@@ -36,7 +36,7 @@ class UpdateExamRequest extends FormRequest
     {
         return [
             "name.unique" => "Provjera znanja sa ovim imenom već postoji.",
-            "time_to_solve.min" => "Vrijeme potrebno za rješavanje mora biti minimalno 10 minuta.",
+            "time_to_solve.min" => "Vrijeme potrebno za rješavanje mora biti minimalno 3 minute.",
             "user_id.required" => "ID korisnika je obavezan.",
             "required_for_pass.lte" => "Broj bodova potrebnih za prolaz ne može biti veći od broja ukupnih bodova.",
         ];

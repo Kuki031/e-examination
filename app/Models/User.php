@@ -31,6 +31,7 @@ class User extends Authenticatable
         'password',
         'is_allowed',
         'is_in_pending_status',
+        'is_in_exam',
         "profile_picture"
     ];
 

@@ -20,9 +20,11 @@ return new class extends Migration
             $table->timestamp('started_at')->nullable();
             $table->timestamp('ended_at')->nullable();
             $table->json('questions');
-            $table->integer('score')->nullable();
+            $table->integer('score')->default(0);
             $table->enum('status', ['in_process', 'finished'])->default('in_process');
             $table->json("state")->nullable();
+            $table->json("stored_answers")->nullable();
+            $table->boolean("has_passed")->default(false);
             $table->timestamps();
         });
     }

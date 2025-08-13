@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
+use Faker\Calculator\Ean;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +100,52 @@ class StudentController extends Controller
         ]);
 
         return response()->json(["message" => "state updated"]);
+    }
+
+    public function storeExam(ExamAttempt $examAttempt, Exam $exam, Request $request) {
+
+        $score = 0;
+        $requiredForPass = $examAttempt->exam->required_for_pass;
+
+        $sentAnswers = $request->input("answerList");
+        $correctAnswers = array_map(function($el) {
+            return $el['answers']['is_correct'];
+        }, $examAttempt->questions);
+
+
+        for($i = 0 ; $i < sizeof($correctAnswers) ; $i++) {
+            if ($correctAnswers[$i] === $sentAnswers[$i]) {
+                $score++;
+            }
+        }
+
+        try {
+
+            DB::beginTransaction();
+
+            $examAttempt->update([
+                "ended_at" => Carbon::now(),
+                "score" => $score,
+                "status" => "finished",
+                "stored_answers" => json_encode($sentAnswers),
+                "has_passed" => $score < $requiredForPass ? false : true
+            ]);
+
+            User::where("id", "=", Auth::id())
+                    ->first()
+                    ->update([
+                        "is_in_exam" => 0
+                    ]);
+
+            DB::commit();
+
+            return response()->json(["message" => "Pohrana ispita izvršena!"], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json(["message" => "Nešto nije u redu!"], 500);
+        }
+
     }
 
     private function isCodeCorrect(string $accessCode, Exam $exam) {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text("description")->nullable();
             $table->integer("num_of_questions")->nullable();
             $table->integer("num_of_points")->nullable();
+            $table->integer("num_participants")->default(0);
             $table->integer("required_for_pass")->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean("in_process")->default(false);

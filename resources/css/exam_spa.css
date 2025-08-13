@@ -16,7 +16,7 @@
     margin: var(--default-margin) auto;
 }
 
-.active {
+.active-question {
     background-color: var(--color-secondary-alter) !important;
 }
 

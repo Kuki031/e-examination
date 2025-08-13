@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExamAttempt extends Model
 {
-    protected $fillable = ["user_id", "exam_id", "started_at", "ended_at", "questions", "score", "status", "state"];
+    protected $fillable = ["user_id", "exam_id", "started_at", "ended_at", "questions", "score", "status", "state", "stored_answers", "has_passed"];
     protected $appends = [];
 
     public function exam() {
@@ -21,6 +21,7 @@ class ExamAttempt extends Model
         "questions" => "array",
         "started_at" => "datetime",
         "ended_at" => "datetime",
-        "state" => "array"
+        "state" => "array",
+        "stored_answers" => "array"
     ];
 }
