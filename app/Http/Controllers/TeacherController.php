@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StopExamEvent;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
 use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -62,6 +64,8 @@ class TeacherController extends Controller
                     ]);
             }
             DB::commit();
+            broadcast(new StopExamEvent($exam->id));
+
         }
 
         catch (\Throwable $th) {

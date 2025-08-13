@@ -6,16 +6,26 @@ import { setFlashMessage } from './questions';
 
 if (document.getElementById("load_script")) {
 
+    const attemptId = document.getElementById("attempt_id")?.textContent;
+    const examId = parseInt(document.getElementById("exam_id")?.textContent);
+    let isSent = false;
+
     document.addEventListener('DOMContentLoaded', () => {
     const timerElement = document.querySelector('.timer');
     const durationMinutes = parseInt(timerElement?.getAttribute('data-time'), 10);
     const startedAtUnix = parseInt(timerElement?.getAttribute('data-started-at'), 10);
     const nowUnix = Math.floor(Date.now() / 1000);
     const elapsedSeconds = nowUnix - startedAtUnix;
-
-
-    let timeLeft = durationMinutes * 60 - elapsedSeconds;
     const countdownSpan = document.getElementById('countdown');
+    let timeLeft = durationMinutes * 60 - elapsedSeconds;
+
+    if (timeLeft <= 0) {
+        isSent = true;
+        countdownSpan.textContent = "00:00";
+        submitExam("Vrijeme je isteklo! Ispit će biti predan.");
+        return;
+    }
+
 
     const formatTime = function(seconds) {
         const mins = Math.floor(seconds / 60);
@@ -28,6 +38,7 @@ if (document.getElementById("load_script")) {
         if (countdownSpan) {
 
             if (timeLeft <= 0) {
+                isSent = true;
                 countdownSpan.textContent = "00:00";
                 clearInterval(timerInterval);
                 submitExam("Vrijeme je isteklo! Ispit će biti predan.");
@@ -48,6 +59,7 @@ if (document.getElementById("load_script")) {
     const navButtons = document.querySelectorAll('.exam-process-nav-btn');
     const prevBtn = document.querySelector('.navigation-buttons button:nth-child(1)');
     const nextBtn = document.querySelector('.navigation-buttons button:nth-child(2)');
+
 
     let currentQuestion = parseInt(document.getElementById("current_question")?.textContent) || 1;
     const totalQuestions = questions.length;
@@ -81,11 +93,16 @@ if (document.getElementById("load_script")) {
     });
 
     prevBtn?.addEventListener('click', () => {
+        if (isSent) return;
         showQuestion(currentQuestion - 1);
     });
 
     nextBtn?.addEventListener('click', () => {
-        if (currentQuestion === totalQuestions) {
+
+        if (isSent) return;
+
+        else if (currentQuestion === totalQuestions) {
+            nextBtn.setAttribute("disabled", "disabled");
             submitExam("Pohrana ispita izvršena!");
         } else {
             showQuestion(currentQuestion + 1);
@@ -116,14 +133,11 @@ if (document.getElementById("load_script")) {
 
     const submitExam = async function(message) {
 
-        const attemptId = document.getElementById("attempt_id")?.textContent;
-        const examId = parseInt(document.getElementById("exam_id")?.textContent);
-
         const answerList = prepareQuestionsForAjax();
 
         try {
 
-            const request = await axios.patch(`/ispiti/pokusaj/${attemptId}/ispit/${examId}/spremi-ispit`, {answerList}, {
+            const request = await axios.patch(`/ispiti/pokusaj/${attemptId}/ispit/${examId}/spremi-ispit`, { answerList }, {
                 withCredentials: true
             });
 
@@ -139,4 +153,11 @@ if (document.getElementById("load_script")) {
 
         }
     }
+
+    window.Echo.join(`exam.${examId}`)
+        .listen('.exam.stopped', (e) => {
+        isSent = true;
+        submitExam("Ispit je prekinut! Vaš rezultat biti će pohranjen.");
+    });
+
 }

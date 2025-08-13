@@ -101,9 +101,9 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
 
         Route::middleware([EnsureStudentIsInExam::class])->group(function() {
             Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
-            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
         });
     });
+    Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
 });
 
 
