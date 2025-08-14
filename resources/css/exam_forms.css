@@ -119,6 +119,12 @@
     margin: var(--default-margin) auto;
 }
 
+.exam-code div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
 .exam-code-input {
     padding: var(--default-padding);
     border: none;

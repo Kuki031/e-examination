@@ -41,7 +41,7 @@
 
         <div class="exam-form-section">
             <div class="exam-form-content">
-                <h4>Detalji provjere znanja: {{ $exam?->name }}</h4>
+                <h4>{{ $exam?->name }}</h4>
 
                 @foreach ([
                     ['num_of_questions', 'Broj pitanja', $exam?->num_of_questions ?? 'Nema pitanja'],
@@ -73,17 +73,19 @@
             <div class="exam-form-content">
                 <h4>Pristupni kod</h4>
                 <div class="exam-code">
-                    <input
+                    <div>
+                        <input
                         class="exam-code-input exam-code-input-input"
                         type="text"
                         name="security_code"
                         autocomplete="off"
                         value="{{ $exam->access_code_formatted }}"
                         disabled
-                    >
-                    <button class="exam-code-input exam-code-input-button">
-                        Generiraj pristupni kod
-                    </button>
+                        >
+                        <button class="exam-code-input exam-code-input-button">
+                            Generiraj pristupni kod
+                        </button>
+                    </div>
                     @if (!$exam->in_process)
                         <form action="{{ route('teacher.start_exam', $exam) }}" method="POST">
                         @csrf

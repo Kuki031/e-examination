@@ -39,10 +39,15 @@
                                     @elseif (auth()->user()->is_in_exam && auth()->user()->last_accessed_exam === $exam->id)
 
                                     @php
-                                        $examAttempt = \App\Models\ExamAttempt::where("user_id", "=", auth()->user()->id)->where("exam_id", "=", $exam->id)->first();
+                                        $examAttempt = \App\Models\ExamAttempt::where("user_id", "=", auth()->user()->id)
+                                        ->where("exam_id", "=", $exam->id)
+                                        ->latest()
+                                        ->first();
                                     @endphp
                                     <form action="{{ route('exams.load_exam', [$examAttempt, $exam]) }}">
-                                        <button class="table-options-btn details" type="submit">Pristupi</button>
+                                        <button
+                                        style="{{ $examAttempt->status === 'in_process' ? 'background-color: #1F2A44;' : '' }}"
+                                        class="table-options-btn details" type="submit">{{ $examAttempt->status === 'in_process' ? 'U tijeku🕓' : 'Pristupi' }}</button>
                                     </form>
                                 @endif
                             </div>

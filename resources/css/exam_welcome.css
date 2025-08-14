@@ -5,6 +5,8 @@
     align-items: center;
     justify-content: center;
     margin: var(--default-margin);
+    padding: var(--default-padding);
+    box-sizing: border-box;
 }
 
 .exam-welcome-wrap {
@@ -19,6 +21,9 @@
     box-shadow: var(--default-box-shadow);
     transition: var(--transitions);
     animation: fadeIn ease-in-out 1s;
+    max-width: 800px;
+    text-align: center;
+    word-wrap: break-word;
 }
 
 .exam-welcome-header {
@@ -27,33 +32,41 @@
     color: var(--color-primary);
     border: none;
     border-radius: var(--default-image-radius);
-    align-self: start;
     font-size: var(--font-size-cells);
     box-shadow: var(--default-box-shadow);
+    width: 100%;
 }
 
 .exam-welcome-header h2 {
-    align-self: flex-start;
+    margin: 0;
+    text-align: center;
 }
 
 .exam-information-main {
-    align-self: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     margin: var(--default-margin) 0;
     padding: var(--default-padding);
     border: none;
     border-radius: var(--default-image-radius);
     box-shadow: var(--default-box-shadow);
     color: var(--color-primary);
+    font-size: var(--default-font);
+    text-align: left;
+    width: 100%;
 }
-
 
 .exam-information-main div {
     font-size: var(--default-font);
 }
 
 .exam-p {
+    display: block;
     margin-top: var(--default-margin);
+    word-break: break-word;
 }
+
 
 .exam-options {
     display: flex;
@@ -61,6 +74,7 @@
     flex-direction: row;
     align-self: start;
     font-size: var(--default-font);
+    align-self: flex-end;
 }
 
 .exam-options div:first-child {

@@ -49,9 +49,8 @@
                     <div class="profile-section-input">
                         <label class="profile-label" for="profile_picture">Slika profila:</label>
 
-                        <div
-                            class="profile-picture"
-                            style="background-image: url('{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/auth_module/user_placeholder.png') }}');">
+                        <div class="profile-picture">
+                            <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/auth_module/user_placeholder.png') }}" alt="">
                         </div>
 
                         <input

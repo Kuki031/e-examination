@@ -2,7 +2,7 @@
     <div class="exam-form-form-wrap">
         <div>
             <label for="name">Naziv: </label>
-            <input type="text" name="name" id="name" autocomplete="off" value="{{ $exam?->name ?? old('name') }}">
+            <input type="text" name="name" id="name" spellcheck="false" autocomplete="off" value="{{ $exam?->name ?? old('name') }}">
         </div>
     </div>
     @error('name')

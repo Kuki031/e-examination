@@ -35,7 +35,9 @@
                         <td data-label="Akcije">
                             <div class="table-options">
                                 <form action="{{ route('teacher.exam_details', $exam) }}">
-                                    <button class="table-options-btn details" type="submit">Detalji</button>
+                                    <button
+                                    style="{{ $exam->in_process ? 'background-color: #1F2A44' : '' }}"
+                                     class="table-options-btn details" type="submit">{{ $exam->in_process ? 'U tijeku' : 'Detalji' }}</button>
                                 </form>
                             </div>
                         </td>
