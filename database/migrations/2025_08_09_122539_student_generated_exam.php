@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json("state")->nullable();
             $table->json("stored_answers")->nullable();
             $table->boolean("has_passed")->default(false);
+            $table->enum("note", ["Nije predano" ,"Uredno predano", "Ispit zaustavljen - Nije bio prisutan"])->default("Nije predano");
             $table->timestamps();
         });
     }

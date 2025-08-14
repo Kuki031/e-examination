@@ -128,7 +128,8 @@ class StudentController extends Controller
                 "score" => $score,
                 "status" => "finished",
                 "stored_answers" => json_encode($sentAnswers),
-                "has_passed" => $score < $requiredForPass ? false : true
+                "has_passed" => $score < $requiredForPass ? false : true,
+                "note" => "Uredno predano"
             ]);
 
             User::where("id", "=", Auth::id())

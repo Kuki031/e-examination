@@ -72,16 +72,23 @@ class TeacherController extends Controller
             DB::commit();
             broadcast(new StopExamEvent($exam->id));
 
-            $examAttempts = ExamAttempt::where("started_at" , ">", $exam->start_time)
-                ->where("exam_id", "=", $exam->id)
+            $examAttempts = ExamAttempt::where("exam_id", "=", $exam->id)
+                ->where("started_at", ">", $exam->start_time)
                 ->get();
 
-            foreach($examAttempts as $exam)
+            foreach($examAttempts as $attempt)
             {
-                $exam->update([
-                    "status" => "finished",
-                    "ended_at" => Carbon::now()
-                ]);
+                if (!$attempt->ended_at) {
+                    $attempt->update([
+                        "score" => 0,
+                        "status" => "finished",
+                        "has_passed" => 0,
+                        "ended_at" => Carbon::now(),
+                        "note" => "Ispit zaustavljen - Nije bio prisutan"
+                    ]);
+                } else {
+                    continue;
+                }
             }
         }
 
