@@ -1,0 +1,78 @@
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    padding: var(--default-padding);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-box {
+    background-color: var(--color-tertiary);
+    padding: 2rem;
+    border-radius: var(--default-radius);
+    box-shadow: var(--default-box-shadow);
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn ease-in-out .5s;
+}
+
+.modal-title {
+    font-size: var(--default-heading-font);
+    color: var(--color-primary);
+    margin-bottom: var(--default-margin);
+}
+
+.modal-subtitle {
+    font-size: var(--default-font);
+    color: var(--color-primary);
+    margin-bottom: var(--default-margin);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--default-element-gap);
+}
+
+.modal-button {
+    padding: var(--default-padding);
+    border-radius: var(--default-radius);
+    font-size: var(--default-font);
+    border: none;
+    cursor: pointer;
+    transition: var(--transitions);
+}
+
+.modal-button.confirm {
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+}
+
+.modal-button.cancel {
+    background-color: var(--color-danger);
+    color: var(--color-tertiary);
+}
+
+.strict-confirmation-btn {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+    cursor: pointer;
+    transition: var(--transitions);
+    color: var(--color-tertiary);
+}
+
+.strict-confirmation-btn:hover {
+    background-color: var(--color-tertiary);
+}

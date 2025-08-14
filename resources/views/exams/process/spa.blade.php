@@ -77,3 +77,5 @@
     </div>
   </div>
 </div>
+
+<x-spa-modal :subtitle="'Želite li predati ispit?'" />

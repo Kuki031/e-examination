@@ -28,6 +28,11 @@ class TeacherController extends Controller
             return back();
         }
 
+        if ($exam->required_for_pass > $exam->num_of_points) {
+            $this->constructToastMessage("Broj bodova potrebnih za prolaz ne može biti veći od broja ukupnih bodova.", "Neuspjelo pokretanje ispita.", "error");
+            return back();
+        }
+
         $exam->update([
             "in_process" => true,
             "start_time" => Carbon::now()
@@ -63,9 +68,21 @@ class TeacherController extends Controller
                         "is_in_exam" => false
                     ]);
             }
+
             DB::commit();
             broadcast(new StopExamEvent($exam->id));
 
+            $examAttempts = ExamAttempt::where("started_at" , ">", $exam->start_time)
+                ->where("exam_id", "=", $exam->id)
+                ->get();
+
+            foreach($examAttempts as $exam)
+            {
+                $exam->update([
+                    "status" => "finished",
+                    "ended_at" => Carbon::now()
+                ]);
+            }
         }
 
         catch (\Throwable $th) {

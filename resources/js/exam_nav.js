@@ -102,8 +102,33 @@ if (document.getElementById("load_script")) {
         if (isSent) return;
 
         else if (currentQuestion === totalQuestions) {
-            nextBtn.setAttribute("disabled", "disabled");
-            submitExam("Pohrana ispita izvršena!");
+
+            const unAnsweredQuestions = determineUnansweredQuestions();
+
+            const modal = document.querySelector(".modal-overlay");
+
+            if (unAnsweredQuestions) {
+                modal.querySelector(".modal-box .alert")?.classList.remove("hidden");
+            } else {
+                modal.querySelector(".modal-box .alert")?.classList.add("hidden");
+            }
+
+            modal.classList.add("active");
+            modal.addEventListener("click", function(e) {
+                let mainEl = e.target;
+                if (!mainEl.classList.contains("modal-button")) return;
+
+                if (mainEl.classList.contains('confirm')) {
+
+                    nextBtn.setAttribute("disabled", "disabled");
+                    prevBtn.setAttribute("disabled", "disabled");
+                    submitExam("Pohrana ispita izvršena!");
+                    e.stopImmediatePropagation();
+                } else if (mainEl.classList.contains('cancel')) {
+                    e.stopImmediatePropagation();
+                    return;
+                }
+            })
         } else {
             showQuestion(currentQuestion + 1);
         }
@@ -135,6 +160,7 @@ if (document.getElementById("load_script")) {
 
         const answerList = prepareQuestionsForAjax();
 
+
         try {
 
             const request = await axios.patch(`/ispiti/pokusaj/${attemptId}/ispit/${examId}/spremi-ispit`, { answerList }, {
@@ -153,6 +179,12 @@ if (document.getElementById("load_script")) {
 
         }
     }
+
+    const determineUnansweredQuestions = function() {
+        const questions = prepareQuestionsForAjax();
+        return questions.some(x => x === 0);
+    }
+
 
     window.Echo.join(`exam.${examId}`)
         .listen('.exam.stopped', (e) => {

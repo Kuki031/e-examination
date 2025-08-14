@@ -17,7 +17,8 @@
 }
 
 .active-question {
-    background-color: var(--color-secondary-alter) !important;
+    background-color: var(--color-tertiary) !important;
+    color: var(--color-primary) !important;
 }
 
 .nav-section {
