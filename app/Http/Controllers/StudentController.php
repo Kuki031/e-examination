@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
-use Faker\Calculator\Ean;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +49,8 @@ class StudentController extends Controller
                 "user_id" => Auth::id(),
                 "questions" => $questions,
                 "status" => "in_process",
-                "started_at" => Carbon::now()
+                "started_at" => Carbon::now(),
+                "ip_address" => $request->ip()
             ]);
 
             User::where("id", "=", Auth::id())->update([

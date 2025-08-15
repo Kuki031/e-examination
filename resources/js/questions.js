@@ -196,7 +196,11 @@ const addQuestionFunc = function(appendEl) {
 }
 
 let questions = [];
-examOptions?.addEventListener("click", () => {
+let isSaving = false;
+examOptions?.addEventListener("click", (e) => {
+
+    if (isSaving) return;
+
 
     let hasError = false;
     const questionDivs = Array.from(document.querySelectorAll(".question-div"));
@@ -297,6 +301,7 @@ examOptions?.addEventListener("click", () => {
     {
         return;
     }
+    isSaving = true;
     saveQuestions();
 });
 

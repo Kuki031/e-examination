@@ -50,8 +50,10 @@ mainAnswerDivWrap?.addEventListener("click", function(e) {
         }
 });
 
-
+let isSaving = false;
 document.querySelector('.update-answers')?.addEventListener("click", (e) => {
+
+    if (isSaving) return;
 
     let hasError = false;
     const answers = Array.from(document.querySelectorAll('.answer'));
@@ -102,7 +104,7 @@ document.querySelector('.update-answers')?.addEventListener("click", (e) => {
     answersObj.is_correct = correctAnswerInput.value;
     questions.answers = answersObj;
 
-
+    isSaving = true;
     saveAnswers({questions});
 
 });

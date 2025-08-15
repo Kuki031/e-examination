@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProctorController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -101,6 +102,7 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
 
         Route::middleware([EnsureStudentIsInExam::class])->group(function() {
             Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
+            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/aktivnost", [ProctorController::class, 'logActivity'])->name("log_activity");
         });
     });
     Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");

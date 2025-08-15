@@ -85,9 +85,11 @@ questions.forEach(q => {
         const questionParentEl = mainEl.parentElement.parentElement.parentElement.getAttribute("data-question");
         const navBtns = Array.from(document.querySelectorAll(".exam-process-nav-btn"));
 
-        const btnToChange = navBtns.filter(btn => parseInt(btn.textContent) === parseInt(questionParentEl))[0];
-        btnToChange.classList.add("checked");
-        btnToChange.style.backgroundColor = '#3ea87f';
+        const btnToChange = navBtns?.filter(btn => parseInt(btn.textContent) === parseInt(questionParentEl))[0];
+        btnToChange?.classList.add("checked");
 
+        if(btnToChange) {
+            btnToChange.style.backgroundColor = '#3ea87f';
+        }
     })
 })

@@ -12,6 +12,7 @@
 <span id="current_question" hidden>{{ $currentQuestion }}</span>
 <span id="load_script" hidden>1</span>
 <span id="exam_id" hidden>{{ $examAttempt->exam_id }}</span>
+<span id="activity_log" hidden></span>
 
 <div class="exam-process-main">
     <div class="exam-header">

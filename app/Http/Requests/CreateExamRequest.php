@@ -24,7 +24,7 @@ class CreateExamRequest extends FormRequest
         return [
             "name" => "required|unique:exams,name",
             "description" => "nullable",
-            "time_to_solve" => "required|integer|min:10",
+            "time_to_solve" => "required|integer|min:1",
             "user_id" => "required"
         ];
     }
@@ -35,7 +35,7 @@ class CreateExamRequest extends FormRequest
             "name.required" => "Naziv provjere znanja je obavezan.",
             "name.unique" => "Provjera znanja sa ovim imenom već postoji.",
             "time_to_solve.required" => "Vrijeme potrebno za rješavanje provjere znanja je obavezno.",
-            "time_to_solve.min" => "Vrijeme potrebno za rješavanje mora biti minimalno 10 minuta.",
+            "time_to_solve.min" => "Vrijeme potrebno za rješavanje mora biti minimalno 1 minuta.",
             "user_id.required" => "ID korisnika je obavezan."
         ];
     }
