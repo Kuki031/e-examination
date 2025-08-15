@@ -32,4 +32,8 @@ class ProctorController extends Controller
 
         return response()->json(["activity" => $activity, "time" => $time, "actions" => $examAttemptJson]);
     }
+
+    public function enterProctoringMode(Exam $exam) {
+        return view("exams.process.proctoring", compact("exam"));
+    }
 }

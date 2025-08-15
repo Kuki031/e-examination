@@ -192,4 +192,5 @@ if (document.getElementById("load_script")) {
         submitExam("Ispit je prekinut! Vaš rezultat biti će pohranjen.");
     });
 
+    window.Echo.join(`proctor.${examId}`);
 }

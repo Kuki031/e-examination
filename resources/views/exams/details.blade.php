@@ -87,6 +87,7 @@
                         </button>
                     </div>
                     @if (!$exam->in_process)
+
                         <form action="{{ route('teacher.start_exam', $exam) }}" method="POST">
                         @csrf
                         @method('PATCH')
@@ -97,6 +98,7 @@
                         </button>
                     </form>
                     @else
+                    <a style="display:block; padding: 1rem; background-color: lime; color: #fff;" href="{{ route('teacher.start_proctor', $exam) }}">Praćenje ispita</a>
                     <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
                         @csrf
                         @method('PATCH')

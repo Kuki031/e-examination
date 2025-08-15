@@ -1,0 +1,68 @@
+.proctor-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin);
+    gap: var(--default-element-gap);
+}
+
+.proctor-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin: var(--default-margin);
+    background-color: var(--color-tertiary);
+    box-shadow: var(--default-box-shadow);
+}
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--default-margin);
+    padding: var(--default-padding);
+    border: none;
+}
+
+.card-wrapper span {
+    font-size: var(--default-font);
+}
+
+.student-card {
+    width: var(--profile-picture-width);
+    height: var(--profile-picture-height);
+    margin: var(--default-margin);
+    background-image: url("/public/images/auth_module/students.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
+}
+
+.proctor-options {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    background-color: var(--color-tertiary);
+    padding: var(--default-padding);
+    color: var(--color-primary);
+    border: none;
+    border-radius: var(--default-image-radius);
+    align-self: start;
+    box-shadow: var(--default-box-shadow);
+}
+
+
+.proctor-option input {
+    font-size: var(--default-font);
+    padding: var(--default-padding);
+    border: none;
+    background-color: #fff;
+    border-radius: var(--default-image-radius);
+    transition: var(--transitions);
+}

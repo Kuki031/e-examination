@@ -17,7 +17,7 @@
 @import url('./exam_welcome.css');
 @import url('./exam_spa.css');
 @import url('./spa_modal.css');
-
+@import url('./proctor.css');
 
 *, *::after, *::before {
     margin: 0;
