@@ -188,9 +188,11 @@ if (document.getElementById("load_script")) {
 
     window.Echo.join(`exam.${examId}`)
         .listen('.exam.stopped', (e) => {
-        isSent = true;
-        submitExam("Ispit je prekinut! Vaš rezultat biti će pohranjen.");
-    });
+            isSent = true;
+            submitExam("Ispit je prekinut! Vaš rezultat biti će pohranjen.");
+        }).listen('.exam.notification', (e) => {
+            setFlashMessage(e.notification, SUCCESS_COLOR);
+        });
 
     window.Echo.join(`proctor.${examId}`);
 }

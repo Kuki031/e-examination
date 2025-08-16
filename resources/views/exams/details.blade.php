@@ -98,7 +98,7 @@
                         </button>
                     </form>
                     @else
-                    <a style="display:block; padding: 1rem; background-color: lime; color: #fff;" href="{{ route('teacher.start_proctor', $exam) }}">Praćenje ispita</a>
+
                     <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
                         @csrf
                         @method('PATCH')
@@ -107,6 +107,7 @@
                             Zaustavi provjeru znanja
                         </button>
                     </form>
+                    <a class="action-button proctor-a" href="{{ route('teacher.start_proctor', $exam) }}">Praćenje ispita</a>
                     @endif
                 </div>
             </div>

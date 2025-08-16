@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendNotification;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
 use App\Traits\Search;
@@ -35,5 +36,10 @@ class ProctorController extends Controller
 
     public function enterProctoringMode(Exam $exam) {
         return view("exams.process.proctoring", compact("exam"));
+    }
+
+    public function sendNotificationViaSocket(Request $request, Exam $exam) {
+        $notification = $request->input("notification");
+        broadcast(new SendNotification($exam->id, $notification));
     }
 }

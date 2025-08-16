@@ -105,6 +105,7 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
             Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
             Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/aktivnost", [ProctorController::class, 'logActivity'])->name("log_activity");
         });
+        Route::post("/ispit/{exam}/posalji-notifikaciju", [ProctorController::class, 'sendNotificationViaSocket'])->name("notify");
     });
     Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
 });
