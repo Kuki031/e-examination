@@ -101,4 +101,8 @@ class TeacherController extends Controller
         $this->constructToastMessage("Provjera znanja uspješno zaustavljena.", "Uspjeh", "success");
         return back();
     }
+
+    public function getUser(User $user) {
+        return view("teacher.user_profile", compact("user"));
+    }
 }

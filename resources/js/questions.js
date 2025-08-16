@@ -81,7 +81,7 @@ const addQuestionFunc = function(appendEl) {
         answerDiv.classList.add("answer_div");
         mainEl.parentElement.appendChild(answerDiv);
 
-        const answerInput = document.createElement("textarea");
+        const answerInput = document.createElement("input");
         answerInput.name = "answer";
         answerInput.autocomplete = "off";
         answerInput.spellcheck = false;

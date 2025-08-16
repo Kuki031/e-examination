@@ -4,6 +4,7 @@
     flex-direction: column;
     margin: var(--default-margin);
     gap: var(--default-element-gap);
+    animation: fadeIn ease-in-out .5s;
 }
 
 .proctor-wrap {
@@ -76,15 +77,19 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
     font-size: var(--default-error-font);
     padding: var(--smaller-padding);
     border: none;
     border-radius: var(--default-image-radius);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+    cursor: pointer;
 }
 
 .proctor-a:hover {
-    color: var(--color-primary);
+    color: var(--color-secondary);
+    background-color: var(--color-tertiary);
 }
 
 .proctor-header {

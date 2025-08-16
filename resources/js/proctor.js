@@ -2,6 +2,7 @@ if (document.getElementById("start_proctoring")) {
     const examId = document.getElementById("exam_id")?.textContent;
     const mainWrap = document.querySelector(".proctor-wrap");
     const notifyBtn = document.querySelector(".notify");
+    const searchStudent = document.getElementById("search_student");
 
     window.Echo.join(`proctor.${examId}`)
         .joining((user) => {
@@ -25,8 +26,10 @@ if (document.getElementById("start_proctoring")) {
             wrapEl.classList.add("card-wrapper");
 
             const el = document.createElement("div");
-            const spanEl = document.createElement("span");
-            spanEl.textContent = students[i].name;
+            const anchorEl = document.createElement("a");
+            anchorEl.textContent = students[i].name;
+            anchorEl.href = `/nastavnik/korisnik/${students[i].id}/informacije`;
+            anchorEl.classList.add("proctor-a");
 
             el.classList.add("student-card");
             el.id = `${students[i].id}`;
@@ -41,7 +44,7 @@ if (document.getElementById("start_proctoring")) {
                 continue;
             }
             wrapEl.appendChild(el);
-            wrapEl.appendChild(spanEl);
+            wrapEl.appendChild(anchorEl);
             appendEl.appendChild(wrapEl);
         }
     }
@@ -58,8 +61,10 @@ if (document.getElementById("start_proctoring")) {
         const wrapEl = document.createElement("div");
         wrapEl.classList.add("card-wrapper");
 
-        const spanEl = document.createElement("span");
-        spanEl.textContent = name;
+        const anchorEl = document.createElement("a");
+        anchorEl.textContent = name;
+        anchorEl.href = `/nastavnik/korisnik/${id}/informacije`;
+        anchorEl.classList.add("proctor-a")
         const el = document.createElement("div");
         el.classList.add("student-card");
         el.id = `${id}`;
@@ -69,7 +74,7 @@ if (document.getElementById("start_proctoring")) {
 
         el.style.backgroundImage = `url(${pic})`;
         wrapEl.appendChild(el);
-        wrapEl.appendChild(spanEl);
+        wrapEl.appendChild(anchorEl);
 
         return wrapEl;
     }
@@ -87,7 +92,7 @@ if (document.getElementById("start_proctoring")) {
     const sendNotification = async function(msg) {
 
         try {
-            await axios.post(`/ispiti/ispit/${examId}/posalji-notifikaciju`, {notification: msg}, {
+            await axios.post(`/ispiti/ispit/${examId}/posalji-notifikaciju`, {notification: "Poruka od nastavnika: " + msg}, {
                 withCredentials: true
             });
 
@@ -95,4 +100,28 @@ if (document.getElementById("start_proctoring")) {
             console.error(error);
         }
     }
+
+    const proctorSearch = function() {
+        const searchInput = document.getElementById('search_student');
+        const allStudents = Array.from(document.querySelectorAll('.card-wrapper .proctor-a'));
+
+        if (!searchInput.value) {
+            allStudents.forEach(student => student.parentElement.style.display = 'flex');
+            return;
+        }
+
+        for (const student of allStudents) {
+            const text = student.textContent.toLowerCase();
+            const parentEl = student.parentElement;
+
+
+            if (!text.includes(searchInput.value.toLowerCase())) {
+                parentEl.style.display = 'none';
+            } else {
+                parentEl.style.display = 'flex';
+            }
+        }
+    }
+
+    searchStudent.addEventListener("keyup", proctorSearch);
 }

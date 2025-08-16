@@ -7,7 +7,7 @@
     <div>
         <div class="proctor-options">
         <div class="proctor-option">
-            <input type="text" placeholder="Pretraži studenta" spellcheck="false" autocomplete="off">
+            <input id="search_student" type="text" placeholder="Pretraži studenta" spellcheck="false" autocomplete="off">
         </div>
         <div class="proctor-option">
             <div>

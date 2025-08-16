@@ -69,6 +69,7 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->
 
 // Upravljanje ispitima, rute za nastavnika ili admina (jer admin može biti i nastavnik)
 Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
+    Route::get("/korisnik/{user}/informacije", [TeacherController::class, 'getUser'])->name("user_profile");
     Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
     Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");
     Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");

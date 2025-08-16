@@ -36,6 +36,25 @@
     border-radius: var(--default-image-radius);
 }
 
+
+.profile-section-teacher {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    background-color: var(--color-bg-profile);
+    border-radius: var(--default-image-radius);
+    border: none;
+    padding: var(--default-padding);
+}
+
+.profile-section-input-teacher {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+
 .profile-section-input {
     display: flex;
     flex-wrap: wrap;
