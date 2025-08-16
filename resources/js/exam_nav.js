@@ -1,6 +1,6 @@
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
-import {DANGER_COLOR, SUCCESS_COLOR} from './constants';
+import {DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR} from './constants';
 import { setFlashMessage } from './questions';
 
 
@@ -191,7 +191,7 @@ if (document.getElementById("load_script")) {
             isSent = true;
             submitExam("Ispit je prekinut! Vaš rezultat biti će pohranjen.");
         }).listen('.exam.notification', (e) => {
-            setFlashMessage(e.notification, SUCCESS_COLOR);
+            setFlashMessage(e.notification, WARNING_COLOR);
         });
 
     window.Echo.join(`proctor.${examId}`);

@@ -15,6 +15,12 @@
     box-shadow: var(--default-box-shadow);
 }
 
+.student-activity {
+    background-color: var(--color-tertiary);
+    padding: var(--default-padding);
+    box-shadow: var(--default-box-shadow);
+}
+
 .card-wrapper {
     display: flex;
     flex-wrap: wrap;

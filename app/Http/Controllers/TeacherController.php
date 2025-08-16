@@ -103,6 +103,11 @@ class TeacherController extends Controller
     }
 
     public function getUser(User $user) {
-        return view("teacher.user_profile", compact("user"));
+
+        $latestAttempt = $user->examAttempts()
+            ->latest()
+            ->first();
+
+        return view("teacher.user_profile", compact("user", "latestAttempt"));
     }
 }

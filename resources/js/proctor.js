@@ -1,3 +1,8 @@
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
+import {DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR} from './constants';
+import { setFlashMessage } from './questions';
+
 if (document.getElementById("start_proctoring")) {
     const examId = document.getElementById("exam_id")?.textContent;
     const mainWrap = document.querySelector(".proctor-wrap");
@@ -92,9 +97,16 @@ if (document.getElementById("start_proctoring")) {
     const sendNotification = async function(msg) {
 
         try {
-            await axios.post(`/ispiti/ispit/${examId}/posalji-notifikaciju`, {notification: "Poruka od nastavnika: " + msg}, {
+            const req = await axios.post(`/ispiti/ispit/${examId}/posalji-notifikaciju`, {notification: "Poruka od nastavnika: " + msg}, {
                 withCredentials: true
             });
+
+            if (req.status === 200) {
+                const inp = document.getElementById("notification");
+                inp.value = '';
+                setFlashMessage("Notifikacija uspješno poslana.", SUCCESS_COLOR);
+            }
+
 
         } catch (error) {
             console.error(error);

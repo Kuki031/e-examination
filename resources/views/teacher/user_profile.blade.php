@@ -1,5 +1,10 @@
 <x-header />
 
+
+@php
+    $last = $latestAttempt->actions[array_key_last($latestAttempt->actions)];
+@endphp
+
 <div class="profile-main">
     <div class="profile-wrap">
         <div class="profile-title">
@@ -28,6 +33,13 @@
                 <div class="profile-section-input-teacher">
                     <label class="profile-label" for="full_name">Prezime i ime: </label>
                     <span class="status">{{ $user->full_name_formatted }}</span>
+                </div>
+
+
+                <div class="profile-section-input-teacher student-activity">
+                    <label class="profile-label">Zadnja aktivnost: </label>
+                    <span class="status">Vrijeme: {{ $last['time'] }}</span>
+                    <span class="status">Aktivnost: {{ $last['activity'] }}</span>
                 </div>
             </div>
 
