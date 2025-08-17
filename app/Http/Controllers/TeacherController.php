@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
-use COM;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +41,9 @@ class TeacherController extends Controller
 
         ConductedExam::create([
             "exam_id" => $exam->id,
-            "start_time" => Carbon::now()
+            "start_time" => Carbon::now(),
+            "time_to_solve" => $exam->time_to_solve,
+            "required_for_pass" => $exam->required_for_pass
         ]);
 
         $this->constructToastMessage("Prijava znanja uspješno pokrenuta. Kako bi studenti mogli pristupiti istoj, morate im podijeliti pristupni kod.", "Uspjeh", "success", 4500);
@@ -73,7 +74,6 @@ class TeacherController extends Controller
                 ->get(["user_id"])
                 ->pluck("user_id");
 
-            $countOfParticipants = sizeof($usersToStop);
 
             foreach($usersToStop as $user) {
                 User::where("id", "=", $user)
@@ -83,7 +83,7 @@ class TeacherController extends Controller
             }
 
             $lastConcludedExam->update([
-                "num_of_participants" => $countOfParticipants,
+                "num_of_participants" => $lastConcludedExam->num_of_participants,
                 "end_time" => Carbon::now()
             ]);
 

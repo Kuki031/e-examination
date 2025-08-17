@@ -66,7 +66,7 @@
             </div>
         @endforeach
 
-        <div class="timer" data-time="{{ $examAttempt->exam->time_to_solve }}" data-started-at="{{ $examAttempt->started_at->timestamp }}">
+        <div class="timer" data-time="{{ $timeToSolve->time_to_solve }}" data-started-at="{{ $examAttempt->started_at->timestamp }}">
             <span id="countdown">--:--</span>
         </div>
       </div>

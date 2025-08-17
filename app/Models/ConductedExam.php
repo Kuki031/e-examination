@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConductedExam extends Model
 {
-    protected $fillable = ["exam_id", "exam_attempt_id", "num_of_participants", "start_time", "end_time"];
+    protected $fillable = ["exam_id", "exam_attempt_id", "num_of_participants", "start_time", "end_time", "time_to_solve", "required_for_pass", "num_of_participants"];
     protected $appends = ["created_at_formatted", "updated_at_formatted", "start_time_formatted", "end_time_formatted"];
 
     protected $casts = [

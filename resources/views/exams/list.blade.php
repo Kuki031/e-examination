@@ -7,6 +7,8 @@
             <h2>Provjere znanja</h2>
         </div>
 
+        @if (sizeof($exams) > 0)
+
         <div class="table-title">
             <x-search-bar :search="'provjere znanja'" />
             @if(request('search'))
@@ -48,6 +50,11 @@
         <div>
             {{ $exams->links('vendor.pagination.simple-next-prev') }}
         </div>
+        @else
+            <div>
+                <h1 style="color: #1F2A44; margin-top: 1rem;">Nemate kreiranih provjeri znanja!</h1>
+            </div>
+        @endif
     </div>
 </div>
 

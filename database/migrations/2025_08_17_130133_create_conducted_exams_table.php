@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Exam::class);
             $table->integer("num_of_participants")->default(0);
+            $table->integer("time_to_solve")->nullable();
+            $table->integer("required_for_pass")->nullable();
             $table->timestamp("start_time")->nullable();
             $table->timestamp("end_time")->nullable();
             $table->timestamps();

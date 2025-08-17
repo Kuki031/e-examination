@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConductedExam;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
 use App\Models\User;
@@ -33,6 +34,7 @@ class StudentController extends Controller
     public function joinExam(Exam $exam, Request $request) {
         $isCodeCorrect = $this->isCodeCorrect($request->input("access_code"), $exam);
 
+
         if (!$isCodeCorrect) {
             $this->constructToastMessage("Netočan pristupni kod!", "Neuspjeh", "error");
             return back();
@@ -44,6 +46,10 @@ class StudentController extends Controller
 
             DB::beginTransaction();
 
+            $lastConcludedExam = ConductedExam::where("exam_id", $exam->id)
+                ->latest()
+                ->first();
+
             $attempt = ExamAttempt::create([
                 "exam_id" => $exam->id,
                 "user_id" => Auth::id(),
@@ -51,6 +57,10 @@ class StudentController extends Controller
                 "status" => "in_process",
                 "started_at" => Carbon::now(),
                 "ip_address" => $request->ip()
+            ]);
+
+            $lastConcludedExam->update([
+                "num_of_participants" => (int) $lastConcludedExam->num_of_participants + 1
             ]);
 
             User::where("id", "=", Auth::id())->update([
@@ -63,7 +73,7 @@ class StudentController extends Controller
             return to_route("exams.load_exam", [
                     'examAttempt' => $attempt->id,
                     'exam' => $exam->id
-                ]);
+            ]);
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -79,7 +89,12 @@ class StudentController extends Controller
             ->latest()
             ->first();
 
-        return view("exams.process.spa", compact("examAttempt"));
+        $timeToSolve = ConductedExam::where("exam_id", $exam->id)
+            ->latest()
+            ->first();
+
+
+        return view("exams.process.spa", compact("examAttempt", "timeToSolve"));
     }
 
     public function updateState(ExamAttempt $examAttempt, Exam $exam, Request $request) {
@@ -105,7 +120,9 @@ class StudentController extends Controller
     public function storeExam(ExamAttempt $examAttempt, Exam $exam, Request $request) {
 
         $score = 0;
-        $requiredForPass = $examAttempt->exam->required_for_pass;
+        $requiredForPass = ConductedExam::where("exam_id", $exam->id)
+            ->latest()
+            ->first();
 
         $sentAnswers = $request->input("answerList");
         $correctAnswers = array_map(function($el) {
@@ -128,7 +145,7 @@ class StudentController extends Controller
                 "score" => $score,
                 "status" => "finished",
                 "stored_answers" => json_encode($sentAnswers),
-                "has_passed" => $score < $requiredForPass ? false : true,
+                "has_passed" => (int) $score < (int) $requiredForPass->required_for_pass ? false : true,
                 "note" => "Uredno predano"
             ]);
 
