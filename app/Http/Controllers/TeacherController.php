@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Events\StopExamEvent;
+use App\Models\ConductedExam;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
 use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
+use COM;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
@@ -34,7 +37,11 @@ class TeacherController extends Controller
         }
 
         $exam->update([
-            "in_process" => true,
+            "in_process" => true
+        ]);
+
+        ConductedExam::create([
+            "exam_id" => $exam->id,
             "start_time" => Carbon::now()
         ]);
 
@@ -53,14 +60,20 @@ class TeacherController extends Controller
 
             DB::beginTransaction();
 
+            $lastConcludedExam = ConductedExam::where("exam_id", $exam->id)
+            ->latest()
+            ->first();
+
             $exam->update([
                 "in_process" => false,
-                "end_time" => Carbon::now()
             ]);
 
             $usersToStop = ExamAttempt::where("exam_id", "=", $exam->id)
+                ->where("started_at", ">", $lastConcludedExam->start_time)
                 ->get(["user_id"])
                 ->pluck("user_id");
+
+            $countOfParticipants = sizeof($usersToStop);
 
             foreach($usersToStop as $user) {
                 User::where("id", "=", $user)
@@ -69,11 +82,16 @@ class TeacherController extends Controller
                     ]);
             }
 
+            $lastConcludedExam->update([
+                "num_of_participants" => $countOfParticipants,
+                "end_time" => Carbon::now()
+            ]);
+
             DB::commit();
             broadcast(new StopExamEvent($exam->id));
 
             $examAttempts = ExamAttempt::where("exam_id", "=", $exam->id)
-                ->where("started_at", ">", $exam->start_time)
+                ->where("started_at", ">", $lastConcludedExam->start_time)
                 ->get();
 
             foreach($examAttempts as $attempt)
@@ -109,5 +127,15 @@ class TeacherController extends Controller
             ->first();
 
         return view("teacher.user_profile", compact("user", "latestAttempt"));
+    }
+
+    public function getConductedExamList() {
+        $conductedExams = ConductedExam::whereHas('exam', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+        ->orderByDesc("created_at")
+        ->paginate(5);
+
+        return view("teacher.conductedExams", compact("conductedExams"));
     }
 }

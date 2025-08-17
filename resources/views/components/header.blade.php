@@ -25,7 +25,7 @@
                     <div>
                         <a class="header-button" href="{{ route('teacher.teacher_exams') }}">Moje provjere znanja</a>
                         <a class="header-button" href="{{ route('teacher.new_exam') }}">Nova provjera znanja</a>
-                        <a class="header-button" href="#">Provedene provjere znanja</a>
+                        <a class="header-button" href="{{ route('teacher.conducted_exams') }}">Provedene provjere znanja</a>
                     </div>
                 @endif
             @endauth

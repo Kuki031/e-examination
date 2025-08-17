@@ -6,6 +6,7 @@
         <div class="table-title">
             <h2>Dostupne provjere znanja</h2>
         </div>
+        @if (sizeof($exams) > 0)
 
         <div class="table-title">
             <x-search-bar :search="'provjere znanja'" />
@@ -59,6 +60,11 @@
         <div>
             {{ $exams->links('vendor.pagination.simple-next-prev') }}
         </div>
+        @else
+            <div>
+                <h1 style="color: #1F2A44; margin: 1rem auto;">Nema dostupnih provjeri znanja. Pokušajte osvježiti stranicu!</h1>
+            </div>
+        @endif
     </div>
 </div>
 

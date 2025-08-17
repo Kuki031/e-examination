@@ -18,7 +18,6 @@ use App\Http\Middleware\RejectIfInExam;
 use App\Http\Middleware\StopIfExamInProcess;
 use Illuminate\Support\Facades\Route;
 
-// Redirect sa root-a
 Route::get('/', function () {
     return redirect("/naslovnica");
 });
@@ -26,7 +25,6 @@ Route::get('/', function () {
 Route::get('/naslovnica', [HomeController::class, 'getIndex'])->name('index');
 
 
-// Autentifikacija rute
 Route::name("auth.")->prefix("autentifikacija")->group(function() {
     Route::get("/prijava", [HomeController::class, 'getLoginSelector'])->name("login_selector");
     Route::get("/registracija", [HomeController::class, 'getRegistrationSelector'])->name("register_selector");
@@ -45,7 +43,6 @@ Route::name("auth.")->prefix("autentifikacija")->group(function() {
 });
 
 
-// Korisnici rute
 Route::middleware(['auth'])
     ->name('users.')->prefix("korisnici")
     ->group(function() {
@@ -55,7 +52,6 @@ Route::middleware(['auth'])
 });
 
 
-// Admin rute
 Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->name("admin.")->group(function() {
     Route::get("/korisnici", [AdminController::class, 'getAllUsers'])->name("new_users_list");
     Route::get("/korisnici/{user}", [AdminController::class, 'getUserProfile'])->name("user_profile");
@@ -67,8 +63,8 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->
 
 });
 
-// Upravljanje ispitima, rute za nastavnika ili admina (jer admin može biti i nastavnik)
 Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
+    Route::get("/provjera-znanja/provedene-provjere", [TeacherController::class, 'getConductedExamList'])->name("conducted_exams");
     Route::get("/korisnik/{user}/informacije", [TeacherController::class, 'getUser'])->name("user_profile");
     Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
     Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");
@@ -92,7 +88,6 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     });
 });
 
-// Provedba ispita
 Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() {
     Route::get("/dostupni-ispiti", [StudentController::class, 'getAvailableExamList'])->name("list");
     Route::middleware([EnsureExamIsInProcess::class])->group(function() {

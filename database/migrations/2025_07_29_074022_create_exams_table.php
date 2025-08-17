@@ -19,14 +19,11 @@ return new class extends Migration
             $table->text("description")->nullable();
             $table->integer("num_of_questions")->nullable();
             $table->integer("num_of_points")->nullable();
-            $table->integer("num_participants")->default(0);
             $table->integer("required_for_pass")->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean("in_process")->default(false);
             $table->string("access_code")->nullable();
             $table->text('access_code_encrypted')->nullable();
-            $table->timestamp("start_time")->nullable();
-            $table->timestamp("end_time")->nullable();
             $table->integer("time_to_solve")->nullable();
             $table->timestamps();
         });
