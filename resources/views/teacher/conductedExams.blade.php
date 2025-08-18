@@ -11,7 +11,7 @@
         <div class="table-title">
             <x-search-bar :search="'provedene provjere znanja'" />
             @if(request('search'))
-                <a href="{{ route('teacher.teacher_exams') }}" class="reset-filter-link">
+                <a href="{{ route('teacher.conducted_exams') }}" class="reset-filter-link">
                     Poništi pretragu
                 </a>
             @endif
@@ -39,7 +39,7 @@
                         <td data-label="Kraj">{{ $conductedExam->end_time_formatted }}</td>
                         <td data-label="Akcije">
                             <div class="table-options">
-                                <form action="#">
+                                <form action="{{ route('teacher.conducted_exams_details', [$conductedExam, $conductedExam->exam]) }}" method="GET">
                                     <button
                                     style="{{ $conductedExam->exam->in_process ? 'background-color: #1F2A44' : '' }}"
                                      class="table-options-btn details" type="submit">{{ $conductedExam->exam->in_process ? 'U tijeku' : 'Detalji' }}</button>

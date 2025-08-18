@@ -1,9 +1,12 @@
 <x-header />
 
-
 @php
-    $last = $latestAttempt->actions[array_key_last($latestAttempt->actions)];
+    $last = null;
+    if ($latestAttempt && !empty($latestAttempt->actions)) {
+        $last = $latestAttempt->actions[array_key_last($latestAttempt->actions)];
+    }
 @endphp
+
 
 <div class="profile-main">
     <div class="profile-wrap">
@@ -36,11 +39,13 @@
                 </div>
 
 
-                <div class="profile-section-input-teacher student-activity">
-                    <label class="profile-label">Zadnja aktivnost: </label>
-                    <span class="status">Vrijeme: {{ $last['time'] }}</span>
-                    <span class="status">Aktivnost: {{ $last['activity'] }}</span>
-                </div>
+                @if ($last)
+                    <div class="profile-section-input-teacher student-activity">
+                        <label class="profile-label">Zadnja aktivnost: </label>
+                        <span class="status">Vrijeme: {{ $last['time'] }}</span>
+                        <span class="status">Aktivnost: {{ $last['activity'] }}</span>
+                    </div>
+                @endif
             </div>
 
             <div class="profile-section-teacher">

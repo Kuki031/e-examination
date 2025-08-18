@@ -64,7 +64,10 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->
 });
 
 Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
-    Route::get("/provjera-znanja/provedene-provjere", [TeacherController::class, 'getConductedExamList'])->name("conducted_exams");
+    Route::get("/provedene-provjere", [TeacherController::class, 'getConductedExamList'])->name("conducted_exams");
+    Route::get("/provedene-provjere/{conductedExam}/ispit/{exam}", [TeacherController::class, 'getConductedExamDetails'])->name("conducted_exams_details");
+    Route::get("/provedene-provjere/{conductedExam}/ispit/{exam}/sudionici", [TeacherController::class, 'getParticipantsForConductedExam'])->name("conducted_exam_participants");
+    Route::get("/provedene-provjere/ispit/{exam}/sudionici/{user}/aktivnosti", [TeacherController::class, 'loadActivitesForStudent'])->name("conducted_exam_activites");
     Route::get("/korisnik/{user}/informacije", [TeacherController::class, 'getUser'])->name("user_profile");
     Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
     Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");

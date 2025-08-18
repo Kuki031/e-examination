@@ -24,10 +24,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'full_name' => fake('hr-HR')->name(),
-            'email' => fake()->email,
+            'full_name' => fake('hr_HR')->name(),
+            'email' => fake('hr_HR')->email,
             'pin' => "JMBAG",
-            'pin_value' => fake()->numerify(str_repeat('#', 11)),
+            'pin_value' => fake()->numerify(str_repeat('#', 10)),
             'gender' => "m",
             'status' => "r",
             "registration_type" => "student",

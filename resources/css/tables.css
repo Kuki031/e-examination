@@ -1,27 +1,23 @@
 .tables-main {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin: var(--default-margin);
+    animation: fadeIn .5s ease-in-out;
 }
 
 .table-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: var(--default-margin);
-    animation: fadeIn ease-in-out 1s;
+    width: 100%;
+    max-width: 120rem;
+    text-align: left;
 }
 
 .table-main {
     overflow-x: auto;
     border-collapse: collapse;
-    margin: var(--default-margin) auto;
+    margin: var(--default-margin) 0;
     box-shadow: var(--default-box-shadow);
+    width: 100%;
 }
 
 .table-main tr td {

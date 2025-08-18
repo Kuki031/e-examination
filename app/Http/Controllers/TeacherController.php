@@ -57,6 +57,8 @@ class TeacherController extends Controller
             return back();
         }
 
+        broadcast(new StopExamEvent($exam->id));
+
         try {
 
             DB::beginTransaction();
@@ -82,18 +84,12 @@ class TeacherController extends Controller
                     ]);
             }
 
-            $lastConcludedExam->update([
-                "num_of_participants" => $lastConcludedExam->num_of_participants,
-                "end_time" => Carbon::now()
-            ]);
-
-            DB::commit();
-            broadcast(new StopExamEvent($exam->id));
-
             $examAttempts = ExamAttempt::where("exam_id", "=", $exam->id)
                 ->where("started_at", ">", $lastConcludedExam->start_time)
                 ->get();
 
+
+            $now = Carbon::now();
             foreach($examAttempts as $attempt)
             {
                 if (!$attempt->ended_at) {
@@ -101,13 +97,22 @@ class TeacherController extends Controller
                         "score" => 0,
                         "status" => "finished",
                         "has_passed" => 0,
-                        "ended_at" => Carbon::now(),
+                        "ended_at" => $now,
                         "note" => "Ispit zaustavljen - Nije bio prisutan"
                     ]);
                 } else {
                     continue;
                 }
             }
+
+            $lastConcludedExam->timestamps = false;
+            $lastConcludedExam->forceFill([
+                "num_of_participants" => $lastConcludedExam->num_of_participants,
+                "end_time" => $now->copy()->addSeconds(10),
+                "updated_at" => $now->copy()->addSeconds(10)
+            ])->save();
+
+            DB::commit();
         }
 
         catch (\Throwable $th) {
@@ -136,6 +141,49 @@ class TeacherController extends Controller
         ->orderByDesc("created_at")
         ->paginate(5);
 
-        return view("teacher.conductedExams", compact("conductedExams"));
+        return view("teacher.conductedExams", data: compact("conductedExams"));
+    }
+
+    public function getConductedExamDetails(ConductedExam $conductedExam, Exam $exam) {
+
+        $passes = 0;
+        $fails = 0;
+        $attempts = $exam->examAttempts()
+            ->where('created_at', ">=", $conductedExam->created_at)
+            ->where('updated_at', "<=", $conductedExam->updated_at)
+            ->get();
+
+
+        foreach($attempts as $attempt)
+        {
+            if ($attempt['has_passed']) {
+                $passes++;
+            } else {
+                $fails++;
+            }
+        }
+
+        return view("teacher.conducted_exam_details", compact("exam","conductedExam", "passes", "fails"));
+    }
+
+    public function getParticipantsForConductedExam(ConductedExam $conductedExam, Exam $exam) {
+
+        $attempts = $exam->examAttempts()
+            ->where('created_at', ">=", $conductedExam->created_at)
+            ->where('updated_at', "<=", $conductedExam->updated_at)
+            ->paginate(5);
+
+        return view("teacher.conducted_participants", compact("attempts", "conductedExam", "exam"));
+    }
+
+    public function loadActivitesForStudent(Exam $exam, User $user) {
+
+        $attempt = $exam->examAttempts()
+            ->where("user_id", $user->id)
+            ->where("exam_id", $exam->id)
+            ->latest()
+            ->first();
+
+        return view("teacher.conducted_exam_activites", compact("attempt"));
     }
 }
