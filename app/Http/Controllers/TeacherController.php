@@ -43,7 +43,9 @@ class TeacherController extends Controller
             "exam_id" => $exam->id,
             "start_time" => Carbon::now(),
             "time_to_solve" => $exam->time_to_solve,
-            "required_for_pass" => $exam->required_for_pass
+            "required_for_pass" => $exam->required_for_pass,
+            "num_of_points" => $exam->num_of_points,
+            "num_of_questions" => $exam->num_of_questions
         ]);
 
         $this->constructToastMessage("Prijava znanja uspješno pokrenuta. Kako bi studenti mogli pristupiti istoj, morate im podijeliti pristupni kod.", "Uspjeh", "success", 4500);
@@ -106,6 +108,8 @@ class TeacherController extends Controller
             }
 
             $lastConcludedExam->timestamps = false;
+
+            // Zbog timestamepova force fill, jer je inace zbog transakcije spremao sve iste ts
             $lastConcludedExam->forceFill([
                 "num_of_participants" => $lastConcludedExam->num_of_participants,
                 "end_time" => $now->copy()->addSeconds(10),

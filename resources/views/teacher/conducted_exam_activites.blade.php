@@ -61,10 +61,12 @@
             <tbody>
                 @php
                     $i = 0;
+                    $j = 0;
                 @endphp
                 @foreach ($questions as $question)
+                @php $j++; @endphp
                     <tr>
-                        <td>{{ $question['question'] }}</td>
+                        <td>{{ $j }}. {{ $question['question'] }}</td>
                         <td>
                         @foreach ($question['answers'] as $key => $answer)
                             @php $i++ @endphp
