@@ -4,7 +4,7 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Dostupne provjere znanja</h2>
+            <h2 style="text-align: center">Dostupne provjere znanja</h2>
         </div>
         @if (sizeof($exams) > 0)
 
@@ -61,7 +61,7 @@
             {{ $exams->links('vendor.pagination.simple-next-prev') }}
         </div>
         @else
-            <div>
+            <div style="display: flex;align-items:center;justfy-content:center;margin:auto;">
                 <h1 style="color: #1F2A44; margin: 1rem auto;">Nema dostupnih provjeri znanja. Pokušajte osvježiti stranicu!</h1>
             </div>
         @endif

@@ -11,3 +11,14 @@ import './exam_nav';
 import './exam_state';
 import './log_activity';
 import './proctor';
+
+document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const menu = document.getElementById("header-menu");
+
+    if (hamburgerBtn && menu) {
+        hamburgerBtn.addEventListener("click", () => {
+            menu.classList.toggle("show");
+        });
+    }
+});

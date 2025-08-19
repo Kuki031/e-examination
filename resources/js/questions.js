@@ -119,13 +119,10 @@ const addQuestionFunc = function(appendEl) {
     if (mainEl.classList.contains('del_question')) {
         let parentDiv = mainEl.parentElement;
 
-        const confirmation = prompt("Želite li obrisati ovo pitanje? Upisati 'Da' za potvrdu.");
-
+        const confirmation = confirm("Želite li obrisati ovo pitanje?");
         if (!confirmation) return;
 
-        const transformToLower = confirmation.toLowerCase();
-
-        if (transformToLower === 'da') {
+        else if (confirmation) {
             numOfQuestions--;
             parentDiv.remove();
         }
@@ -136,13 +133,10 @@ const addQuestionFunc = function(appendEl) {
 
     if (mainEl.classList.contains('delete_answer')) {
         let parentDiv = mainEl.parentElement;
-        const confirmation = prompt("Želite li obrisati ovaj odgovor? Upisati 'Da' za potvrdu.");
-
+        const confirmation = confirm("Želite li obrisati ovaj odgovor?");
         if (!confirmation) return;
 
-        const transformToLower = confirmation.toLowerCase();
-
-        if (transformToLower === 'da') {
+        else if (confirmation) {
             parentDiv.remove();
         }
     }

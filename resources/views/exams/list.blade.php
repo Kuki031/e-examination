@@ -4,7 +4,7 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Provjere znanja</h2>
+            <h2 style="text-align: center">Provjere znanja</h2>
         </div>
 
         @if (sizeof($exams) > 0)
@@ -39,7 +39,7 @@
                                 <form action="{{ route('teacher.exam_details', $exam) }}">
                                     <button
                                     style="{{ $exam->in_process ? 'background-color: #1F2A44' : '' }}"
-                                     class="table-options-btn details" type="submit">{{ $exam->in_process ? 'U tijeku' : 'Detalji' }}</button>
+                                     class="table-options-btn details" type="submit">{{ $exam->in_process ? 'U tijeku🕓' : 'Detalji' }}</button>
                                 </form>
                             </div>
                         </td>
@@ -51,7 +51,7 @@
             {{ $exams->links('vendor.pagination.simple-next-prev') }}
         </div>
         @else
-            <div>
+            <div style="display: flex;align-items:center;justify-content:center;margin:auto;">
                 <h1 style="color: #1F2A44; margin-top: 1rem;">Nemate kreiranih provjeri znanja!</h1>
             </div>
         @endif

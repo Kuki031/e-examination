@@ -19,27 +19,20 @@
                     <a class="header-button" href="{{ route('index') }}">Naslovnica</a>
                 </div>
             </div>
-
-            @auth
-                @if (auth()->user()->role === 'admin' || auth()->user()->role === 'teacher')
-                    <div>
+            <button class="hamburger" id="hamburger-btn">☰</button>
+            <div class="header-menu" id="header-menu">
+                @auth
+                    @if (auth()->user()->role === 'admin' || auth()->user()->role === 'teacher')
                         <a class="header-button" href="{{ route('teacher.teacher_exams') }}">Moje provjere znanja</a>
                         <a class="header-button" href="{{ route('teacher.new_exam') }}">Nova provjera znanja</a>
                         <a class="header-button" href="{{ route('teacher.conducted_exams') }}">Provedene provjere znanja</a>
-                    </div>
-                @endif
-            @endauth
-
-            @auth
-                @if (auth()->user()->role === 'student')
-                    <div>
+                    @endif
+                    @if (auth()->user()->role === 'student')
                         <a class="header-button" href="{{ route('exams.list') }}">Dostupne provjere znanja</a>
                         <a class="header-button" href="#">Rezultati</a>
-                    </div>
-                @endif
-            @endauth
+                    @endif
+                @endauth
 
-            <div class="header-actions">
                 @auth
                     @if (auth()->user()['role'] === 'admin')
                         <div class="header-requests">
@@ -52,7 +45,6 @@
                     <a class="header-button" href="{{ route('users.profile') }}">Moj profil</a>
                     <a id="log-out" class="header-button" href="#">Odjavi se</a>
                 @endauth
-
 
                 @if (!auth()->check())
                     <a class="header-button" href="{{ route('auth.login_selector') }}">Prijava</a>

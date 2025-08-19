@@ -73,7 +73,7 @@ class AdminController extends Controller
                 "registration_type" => "student"
             ]);
         } else {
-            $this->constructToastMessage(message: "Odaberite ulogu nastavnik ili student!", title: "Neuspjela dodjela uloge", model: "error");
+            $this->constructToastMessage(message: "Odaberite raspoloživu ulogu!", title: "Neuspjela dodjela uloge", model: "error");
             return back();
         }
 

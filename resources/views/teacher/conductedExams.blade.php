@@ -3,7 +3,7 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Provedene provjere znanja</h2>
+            <h2 style="text-align: center;">Provedene provjere znanja</h2>
         </div>
 
         @if (sizeof($conductedExams) > 0)
@@ -55,7 +55,7 @@
         </div>
     </div>
     @else
-        <div>
+        <div style="display: flex;align-items:center;justify-content:center;margin:auto;">
             <h1 style="color: #1F2A44; margin-top: 1rem;">Nema provedenih provjeri znanja!</h1>
         </div>
     @endif
