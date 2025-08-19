@@ -109,5 +109,9 @@ Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() 
     Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
 });
 
+Route::middleware(['auth'])->prefix("rezultati")->name("results.")->group(function() {
+    Route::get("{user}", [StudentController::class, 'getResultList'])->name("student");
+});
+
 
 Route::fallback([HomeController::class, 'fallbackRoute']);

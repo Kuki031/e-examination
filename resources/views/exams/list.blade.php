@@ -7,8 +7,6 @@
             <h2 style="text-align: center">Provjere znanja</h2>
         </div>
 
-        @if (sizeof($exams) > 0)
-
         <div class="table-title">
             <x-search-bar :search="'provjere znanja'" />
             @if(request('search'))
@@ -18,6 +16,7 @@
             @endif
         </div>
 
+        @if (sizeof($exams) > 0)
         <table class="table-main">
             <thead>
                 <tr>
@@ -52,7 +51,7 @@
         </div>
         @else
             <div style="display: flex;align-items:center;justify-content:center;margin:auto;">
-                <h1 style="color: #1F2A44; margin-top: 1rem;">Nemate kreiranih provjeri znanja!</h1>
+                <h1 style="color: #1F2A44; margin-top: 1rem;">Nema provjeri znanja!</h1>
             </div>
         @endif
     </div>

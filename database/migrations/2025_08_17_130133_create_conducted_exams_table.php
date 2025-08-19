@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('conducted_exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Exam::class);
+            $table->foreignIdFor(Exam::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer("num_of_questions")->default(0);
             $table->integer("num_of_points");
             $table->integer("num_of_participants")->default(0);

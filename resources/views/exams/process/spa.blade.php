@@ -13,6 +13,7 @@
 <span id="load_script" hidden>1</span>
 <span id="exam_id" hidden>{{ $examAttempt->exam_id }}</span>
 <span id="activity_log" hidden></span>
+<span id="user_id" hidden>{{ auth()->id() }}</span>
 
 <div class="exam-process-main">
     <div class="exam-header">

@@ -56,6 +56,7 @@ class StudentController extends Controller
                 "questions" => $questions,
                 "status" => "in_process",
                 "started_at" => Carbon::now(),
+                "total_points" => (int) $lastConcludedExam->num_of_points,
                 "ip_address" => $request->ip()
             ]);
 
@@ -164,6 +165,11 @@ class StudentController extends Controller
             return response()->json(["message" => "Nešto nije u redu!"], 500);
         }
 
+    }
+
+    public function getResultList(User $user) {
+        $examAttempts = ExamAttempt::where("user_id", $user->id)->orderByDesc("created_at")->paginate(5);
+        return view("student.results", compact("examAttempts", "user"));
     }
 
     private function isCodeCorrect(string $accessCode, Exam $exam) {

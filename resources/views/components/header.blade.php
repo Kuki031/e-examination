@@ -29,7 +29,7 @@
                     @endif
                     @if (auth()->user()->role === 'student')
                         <a class="header-button" href="{{ route('exams.list') }}">Dostupne provjere znanja</a>
-                        <a class="header-button" href="#">Rezultati</a>
+                        <a class="header-button" href="{{ route('results.student', Auth::user()) }}">Rezultati</a>
                     @endif
                 @endauth
 

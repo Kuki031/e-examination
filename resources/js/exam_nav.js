@@ -8,6 +8,8 @@ if (document.getElementById("load_script")) {
 
     const attemptId = document.getElementById("attempt_id")?.textContent;
     const examId = parseInt(document.getElementById("exam_id")?.textContent);
+    const userId = parseInt(document.getElementById("user_id")?.textContent);
+
     let isSent = false;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -170,7 +172,7 @@ if (document.getElementById("load_script")) {
         if (request.status === 200) {
             setFlashMessage(message, SUCCESS_COLOR)
             setTimeout(() => {
-                location.assign("/");
+                location.assign(`/rezultati/${userId}`);
             }, 2000);
         }
 

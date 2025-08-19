@@ -15,8 +15,8 @@ return new class extends Migration
     {
             Schema::create('exam_attempts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Exam::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Exam::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('ended_at')->nullable();
             $table->json('questions');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('status', ['in_process', 'finished'])->default('in_process');
             $table->json("state")->nullable();
             $table->json("stored_answers")->nullable();
+            $table->integer("total_points")->nullable();
             $table->boolean("has_passed")->default(false);
             $table->enum("note", ["Nije predano" ,"Uredno predano", "Ispit zaustavljen - Nije bio prisutan"])->default("Nije predano");
             $table->json("actions")->nullable();

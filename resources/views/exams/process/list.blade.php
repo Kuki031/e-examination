@@ -6,7 +6,6 @@
         <div class="table-title">
             <h2 style="text-align: center">Dostupne provjere znanja</h2>
         </div>
-        @if (sizeof($exams) > 0)
 
         <div class="table-title">
             <x-search-bar :search="'provjere znanja'" />
@@ -17,6 +16,7 @@
             @endif
         </div>
 
+        @if (sizeof($exams) > 0)
         <table class="table-main">
             <thead>
                 <tr>
