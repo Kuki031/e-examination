@@ -8,18 +8,26 @@ if (document.getElementById("start_proctoring")) {
     const mainWrap = document.querySelector(".proctor-wrap");
     const notifyBtn = document.querySelector(".notify");
     const searchStudent = document.getElementById("search_student");
+    const studentCounter = document.getElementById("student_counter");
+    let connectedStudents = 0;
 
     window.Echo.join(`proctor.${examId}`)
         .joining((user) => {
+            connectedStudents++;
+            studentCounter.textContent = connectedStudents;
             const appendDiv = appendStudent(user.id, user.picture, user.name);
             mainWrap.appendChild(appendDiv);
         })
         .leaving((user) => {
+            connectedStudents--;
+            studentCounter.textContent = connectedStudents;
             const removeDiv = removeStudent(user.id);
             mainWrap.removeChild(removeDiv.parentElement);
         })
         .here((users) => {
             renderStudentsOnLoad(users, mainWrap);
+            connectedStudents = parseInt(users.length - 1);
+            studentCounter.textContent = connectedStudents;
         });
 
 

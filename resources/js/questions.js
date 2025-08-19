@@ -72,6 +72,12 @@ const addQuestionFunc = function(appendEl) {
     questionDivHolder.appendChild(delQuestionBtn);
     appendEl.appendChild(questionDivHolder);
 
+    const divsScroll = Array.from(document.querySelectorAll(".question-div"));
+    if (divsScroll) {
+        handleScrollBehavior(divsScroll[divsScroll.length - 1]);
+    }
+
+
     questionDivHolder.addEventListener("click", (e) => {
         let mainEl = e.target;
 
@@ -373,7 +379,19 @@ const saveQuestions = async function () {
     }
 };
 
+const returnTopBtn = document.querySelector(".return-top");
 
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 200) {
+        returnTopBtn?.classList.add("show");
+    } else {
+        returnTopBtn?.classList.remove("show");
+    }
+});
+
+returnTopBtn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 
 

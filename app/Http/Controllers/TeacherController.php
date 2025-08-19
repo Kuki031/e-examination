@@ -126,7 +126,7 @@ class TeacherController extends Controller
         }
 
         $this->constructToastMessage("Provjera znanja uspješno zaustavljena.", "Uspjeh", "success");
-        return back();
+        return to_route("teacher.exam_details", ["exam" => $exam]);
     }
 
     public function getUser(User $user) {

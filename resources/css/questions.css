@@ -154,3 +154,20 @@
     transition: var(--transitions);
     animation: fadeIn ease-in-out .5s;
 }
+
+.return-top {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    cursor: pointer;
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+    box-shadow: var(--default-box-shadow);
+    opacity: 0;
+    pointer-events: none;
+}
+.return-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}

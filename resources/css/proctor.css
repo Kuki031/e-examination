@@ -69,6 +69,7 @@
     margin: var(--default-margin) auto;
 }
 
+
 .proctor-option input {
     font-size: var(--default-error-font);
     padding: var(--default-padding);
@@ -102,4 +103,8 @@
     margin: var(--default-margin) auto;
     color: var(--color-primary);
     font-size: var(--header-element-gap);
+}
+
+.proctor-header p {
+    font-size: var(--default-font);
 }
