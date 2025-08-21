@@ -9,7 +9,7 @@ class Exam extends Model
 {
 
     protected $fillable = [
-        "name", "description", "num_of_questions", "num_of_points", "required_for_pass", "user_id", "in_process", "time_to_solve", "access_code", "access_code_encrypted"
+        "name", "description", "num_of_questions", "num_of_points", "required_for_pass", "user_id", "in_process", "time_to_solve", "access_code", "access_code_encrypted", "is_quiz"
     ];
 
     protected $appends = ["created_at_formatted", "updated_at_formatted", "access_code_formatted", "in_process_formatted"];

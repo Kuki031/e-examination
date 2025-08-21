@@ -33,14 +33,18 @@ class StudentController extends Controller
 
     public function joinExam(Exam $exam, Request $request) {
         $isCodeCorrect = $this->isCodeCorrect($request->input("access_code"), $exam);
-
+        $questions = null;
 
         if (!$isCodeCorrect) {
             $this->constructToastMessage("Netočan pristupni kod!", "Neuspjeh", "error");
             return back();
         }
 
-        $questions = $exam->questions()->inRandomOrder()->get(["question", "answers", "image"]);
+        if ($exam->is_quiz) {
+            $questions = $exam->questions->toArray();
+        } else {
+            $questions = $exam->questions()->inRandomOrder()->get(["question", "answers", "image"]);
+        }
 
         try {
 
@@ -76,6 +80,7 @@ class StudentController extends Controller
                     'exam' => $exam->id
             ]);
 
+
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -95,7 +100,11 @@ class StudentController extends Controller
             ->first();
 
 
-        return view("exams.process.spa", compact("examAttempt", "timeToSolve"));
+        if ($exam->is_quiz) {
+
+            return view("student.quiz_process", compact("examAttempt", "exam"));
+        }
+        else return view("exams.process.spa", compact("examAttempt", "timeToSolve"));
     }
 
     public function updateState(ExamAttempt $examAttempt, Exam $exam, Request $request) {

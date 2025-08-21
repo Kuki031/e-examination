@@ -27,10 +27,10 @@ class ExamAttempt extends Model
     ];
 
     public function getStartedAtFormattedAttribute() {
-        return $this->started_at->format("d.m.Y H:i:s");
+        return $this?->started_at?->format("d.m.Y H:i:s");
     }
 
     public function getEndedAtFormattedAttribute() {
-        return $this->ended_at->format("d.m.Y H:i:s");
+        return $this?->ended_at?->format("d.m.Y H:i:s");
     }
 }

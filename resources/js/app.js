@@ -11,6 +11,9 @@ import './exam_nav';
 import './exam_state';
 import './log_activity';
 import './proctor';
+import './spa_quiz';
+import './quiz_control';
+import './quiz_process';
 
 document.addEventListener("DOMContentLoaded", () => {
     const hamburgerBtn = document.getElementById("hamburger-btn");

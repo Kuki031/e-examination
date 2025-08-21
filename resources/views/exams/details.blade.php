@@ -95,7 +95,7 @@
                             Pokreni provjeru znanja
                         </button>
                     </form>
-                    @else
+                    @elseif ($exam->in_process && !$exam->is_quiz)
 
                     <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
                         @csrf
@@ -115,18 +115,50 @@
             <div class="exam-form-content">
                 <h4>Pitanja</h4>
                 <div class="exam-form-form-wrap">
-                    <a class="exam-details-btn" href="{{ route('teacher.exam_question_list', $exam) }}">Pregled pitanja</a>
-                    <a class="exam-details-btn" href="{{ route('teacher.create_questions', $exam) }}">Kreator pitanja ✨</a>
+                    <form action="{{ route('teacher.create_questions', $exam) }}">
+                        <button type="submit" class="action-button success">Kreator pitanja ✨</button>
+                    </form>
+                    <form action="{{ route('teacher.exam_question_list', $exam) }}">
+                        <button type="submit" class="action-button success">Pregled pitanja</button>
+                    </form>
                 </div>
             </div>
 
+            @if (!$exam->in_process)
             <div class="exam-form-content">
-                <h4>Gamifikacija (kviz)</h4>
+                <h4>Gamifikacija</h4>
                 <div class="exam-form-form-wrap">
-                    <a class="exam-details-btn" href="#">Podijeli 🎮</a>
+                        <form action="{{ route('teacher.start_exam', $exam) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="is_quiz" value="1">
+                            <button type="submit"
+                                class="action-button {{ !$exam?->num_of_questions ? 'danger' : 'success' }}"
+                                {{ !$exam?->num_of_questions ? 'disabled' : '' }}>
+                                Pokreni kviz
+                            </button>
+                        </form>
+                        @elseif ($exam->in_process && $exam->is_quiz)
+                        <div class="exam-form-form-wrap">
+                            <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit"
+                                class="action-button danger">
+                                Zaustavi kviz
+                            </button>
+                        </form>
+
+                        <form action="{{ route('teacher.quiz_control', $exam) }}">
+                            <button type="submit"
+                                class="action-button success">
+                                Upravljanje kvizom
+                            </button>
+                        </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
-
     </div>
 </div>

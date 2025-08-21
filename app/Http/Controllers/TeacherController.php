@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Traits\Search;
 use App\Traits\ToastInterface;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +18,9 @@ class TeacherController extends Controller
 {
 
     use ToastInterface, Search;
-    public function startExam(Exam $exam)
+    public function startExam(Exam $exam, Request $request)
     {
+
         if (!$exam->required_for_pass) {
             $this->constructToastMessage("Nije definiran broj bodova potreban za prolaz.", "Neuspjelo pokretanje ispita", "error");
             return back();
@@ -34,7 +36,8 @@ class TeacherController extends Controller
         }
 
         $exam->update([
-            "in_process" => true
+            "in_process" => true,
+            "is_quiz" => $request->input("is_quiz") ? true : false
         ]);
 
         ConductedExam::create([
@@ -50,7 +53,7 @@ class TeacherController extends Controller
         return back();
     }
 
-    public function stopExam(Exam $exam) {
+    public function stopExam(Exam $exam, Request $request) {
 
         if (!$exam->in_process) {
             $this->constructToastMessage("Provjera znanja nije pokrenuta.", "Neuspjeh", "error");
@@ -69,6 +72,7 @@ class TeacherController extends Controller
 
             $exam->update([
                 "in_process" => false,
+                "is_quiz" => 0
             ]);
 
             $usersToStop = ExamAttempt::where("exam_id", "=", $exam->id)
@@ -187,5 +191,16 @@ class TeacherController extends Controller
             ->first();
 
         return view("teacher.conducted_exam_activites", compact("attempt"));
+    }
+
+    public function loadQuizControl(Exam $exam) {
+
+        $lastConductedExam = $exam->conductedExams()
+        ->latest()
+        ->first();
+
+        $questions = $exam->questions->toArray();
+
+        return view("teacher.quiz_control", compact("lastConductedExam", "questions", "exam"));
     }
 }

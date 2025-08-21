@@ -79,6 +79,7 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
     Route::get("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'getQuestionDetails'])->name("exam_question_details");
     Route::patch("/provjera-znanja/{exam}/zaustavi", [TeacherController::class, 'stopExam'])->name("stop_exam");
     Route::get("/provjera-znanja/{exam}/pracenje", [ProctorController::class, 'enterProctoringMode'])->name("start_proctor");
+    Route::get("/provjera/znanja/{exam}/kviz", [TeacherController::class, 'loadQuizControl'])->name("quiz_control");
 
     Route::middleware([StopIfExamInProcess::class])->group(function() {
         Route::delete("/provjera-znanja/{exam}", [ExamController::class, 'deleteExam'])->name("delete_exam");
