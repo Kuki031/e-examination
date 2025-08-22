@@ -12,23 +12,22 @@
     <div>
         <div class="proctor-options">
 
-            <div class="proctor-option">
-                <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit"
-                        class="action-button danger">
-                        Zaustavi provjeru znanja
-                    </button>
-                </form>
-            </div>
-
         <div class="proctor-option">
             <p class="exam-code-input exam-code-input-input" style="font-size: 1.5rem;">Pristupni kod: <span>{{ $exam->access_code_formatted }}</span></p>
         </div>
             <p class="exam-code-input exam-code-input-input" style="font-size: 1.5rem; color:green;">Broj spojenih studenata: <span id="connected_students">0</span></p>
             <div>
                 <button id="start_quiz" style="background-color:green;cursor: pointer;color:#fff">Započni kviz</button>
+            </div>
+                        <div class="proctor-option">
+                <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit"
+                        class="action-button danger">
+                        Zaustavi kviz
+                    </button>
+                </form>
             </div>
         </div>
     </div>

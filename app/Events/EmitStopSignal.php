@@ -7,19 +7,21 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class EmitStartSignal
+class EmitStopSignal implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public $examId;
+    public function __construct(string $examId)
     {
-        //
+        $this->examId = $examId;
     }
 
     /**
@@ -30,7 +32,12 @@ class EmitStartSignal
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PresenceChannel("quiz.{$this->examId}"),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'quiz.stopped';
     }
 }

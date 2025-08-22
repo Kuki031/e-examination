@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
         questionToSend.style.display = '';
 
         currentQuestion = n;
-        nextBtn.textContent = (n === totalQuestions) ? "Završi ispit" : "Sljedeće pitanje";
 
         return questionToSend;
     };
@@ -56,10 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
         quizChannel.whisper("questionNumber", { q: questionToSend.getAttribute("data-question") });
 
     });
-    nextBtn?.addEventListener('click', () => {
+    nextBtn?.addEventListener('click', function() {
         if (currentQuestion === totalQuestions) {
-            // Emit finish state signal over socket
-            alert("Ispit završen!");
+            return;
+
         } else {
 
             const questionToSend = showQuestion(currentQuestion + 1);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EmitStopSignal;
 use App\Events\StopExamEvent;
 use App\Models\ConductedExam;
 use App\Models\Exam;
@@ -60,7 +61,11 @@ class TeacherController extends Controller
             return back();
         }
 
-        broadcast(new StopExamEvent($exam->id));
+        if ($exam->is_quiz) {
+            broadcast(new EmitStopSignal($exam->id));
+        } else {
+            broadcast(new StopExamEvent($exam->id));
+        }
 
         try {
 
