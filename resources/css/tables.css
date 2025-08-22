@@ -8,7 +8,7 @@
 
 .table-wrap {
     width: 100%;
-    max-width: 120rem;
+    max-width: 150rem;
     text-align: left;
 }
 
@@ -106,12 +106,14 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
-        margin-bottom: 1.5rem;
-        background-color: var(--color-secondary-diff);
-        border: var(--border-thickness) solid var(--color-primary);
-        border-radius: var(--default-image-radius);
-        padding: var(--default-padding);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        margin: 1rem auto; /* adds spacing between cards */
+        background-color: #fff; /* clean white cards */
+        border: 1px solid #ddd; /* lighter borders */
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* subtle shadow */
+        width: 95%; /* narrower cards on mobile */
+        max-width: 500px; /* prevents them from being too wide */
     }
 
     .table-main td {
@@ -122,6 +124,7 @@
         padding: 0.5rem 0;
         position: relative;
         border: none;
+        background: none; /* remove cell background colors */
     }
 
     .table-main td::before {

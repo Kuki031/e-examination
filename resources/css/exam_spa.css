@@ -145,6 +145,11 @@
 }
 
 @media (max-width: 768px) {
+
+    .question-image {
+        width: var(--question-picture-mobile-w);
+        height: var(--question-picture-mobile-h);
+    }
   .exam-process-wrap {
     flex-direction: column;
   }

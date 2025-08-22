@@ -4,8 +4,10 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Sudionici</h2>
+            <h2 style="text-align: center;">Sudionici</h2>
         </div>
+
+        @if (sizeof($attempts) > 0)
 
         <table class="table-main">
             <thead>
@@ -15,6 +17,7 @@
                     <th>JMBAG</th>
                     <th>Početak</th>
                     <th>Kraj</th>
+                    <th>Rezultat</th>
                     <th>Položio?</th>
                     <th>IP adresa</th>
                     <th>Napomena</th>
@@ -30,6 +33,7 @@
                         <td data-label="JMBAG">{{ $attempt->user->pin_value }}</td>
                         <td data-label="Početak">{{ $attempt->started_at_formatted }}</td>
                         <td data-label="Kraj">{{ $attempt->ended_at_formatted }}</td>
+                        <td data-label="Rezultat">{{ $attempt->score }} / {{ $attempt->total_points }} ({{ round(($attempt->score / $attempt->total_points) * 100, 2) }}%)</td>
                         <td data-label="Položio?">{{ $attempt->has_passed ? "✔️" : "❌" }}</td>
                         <td data-label="IP adresa">{{ $attempt->ip_address }}</td>
                         <td data-label="Napomena">{{ $attempt->note }}</td>
@@ -50,6 +54,11 @@
         <div>
             {{ $attempts->links('vendor.pagination.simple-next-prev') }}
         </div>
+        @else
+            <div style="display: flex;align-items:center;justify-content:center;margin:auto;">
+                <h1 style="color: #1F2A44; margin-top: 1rem;">Nema sudionika!</h1>
+            </div>
+        @endif
     </div>
 </div>
 

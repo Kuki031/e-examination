@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (hamburgerBtn && menu) {
         hamburgerBtn.addEventListener("click", () => {
             menu.classList.toggle("show");
+            hamburgerBtn.textContent = hamburgerBtn.textContent === "☰" ? "X" : "☰";
         });
     }
 });

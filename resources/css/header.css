@@ -95,6 +95,8 @@
     border: none;
     cursor: pointer;
     color: var(--color-primary);
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
 }
 
 .header-menu {
@@ -120,6 +122,8 @@
         padding: 1rem;
         box-shadow: var(--default-box-shadow);
         z-index: 1000;
+        transition: var(--transitions);
+        animation: fadeIn ease-in-out .5s;
     }
 
     .header-menu.show {

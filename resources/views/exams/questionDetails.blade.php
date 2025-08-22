@@ -2,7 +2,7 @@
 
 <div class="question-details-main">
     <div class="question-details-wrap">
-        <div class="question-details-content">
+        <div class="question-details-content" style="align-self: flex-start;">
             <input class="exam-id" type="hidden" readonly disabled value="{{ $exam->id }}">
             <form class="question-details-content-form" action="{{ route('teacher.exam_question_update', [$exam, $question]) }}" method="POST">
                 @csrf
@@ -10,7 +10,7 @@
                 <div>
 
                     @php
-                        $questionLength = str_split($question->name);
+                        $questionLength = explode(" ",$question->question);
                     @endphp
                     <p><b>Provjera znanja: {{ $exam->name }}</b></p>
                     <p><b>ID pitanja: <span class="question-id">{{ $question->id }}</span></b></p>
@@ -18,7 +18,7 @@
 
                 <div>
                     <label for="question">Pitanje: </label>
-                    <textarea cols="{{ sizeof($questionLength) }}" name="question" id="question" spellcheck="false">{{ $question->question }}</textarea>
+                    <textarea cols="{{ sizeof($questionLength) }}" rows="{{ sizeof($questionLength) / 2 }}" name="question" id="question" spellcheck="false">{{ $question->question }}</textarea>
                 </div>
 
                 @if ($question->image)

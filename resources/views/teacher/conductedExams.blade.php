@@ -8,15 +8,6 @@
 
         @if (sizeof($conductedExams) > 0)
 
-        <div class="table-title">
-            <x-search-bar :search="'provedene provjere znanja'" />
-            @if(request('search'))
-                <a href="{{ route('teacher.conducted_exams') }}" class="reset-filter-link">
-                    Poništi pretragu
-                </a>
-            @endif
-        </div>
-
         <table class="table-main">
             <thead>
                 <tr>
@@ -41,8 +32,8 @@
                             <div class="table-options">
                                 <form action="{{ route('teacher.conducted_exams_details', [$conductedExam, $conductedExam->exam]) }}" method="GET">
                                     <button
-                                    style="{{ $conductedExam->exam->in_process ? 'background-color: #1F2A44' : '' }}"
-                                     class="table-options-btn details" type="submit">{{ $conductedExam->exam->in_process ? 'U tijeku' : 'Detalji' }}</button>
+                                    style="{{ $conductedExam->exam->in_process && !$conductedExam->end_time ? 'background-color: #1F2A44' : '' }}"
+                                     class="table-options-btn details" type="submit">{{ $conductedExam->exam->in_process && !$conductedExam->end_time ? 'U tijeku🕓' : 'Detalji' }}</button>
                                 </form>
                             </div>
                         </td>

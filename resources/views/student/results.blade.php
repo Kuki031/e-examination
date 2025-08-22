@@ -24,7 +24,7 @@
                         <td data-label="Ispit">{{ $attempt?->exam->name }}</td>
                         <td data-label="Započeto">{{ $attempt->started_at_formatted }}</td>
                         <td data-label="Završeno">{{ $attempt->ended_at_formatted }}</td>
-                        <td data-label="Ostvareno bodova">{{ $attempt->score }} / {{ $attempt->total_points }} ({{ ((float) $attempt->score / (float) $attempt->total_points) * 100 }}%)</td>
+                        <td data-label="Ostvareno bodova">{{ $attempt->score }} / {{ $attempt->total_points }} ({{ round(($attempt->score / $attempt->total_points) * 100, 2) }}%)</td>
                         <td data-label="Položeno?">{{ $attempt->has_passed ? '✔️' : '❌' }}</td>
                     </tr>
                 @endforeach

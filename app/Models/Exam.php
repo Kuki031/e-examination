@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
 class Exam extends Model
 {
 
+    use HasFactory;
     protected $fillable = [
         "name", "description", "num_of_questions", "num_of_points", "required_for_pass", "user_id", "in_process", "time_to_solve", "access_code", "access_code_encrypted", "is_quiz"
     ];
