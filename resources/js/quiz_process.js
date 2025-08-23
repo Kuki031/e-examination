@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
             submitExam("Kviz je završio! Vaš rezultat biti će pohranjen.");
         })
         .listenForWhisper('questionNumber', e => {
+            document.querySelector(".exam-header").style.display = 'none';
+
             questionSection.style.display = 'flex';
             questionsWraps.forEach(q => q.style.display = 'none');
             document.querySelector(`.question-wrap[data-question="${e.q}"]`).style.display = 'flex';

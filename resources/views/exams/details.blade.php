@@ -105,7 +105,9 @@
                             Zaustavi provjeru znanja
                         </button>
                     </form>
-                    <a class="action-button proctor-a" href="{{ route('teacher.start_proctor', $exam) }}">Praćenje ispita</a>
+                    <div class="exam-form-form-wrap">
+                        <a class="proctor-a" style="font-size: 1.4rem;" href="{{ route('teacher.start_proctor', $exam) }}">Praćenje ispita</a>
+                    </div>
                     @endif
                 </div>
             </div>

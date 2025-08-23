@@ -144,6 +144,40 @@
   background: var(--color-secondary);
 }
 
+.loading {
+    font-size: 2rem;
+    margin: var(--default-margin) auto;
+    text-align: center;
+    display: block;
+    width: 100%;
+
+}
+.loading span {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #fff 50%, var(--color-primary) 100%);
+    background-size: 200% auto;
+    font-weight: bold;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glowSlide 3s linear infinite;
+    white-space: nowrap;
+}
+
+
+.exam-header h1 {
+    text-align: center;
+    color: var(--color-secondary-alter);
+    font-size: var(--default-font);
+    background-image: var(--image-gradient);
+    background-repeat: no-repeat;
+    background-size: var(--image-gradient-size);
+    background-position: var(--image-gradient-position);
+
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
+}
+
+
 @media (max-width: 768px) {
 
     .question-image {

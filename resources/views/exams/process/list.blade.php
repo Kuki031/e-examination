@@ -7,15 +7,6 @@
             <h2 style="text-align: center">Dostupne provjere znanja</h2>
         </div>
 
-        <div class="table-title">
-            <x-search-bar :search="'provjere znanja'" />
-            @if(request('search'))
-                <a href="{{ route('exams.list') }}" class="reset-filter-link">
-                    Poništi pretragu
-                </a>
-            @endif
-        </div>
-
         @if (sizeof($exams) > 0)
         <table class="table-main">
             <thead>

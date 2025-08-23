@@ -27,7 +27,7 @@
                         <td data-label="Naziv">{{ $conductedExam->exam->name}}</td>
                         <td data-label="Broj sudionika">{{ $conductedExam->num_of_participants }}</td>
                         <td data-label="Početak">{{ $conductedExam->start_time_formatted }}</td>
-                        <td data-label="Kraj">{{ $conductedExam->end_time_formatted }}</td>
+                        <td data-label="Kraj">{{ !$conductedExam->end_time_formatted ? 'U tijeku' : $conductedExam->end_time_formatted }}</td>
                         <td data-label="Akcije">
                             <div class="table-options">
                                 <form action="{{ route('teacher.conducted_exams_details', [$conductedExam, $conductedExam->exam]) }}" method="GET">

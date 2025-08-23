@@ -10,10 +10,14 @@
 <span id="exam_id" hidden>{{ $examAttempt->exam_id }}</span>
 <span id="user_id" hidden>{{ auth()->id() }}</span>
 
-<div class="exam-process-main">
-    <div class="exam-header">
-        <h1>{{ $examAttempt->exam->name }}</h1>
+<div class="exam-header">
+    <h1>{{ $examAttempt->exam->name }}</h1>
+
+    <div class="loading">
+        <span>Čekanje da nastavnik pokrene kviz</span>
     </div>
+</div>
+
   <div class="exam-process-wrap">
     <div class="exam-process-section question-section" style="display: none;">
       <div class="question-timer">
