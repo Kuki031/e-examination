@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,9 +20,23 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'pin',
+        'pin_value',
+        'full_name',
+        'gender',
+        'status',
+        'registration_type',
+        'role',
         'password',
+        'is_allowed',
+        'is_in_pending_status',
+        'is_in_exam',
+        "profile_picture"
+    ];
+
+    protected $appends = [
+        "registration_type_formatted", "is_allowed_formatted", "full_name_formatted", "status_formatted", "role_formatted", "is_in_pending_status_formatted"
     ];
 
     /**
@@ -42,7 +58,76 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
+    public function examAttempts() {
+        return $this->hasMany(ExamAttempt::class);
+    }
+
+    public function getIsAllowedFormattedAttribute()
+    {
+        return $this->is_allowed === 0 ? "Ne" : "Da";
+    }
+
+    public function getRegistrationTypeFormattedAttribute()
+    {
+        return $this->registration_type === "teacher" ? "Nastavnik" : "Student";
+    }
+
+    public function getFullNameFormattedAttribute()
+    {
+        $fullName = explode(" ", $this->full_name);
+        $fullNameLower = array_map(fn($item) => strtolower($item), $fullName);
+        $firstLetterUc = array_map(fn($item) => ucfirst($item), $fullNameLower);
+        $convert = implode(" ", $firstLetterUc);
+
+        return $convert;
+    }
+
+    public function getIsInPendingStatusFormattedAttribute()
+    {
+        return $this->is_in_pending_status === 0 ? "Ne" : "Da";
+    }
+
+    public function getGenderFormattedAttribute()
+    {
+        return $this->gender === "m" ? "Muški" : "Ženski";
+    }
+
+    public function getStatusFormattedAttribute()
+    {
+        return match ($this->status) {
+            'n' => 'Nastavnik',
+            'r' => 'Redovan',
+            default => 'Izvanredan',
+        };
+    }
+
+    public function getRoleFormattedAttribute()
+    {
+        return match ($this->role) {
+            'admin' => 'Administrator',
+            'teacher' => 'Nastavnik',
+            default => 'Student',
+        };
+    }
+
+    public function getCreatedAtFormattedAttribute()
+    {
+        return $this->created_at->format("d.m.Y H:i:s");
+    }
+
+    public function getUpdatedAtFormattedAttribute()
+    {
+        return $this->updated_at->format("d.m.Y H:i:s");
     }
 }

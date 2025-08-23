@@ -1,0 +1,173 @@
+.question-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: var(--default-margin) auto;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn .5s ease-in-out;
+}
+
+.question-title {
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--default-padding);
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.question-wrap {
+    background-color: var(--color-tertiary);
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.question-options {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--default-element-gap);
+    margin: var(--default-margin);
+}
+
+.add_question, .save_exam {
+    cursor: pointer;
+    transition: var(--transitions);
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+}
+
+.questions-holder {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+    margin: var(--default-margin) auto;
+}
+
+.question-div {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    gap: var(--default-element-gap);
+    margin: var(--default-margin) auto;
+    background-color: var(--color-secondary-diff);
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+    font-size: var(--default-font);
+    color: var(--color-primary);
+    box-shadow: var(--default-box-shadow);
+    animation: fadeIn .5s ease-in-out;
+    transition: var(--transitions);
+}
+
+.question_title {
+    text-decoration:none;
+}
+
+.is_correct_div {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    gap: var(--default-element-gap);
+}
+
+.is_correct {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+.answer_div {
+    display:flex;
+    flex-flow:wrap;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    padding: var(--default-padding);
+    gap: var(--default-element-gap);
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
+}
+
+.answer_div input {
+    padding: var(--default-padding);
+    border: none;
+    border-radius: var(--default-image-radius);
+}
+
+.add_answer, .del_question, .delete_answer {
+    border: none;
+    border-radius: var(--default-image-radius);
+    cursor: pointer;
+    transition: var(--transitions);
+}
+
+.add_answer {
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+}
+
+.del_question {
+    background-color: var(--color-danger-diff);
+    color: var(--color-tertiary);
+}
+
+.delete_answer {
+    background-color: var(--color-danger-diff);
+    color: var(--color-tertiary);
+}
+
+.has-picture-holder {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--default-element-gap);
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
+}
+
+.question-picture {
+    width: var(--question-picture-w);
+    height: var(--question-picture-h);
+    background-color: var(--color-tertiary);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.has-picture-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-element-gap);
+}
+
+.picture-div-holder {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    transition: var(--transitions);
+    animation: fadeIn ease-in-out .5s;
+}
+
+.return-top {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    cursor: pointer;
+    background-color: var(--color-secondary-alter);
+    color: var(--color-tertiary);
+    transition: var(--transitions);
+    box-shadow: var(--default-box-shadow);
+    opacity: 0;
+    pointer-events: none;
+}
+.return-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}

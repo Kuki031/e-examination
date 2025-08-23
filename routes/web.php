@@ -1,7 +1,118 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProctorController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\EnsureExamIsInProcess;
+use App\Http\Middleware\EnsureStudentIsInExam;
+use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\EnsureUserIsAllowed;
+use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
+use App\Http\Middleware\RejectIfInExam;
+use App\Http\Middleware\StopIfExamInProcess;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/naslovnica");
 });
+
+Route::get('/naslovnica', [HomeController::class, 'getIndex'])->name('index');
+
+
+Route::name("auth.")->prefix("autentifikacija")->group(function() {
+    Route::get("/prijava", [HomeController::class, 'getLoginSelector'])->name("login_selector");
+    Route::get("/registracija", [HomeController::class, 'getRegistrationSelector'])->name("register_selector");
+    Route::get("/prijava/student", [AuthController::class, 'getStudentLoginForm'])->name("student_login_form");
+    Route::get("/registracija/student", [AuthController::class, 'getStudentRegisterForm'])->name("student_register_form");
+    Route::get("/prijava/nastavnik", [AuthController::class, "getTeacherLoginForm"])->name("teacher_login_form");
+
+    Route::get("/registracija/nastavnik", [AuthController::class, "getTeacherRegisterForm"])->name("teacher_register_form");
+    Route::middleware([EnsureUserIsAllowed::class])->group(function() {
+        Route::post("/prijava", [AuthController::class, 'authenticate'])->name("login");
+    });
+    Route::post("/registracija", [AuthController::class, 'register'])->name('register');
+    Route::middleware(['auth'])->group(function() {
+        Route::post("/odjavi-se", [AuthController::class, 'logout'])->name("logout");
+    });
+});
+
+
+Route::middleware(['auth'])
+    ->name('users.')->prefix("korisnici")
+    ->group(function() {
+        Route::get("/moj-profil", [UserController::class, 'getMyProfile'])->name('profile');
+        Route::patch("/moj-profil/azuriraj", [UserController::class, 'editProfile'])->name("edit_profile");
+        Route::patch("/moj-profil/azuriraj-lozinku", [UserController::class, 'updatePassword'])->name("update_password");
+});
+
+
+Route::middleware(['auth', EnsureUserIsAdmin::class])->prefix("administrator")->name("admin.")->group(function() {
+    Route::get("/korisnici", [AdminController::class, 'getAllUsers'])->name("new_users_list");
+    Route::get("/korisnici/{user}", [AdminController::class, 'getUserProfile'])->name("user_profile");
+    Route::get("/zahtjevi/brojka", [AdminController::class, 'countRequests'])->name("request_count");
+    Route::post("/zahtjevi/{user}/odbij", [AdminController::class, 'rejectRegistration'])->name("reject_registration");
+    Route::post("/zahtjevi/{user}/odobri", [AdminController::class, 'approveRegistration'])->name("approve_registration");
+    Route::patch("/korisnici/{user}/dodjeli-ulogu", [AdminController::class, 'assignRole'])->name("assign_role");
+    Route::delete("/korisnici/{user}/obrisi", [AdminController::class, "deleteUser"])->name("delete_user");
+
+});
+
+Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavnik")->name("teacher.")->group(function() {
+    Route::get("/provedene-provjere", [TeacherController::class, 'getConductedExamList'])->name("conducted_exams");
+    Route::get("/provedene-provjere/{conductedExam}/ispit/{exam}", [TeacherController::class, 'getConductedExamDetails'])->name("conducted_exams_details");
+    Route::get("/provedene-provjere/{conductedExam}/ispit/{exam}/sudionici", [TeacherController::class, 'getParticipantsForConductedExam'])->name("conducted_exam_participants");
+    Route::get("/provedene-provjere/ispit/{exam}/sudionici/{user}/aktivnosti", [TeacherController::class, 'loadActivitesForStudent'])->name("conducted_exam_activites");
+    Route::get("/korisnik/{user}/informacije", [TeacherController::class, 'getUser'])->name("user_profile");
+    Route::get("/nova-provjera-znanja", [ExamController::class, 'getCreateForm'])->name("new_exam");
+    Route::post("/nova-provjera-znanja", [ExamController::class, 'createExam'])->name("create_exam");
+    Route::get("/moje-provjere-znanja", [ExamController::class, 'getMyExams'])->name("teacher_exams");
+    Route::get("/provjera-znanja/{exam}/kreiraj-pitanja", [ExamController::class, 'getQuestionMakerForExam'])->name("create_questions");
+    Route::get("/provjera-znanja/{exam}", [ExamController::class, 'getExamDetails'])->name("exam_details");
+    Route::patch("/provjera-znanja/{exam}/spremi-kod", [ExamController::class, 'saveGeneratedAccessCode'])->name("save_generated_access_code");
+    Route::get("/provjera-znanja/{exam}/pitanja", [QuestionController::class, 'getQuestionsForExam'])->name("exam_question_list");
+    Route::get("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'getQuestionDetails'])->name("exam_question_details");
+    Route::patch("/provjera-znanja/{exam}/zaustavi", [TeacherController::class, 'stopExam'])->name("stop_exam");
+    Route::get("/provjera-znanja/{exam}/pracenje", [ProctorController::class, 'enterProctoringMode'])->name("start_proctor");
+    Route::get("/provjera/znanja/{exam}/kviz", [TeacherController::class, 'loadQuizControl'])->name("quiz_control");
+
+    Route::middleware([StopIfExamInProcess::class])->group(function() {
+        Route::delete("/provjera-znanja/{exam}", [ExamController::class, 'deleteExam'])->name("delete_exam");
+        Route::patch("/provjera-znanja/{exam}", [ExamController::class, 'updateExam'])->name("update_exam");
+        Route::post("/provjera-znanja/{exam}/spremi-pitanja", [QuestionController::class, 'saveQuestions'])->name("save_questions");
+        Route::patch("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'updateQuestion'])->name("exam_question_update");
+        Route::delete("/provjera-znanja/{exam}/pitanja/{question}", [QuestionController::class, 'deleteQuestion'])->name("exam_question_delete");
+        Route::patch("/provjera-znanja/{exam}/pitanja/{question}/azuriraj-odgovore", [QuestionController::class, 'saveAnswers'])->name("exam_save_answers");
+        Route::patch("/provjera-znanja/{exam}/pokreni", [TeacherController::class, 'startExam'])->name("start_exam");
+    });
+});
+
+Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() {
+    Route::get("/dostupni-ispiti", [StudentController::class, 'getAvailableExamList'])->name("list");
+    Route::middleware([EnsureExamIsInProcess::class])->group(function() {
+        Route::get("/pristup/{exam}", [StudentController::class, 'getExamConfirmationView'])->name("confirmation");
+        Route::middleware([RejectIfInExam::class])->group(function() {
+            Route::post("/pristup/{exam}/provjera-koda", [StudentController::class, 'joinExam'])->name("join_exam");
+        });
+        Route::get("/pokusaj/{examAttempt}/ispit/{exam}", [StudentController::class, 'loadExam'])->name("load_exam");
+
+        Route::middleware([EnsureStudentIsInExam::class])->group(function() {
+            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-stanje", [StudentController::class, 'updateState'])->name("update_state");
+            Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/aktivnost", [ProctorController::class, 'logActivity'])->name("log_activity");
+        });
+        Route::post("/ispit/{exam}/posalji-notifikaciju", [ProctorController::class, 'sendNotificationViaSocket'])->name("notify");
+    });
+    Route::patch("/pokusaj/{examAttempt}/ispit/{exam}/spremi-ispit", [StudentController::class, 'storeExam'])->name("store_exam");
+});
+
+Route::middleware(['auth'])->prefix("rezultati")->name("results.")->group(function() {
+    Route::get("{user}", [StudentController::class, 'getResultList'])->name("student");
+});
+
+
+Route::fallback([HomeController::class, 'fallbackRoute']);

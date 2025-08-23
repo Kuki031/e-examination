@@ -1,5 +1,10 @@
 <?php
 
+use App\Enums\Gender;
+use App\Enums\RegistrationType;
+use App\Enums\Status;
+use App\Enums\Pin;
+use App\Enums\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +18,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email')->unique()->index();
+            $table->enum("pin", array_column(Pin::cases(), 'value'));
+            $table->string("pin_value")->unique()->index();
+            $table->string("full_name")->index();
+            $table->enum("gender", array_column(Gender::cases(), 'value'));
+            $table->enum("status", array_column(Status::cases(), 'value'));
+            $table->enum("registration_type", array_column(RegistrationType::cases(), 'value'));
+            $table->enum("role", array_column(Role::cases(), 'value'));
+            $table->string("profile_picture")->nullable();
             $table->string('password');
+            $table->boolean("is_allowed")->default(false);
+            $table->boolean('is_in_pending_status')->default(true);
+            $table->boolean("is_in_exam")->default(false);
+            $table->integer("last_accessed_exam")->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

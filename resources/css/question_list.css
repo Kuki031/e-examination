@@ -1,0 +1,9 @@
+.question-creator {
+    text-decoration: none;
+    color: var(--color-tertiary);
+    background-color: var(--color-secondary-alter);
+    border: none;
+    padding: var(--smaller-padding);
+    border-radius: var(--default-image-radius);
+    box-shadow: var(--default-box-shadow);
+}

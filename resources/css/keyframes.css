@@ -1,0 +1,48 @@
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes glowFlash {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+
+@keyframes appearFromBelow {
+    0% {
+
+    }
+    100% {
+
+    }
+}
+
+@keyframes glowSlide {
+    0% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+
+@keyframes pulseDots {
+    0% { text-shadow: 0 0 0 var(--color-primary); }
+    50% { text-shadow: 0 0 8px var(--color-primary); }
+    100% { text-shadow: 0 0 0 var(--color-primary); }
+}

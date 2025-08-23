@@ -1,11 +1,70 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('./variables.css');
+@import url('./header.css');
+@import url('./auth_forms.css');
+@import url('./keyframes.css');
+@import url('./auth_selectors.css');
+@import url('./index.css');
+@import url('./tables.css');
+@import url('./pagination.css');
+@import url('./profile.css');
+@import url('./generic_modal.css');
+@import url('./search_bar.css');
+@import url('./exam_forms.css');
+@import url('./questions.css');
+@import url('./question_list.css');
+@import url('./question_details.css');
+@import url('./exam_welcome.css');
+@import url('./exam_spa.css');
+@import url('./spa_modal.css');
+@import url('./proctor.css');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+.error-div {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.error-div span {
+    color: var(--color-danger);
+    font-size: var(--default-error-font);
+}
+
+.fl-wrapper {
+    font-size: var(--flasher-font);
+}
+
+.custom-file-button {
+    display: inline-block;
+    margin-top: .2rem;
+    color: var(--color-tertiary);
+    cursor: pointer;
+    border-radius: var(--default-image-radius);
+    font-size: var(--default-error-font);
+    text-align: center;
+    transition: var(--transitions);
+}
+
+
+.custom-file-button:hover {
+    background-color: var(--color-secondary-alter);
+    color: var(--color-primary);
+}
+
