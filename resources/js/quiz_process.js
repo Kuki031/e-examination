@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitExam = async function(message) {
 
         const answerList = prepareQuestionsForAjax();
-        console.log(answerList);
-
 
         try {
 
@@ -71,8 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         } catch (error) {
-            console.error(error);
-
+            setFlashMessage("Došlo je do pogreške.", DANGER_COLOR);
         }
     }
     }

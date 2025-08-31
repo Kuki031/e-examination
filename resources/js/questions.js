@@ -359,7 +359,6 @@ const saveQuestions = async function () {
             }, 1500);
         }
     } catch (error) {
-        console.log(error);
 
         if (error.response?.status === 422) {
             const errors = error.response.data.errors;

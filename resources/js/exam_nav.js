@@ -177,7 +177,7 @@ if (document.getElementById("load_script")) {
         }
 
         } catch (error) {
-            console.error(error);
+            setFlashMessage("Došlo je do pogreške.", DANGER_COLOR);
 
         }
     }

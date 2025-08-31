@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { setFlashMessage } from './questions';
+import { DANGER_COLOR } from './constants';
 
 const requestCountSpan = document.querySelector("#request-number");
 
@@ -17,7 +19,7 @@ const getRequestCount = async function () {
             }
         }
     } catch (error) {
-        console.error("Error fetching request count:", error);
+        setFlashMessage("Došlo je do pogreške.", DANGER_COLOR);
     }
 };
 

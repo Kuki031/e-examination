@@ -62,9 +62,6 @@ const updateState = async function() {
             withCredentials: true
         });
 
-        if (request.status === 200) {
-            console.log(request.data);
-        }
     } catch (error) {
         console.error(error);
     }
