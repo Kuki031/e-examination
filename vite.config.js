@@ -12,5 +12,9 @@ export default defineConfig({
     ],
     build: {
         sourcemap: false
-    }
+    },
+    server: {
+        https: true
+    },
+    base: process.env.APP_URL + '/build/',
 });
