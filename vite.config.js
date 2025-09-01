@@ -13,5 +13,5 @@ export default defineConfig({
     build: {
         sourcemap: false
     },
-    base: import.meta.env.VITE_APP_URL + '/build/'
+    base: process.env.VITE_APP_URL + '/build/',
 });
