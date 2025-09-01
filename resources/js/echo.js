@@ -12,3 +12,10 @@ window.Echo = new Echo({
     forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
 });
+
+console.log(
+    'Reverb Key:', import.meta.env.VITE_REVERB_APP_KEY,
+    'Host:', import.meta.env.VITE_REVERB_HOST,
+    'Port:', import.meta.env.VITE_REVERB_PORT,
+    'Scheme:', import.meta.env.VITE_REVERB_SCHEME
+);
