@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\FileFallback;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProctorController;
 use App\Http\Controllers\QuestionController;
@@ -16,6 +17,7 @@ use App\Http\Middleware\EnsureUserIsAllowed;
 use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
 use App\Http\Middleware\RejectIfInExam;
 use App\Http\Middleware\StopIfExamInProcess;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -117,11 +119,4 @@ Route::middleware(['auth'])->prefix("rezultati")->name("results.")->group(functi
 
 
 Route::fallback([HomeController::class, 'fallbackRoute']);
-
-Route::get('/debug-storage', function () {
-    return [
-        'symlink_exists' => file_exists(public_path('storage')),
-        'symlink_points_to' => is_link(public_path('storage')) ? readlink(public_path('storage')) : 'not a symlink',
-        'files_in_storage' => Storage::disk('public')->files('profile_pictures')
-    ];
-});
+Route::get('/storage/{path}', [FileFallback::class, 'serveFiles'])->where('path', '.*');
