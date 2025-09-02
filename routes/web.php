@@ -119,4 +119,3 @@ Route::middleware(['auth'])->prefix("rezultati")->name("results.")->group(functi
 
 
 Route::fallback([HomeController::class, 'fallbackRoute']);
-Route::get('/storage/{path}', [FileFallback::class, 'serveFiles'])->where('path', '.*');
