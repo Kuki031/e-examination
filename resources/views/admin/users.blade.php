@@ -4,16 +4,17 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Korisnici</h2>
-        </div>
-
-        <div class="table-title">
-            <x-search-bar :search="'korisnike'" />
+            <div>
+                <h2 style="text-align: center">Korisnici</h2>
+            </div>
+            <div>
+                <x-search-bar :search="'korisnike'" />
             @if(request('search'))
                 <a href="{{ route('admin.new_users_list') }}" class="reset-filter-link">
                     Poništi pretragu
                 </a>
             @endif
+            </div>
         </div>
 
         <table class="table-main">

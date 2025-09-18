@@ -2,18 +2,19 @@
 
 
 <div class="tables-main">
-    <div class="table-wrap">
+    <div class="table-wrap" style="width: fit-content">
         <div class="table-title">
-            <h2 style="text-align: center">Provjere znanja</h2>
-        </div>
-
-        <div class="table-title">
-            <x-search-bar :search="'provjere znanja'" />
+            <div>
+                <h2 style="text-align: center">Provjere znanja</h2>
+            </div>
+            <div>
+                <x-search-bar :search="'provjere znanja'" />
             @if(request('search'))
                 <a href="{{ route('teacher.teacher_exams') }}" class="reset-filter-link">
                     Poništi pretragu
                 </a>
             @endif
+            </div>
         </div>
 
         @if (sizeof($exams) > 0)

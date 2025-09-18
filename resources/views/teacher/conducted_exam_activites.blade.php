@@ -12,10 +12,12 @@
 <div class="tables-main">
 @if ($activites && sizeof($activites) > 0)
 
-<div class="table-wrap">
+<div class="table-wrap-details">
     <div>
         <div class="table-title">
-            <h2>Aktivnosti</h2>
+            <div>
+                <h2>Aktivnosti</h2>
+            </div>
         </div>
 
         <table class="table-main">
@@ -44,10 +46,12 @@
 @endif
 
 
-<div class="table-wrap">
+<div class="table-wrap-details">
     <div>
         <div class="table-title">
-            <h2>Generirana pitanja</h2>
+            <div>
+                <h2>Generirana pitanja</h2>
+            </div>
         </div>
 
         <table class="table-main">
@@ -89,10 +93,12 @@
 
 
 @if ($answers)
-    <div class="table-wrap">
+    <div class="table-wrap-details">
     <div>
         <div class="table-title">
-                <h2>Poslani odgovori</h2>
+                <div>
+                    <h2>Poslani odgovori</h2>
+                </div>
             </div>
 
             <table class="table-main">

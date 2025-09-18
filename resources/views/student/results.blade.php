@@ -3,7 +3,9 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2 style="text-align: center">Rezultati</h2>
+            <div>
+                <h2 style="text-align: center">Rezultati</h2>
+            </div>
         </div>
 
         @if (sizeof($examAttempts) > 0)

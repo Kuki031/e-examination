@@ -17,9 +17,7 @@ use App\Http\Middleware\EnsureUserIsAllowed;
 use App\Http\Middleware\EnsureUserIsTeacherOrAdmin;
 use App\Http\Middleware\RejectIfInExam;
 use App\Http\Middleware\StopIfExamInProcess;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     return redirect("/naslovnica");

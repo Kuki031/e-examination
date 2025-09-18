@@ -7,10 +7,9 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2>Pitanja za provjeru znanja: {{ $exam->name }}</h2>
-        </div>
-
-        <div class="table-title">
+            <div>
+                <h2>Pitanja za provjeru znanja: {{ $exam->name }}</h2>
+            </div>
             <div>
                 <x-search-bar :search="'pitanja'" />
             </div>

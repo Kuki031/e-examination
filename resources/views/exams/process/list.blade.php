@@ -4,7 +4,9 @@
 <div class="tables-main">
     <div class="table-wrap">
         <div class="table-title">
-            <h2 style="text-align: center">Dostupne provjere znanja</h2>
+            <div>
+                <h2 style="text-align: center">Dostupne provjere znanja</h2>
+            </div>
         </div>
 
         @if (sizeof($exams) > 0)
