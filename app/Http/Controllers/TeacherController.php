@@ -38,7 +38,7 @@ class TeacherController extends Controller
 
         $exam->update([
             "in_process" => true,
-            "is_quiz" => $request->input("is_quiz") ? true : false
+            "is_quiz" => $request->input("is_quiz") ? true : false,
         ]);
 
         ConductedExam::create([
@@ -52,6 +52,15 @@ class TeacherController extends Controller
 
         $this->constructToastMessage("Prijava znanja uspješno pokrenuta. Kako bi studenti mogli pristupiti istoj, morate im podijeliti pristupni kod.", "Uspjeh", "success", 4500);
         return back();
+    }
+
+    public function triggerStartQuiz(Exam $exam, Request $request) {
+
+        $exam->update([
+            "is_quiz_in_progress" => true
+        ]);
+
+        return response()->json(["message" => "Kviz uspješno pokrenut."]);
     }
 
     public function stopExam(Exam $exam, Request $request) {
@@ -77,10 +86,11 @@ class TeacherController extends Controller
 
             $exam->update([
                 "in_process" => false,
-                "is_quiz" => 0
+                "is_quiz" => 0,
+                "is_quiz_in_progress" => false
             ]);
 
-            $usersToStop = ExamAttempt::where("exam_id", "=", $exam->id)
+            $usersToStop = ExamAttempt::where(column: "exam_id", operator: "=", value: $exam->id)
                 ->where("started_at", ">", $lastConcludedExam->start_time)
                 ->get(["user_id"])
                 ->pluck("user_id");
@@ -115,8 +125,6 @@ class TeacherController extends Controller
             }
 
             $lastConcludedExam->timestamps = false;
-
-            // Zbog timestamepova force fill, jer je inace zbog transakcije spremao sve iste ts
             $lastConcludedExam->forceFill([
                 "num_of_participants" => $lastConcludedExam->num_of_participants,
                 "end_time" => $now->copy()->addSeconds(10),

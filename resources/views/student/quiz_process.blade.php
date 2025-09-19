@@ -2,21 +2,26 @@
 
 @php
     $questions = $examAttempt->questions;
+    $state = json_decode($examAttempt?->state);
+    $checkedAnswers = $state?->checked_answers;
 @endphp
 
 
 <span id="attempt_id" hidden>{{ $examAttempt->id }}</span>
 <span id="load_process_script" hidden>1</span>
 <span id="exam_id" hidden>{{ $examAttempt->exam_id }}</span>
+<span id="is_quiz_in_process" hidden>{{ $examAttempt->exam->is_quiz_in_progress }}</span>
 <span id="user_id" hidden>{{ auth()->id() }}</span>
 
-<div class="exam-header">
-    <h1>{{ $examAttempt->exam->name }}</h1>
+@if (!$examAttempt->exam->is_quiz_in_progress)
+    <div class="exam-header">
+        <h1>{{ $examAttempt->exam->name }}</h1>
 
-    <div class="loading">
-        <span>Čekanje da nastavnik pokrene kviz</span>
+        <div class="loading">
+            <span>Čekanje da nastavnik pokrene kviz</span>
+        </div>
     </div>
-</div>
+@endif
 
   <div class="exam-process-wrap">
     <div class="exam-process-section question-section" style="display: none;">
@@ -41,7 +46,9 @@
                         @endif
                         @php $j++; $inputId = "q{$index}_a{$j}"; @endphp
                         <label for="{{ $inputId }}">
-                            <input id="{{ $inputId }}" class="answer q{{ $index + 1 }}a{{ $j }}" type="radio" name="answer{{ $index + 1 }}">
+                            <input id="{{ $inputId }}" class="answer q{{ $index + 1 }}a{{ $j }}" type="radio" name="answer{{ $index + 1 }}" @if ($checkedAnswers)
+                                {{ in_array($inputId, $checkedAnswers) ? 'checked' : '' }}
+                            @endif />
                             {{ $answer }}
                         </label>
                     @endforeach

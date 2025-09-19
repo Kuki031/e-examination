@@ -91,6 +91,7 @@ Route::middleware(['auth', EnsureUserIsTeacherOrAdmin::class])->prefix("nastavni
         Route::patch("/provjera-znanja/{exam}/pitanja/{question}/azuriraj-odgovore", [QuestionController::class, 'saveAnswers'])->name("exam_save_answers");
         Route::patch("/provjera-znanja/{exam}/pokreni", [TeacherController::class, 'startExam'])->name("start_exam");
     });
+    Route::patch("/provjera-znanja/{exam}/pokreni-kviz", [TeacherController::class, 'triggerStartQuiz'])->name("trigger_quiz");
 });
 
 Route::middleware(['auth'])->prefix("ispiti")->name("exams.")->group(function() {

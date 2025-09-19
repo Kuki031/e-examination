@@ -2,6 +2,8 @@
 
 <span id="exam_id" hidden>{{ $exam->id }}</span>
 <span id="current_question" hidden>1</span>
+<span id="quiz_started" hidden>{{ $exam->is_quiz_in_progress }}</span>
+<span id="user_role" hidden>{{ $exam->user->role }}</span>
 
 @php
     $numOfQuestions = sizeof($questions);
@@ -19,12 +21,12 @@
             <div>
                 <button id="start_quiz" style="background-color:green;cursor: pointer;color:#fff">Započni kviz</button>
             </div>
-                        <div class="proctor-option">
+            <div class="proctor-option">
                 <form action="{{ route('teacher.stop_exam', $exam) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     <button type="submit"
-                        class="action-button danger">
+                        class="action-button danger stop-quiz">
                         Zaustavi kviz
                     </button>
                 </form>

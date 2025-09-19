@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("name")->unique()->index();
             $table->text("description")->nullable();
             $table->boolean("is_quiz")->default(false);
+            $table->boolean("is_quiz_in_progress")->default(false);
             $table->integer("num_of_questions")->nullable();
             $table->integer("num_of_points")->nullable();
             $table->integer("required_for_pass")->nullable();
